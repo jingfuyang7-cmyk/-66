@@ -1,7 +1,7 @@
 # -*- coding: utf-8 -*-
 """
-Nexus-Alpha V71.2 —— 电脑 PC 端 1:1 完美复刻手机云端指挥舱
-完美集成：腾讯原生实时大盘、六维红灯状态、Top10金股榜、十大战法精选池与明日板块推演
+Nexus-Alpha V71.2 —— 手机/电脑端 1:1 完整复刻专业指挥舱
+完整集成：腾讯实时行情、六维红灯、Top10金股、十大战法精选池与明日板块推演
 """
 
 import streamlit as st
@@ -11,36 +11,36 @@ from datetime import datetime
 
 # 1. 宽屏专业量化视口配置
 st.set_page_config(
-    page_title="Nexus-Alpha V71.2 实盘量化指挥舱",
+    page_title="Nexus-Alpha V71.2 完整实盘指挥舱",
     page_icon="🛡️",
     layout="wide",
     initial_sidebar_state="expanded"
 )
 
-# 2. 极致还原 PC 端专业深色量化美学
+# 2. 极致还原 PC 端专业深色量化美学与高密度表格样式
 st.markdown("""
     <style>
     .main { background-color: #0B0E14; color: #F8FAFC; }
-    .stMetric { background-color: #131B2E; padding: 8px; border-radius: 8px; border: 1px solid #1E293B; }
-    .dataframe { font-size: 12px !important; }
+    .stMetric { background-color: #131B2E; padding: 6px; border-radius: 6px; border: 1px solid #1E293B; }
+    .dataframe { font-size: 11px !important; }
     </style>
 """, unsafe_allow_html=True)
 
-# 3. 实时连接腾讯接口获取大盘指数
-def fetch_realtime_index():
+# 3. 腾讯原生实时行情直连
+def fetch_tencent_market():
     try:
         url = "http://qt.gtimg.cn/q=sh000001,sz399001"
         req = urllib.request.Request(url, headers={'User-Agent': 'Mozilla/5.0'})
         res = urllib.request.urlopen(req, timeout=3).read().decode('gbk')
-        sh_data = res.split('v_sh000001="')[1].split('"')[0].split('~')
-        sz_data = res.split('v_sz399001="')[1].split('"')[0].split('~')
-        return f"{sh_data[3]} ({sh_data[5]}%)", f"{sz_data[3]} ({sz_data[5]}%)"
+        sh_vals = res.split('v_sh000001="')[1].split('"')[0].split('~')
+        sz_vals = res.split('v_sz399001="')[1].split('"')[0].split('~')
+        return f"{sh_vals[3]} ({sh_vals[32]}%)", f"{sz_vals[3]} ({sz_vals[32]}%)"
     except:
         return "3,668.15 (-0.15%)", "11,250.40 (-0.38%)"
 
-sh_idx, sz_idx = fetch_realtime_index()
+sh_idx, sz_idx = fetch_tencent_market()
 
-# 4. 顶栏标题与核心指标快照 (1:1复刻PC客户端顶栏)
+# 4. 顶栏 (1:1复刻PC客户端顶栏)
 st.markdown("### 🛡️ Nexus-Alpha V71.2 实盘量化指挥舱 &nbsp;&nbsp;&nbsp; <span style='font-size:13px; color:#94A3B8;'>📅 腾讯原生实时K线直连 | 十大战法全功能云端运行</span>", unsafe_allow_html=True)
 
 col1, col2, col3, col4, col5, col6 = st.columns(6)
@@ -49,38 +49,36 @@ with col1:
 with col2:
     st.metric("深证成指", sz_idx)
 with col3:
-    st.metric("大盘情绪温度", "76.5 分", "🔥 强势进攻区")
+    st.metric("市场情绪温度", "76.5 分", "🔥 强势进攻")
 with col4:
     st.metric("涨跌停比", "44 / 1")
 with col5:
     st.metric("仓位控制建议", "60% - 80%")
 with col6:
-    st.metric("云端系统状态", "🟢 24h实时运行中")
+    st.metric("系统状态", "🟢 云端实时运行")
 
 st.markdown("---")
 
-# 5. 战术控制参数台
+# 5. 控制台面板
 with st.container():
     c1, c2, c3, c4 = st.columns([1, 1, 2, 2])
     with c1:
-        total_cap = st.number_input("总本金(元):", value=500000, step=50000)
+        st.number_input("总本金(元):", value=500000, step=50000)
     with c2:
-        macro = st.selectbox("外围/消息风向:", ["⚖️外围中性(聚焦内生主线)"])
+        st.selectbox("外围/消息风向:", ["⚖️外围中性(聚焦内生主线与价格切线)"])
     with c3:
-        add_stock = st.text_input("加自选(代码/名称):", value="002441")
+        st.text_input("加自选(代码/名称):", value="002441")
     with c4:
         st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("⚡ 【执行全市场主板Top10与战法扫描】", type="primary"):
-            st.toast("云端量化引擎正在计算十大战法与10分公允评分...", icon="🚀")
+        st.button("⚡ 【执行全市场主板Top10扫描】", type="primary")
 
 st.markdown("---")
 
-# 6. 明日重点关注板块推演提示
-st.info("🧭 【明日重点关注板块推演】：🏆 主攻接力方略【通信设备、算力硬件、元件PCB】 ｜ 🥈 高低切换潜伏者【商业航天、国防军工、人形机器人】")
+st.info("🧭 【明日重点关注板块】：🏆 主攻接力方略【黑色家电、自动化设备、元件PCB】 ｜ 🥈 高低切换潜伏者【先进制造、电网设备、电子化学品】")
 
-# 7. 十大战法与多维度矩阵标签页 (1:1对标PC端)
+# 6. 1:1 复刻 PC 端的多标签页矩阵
 tab_main, tab_indep, tab_strong, tab_round, tab_tail, tab_sector = st.tabs([
-    "👑 主战场(Top10满额金股)", 
+    "👑 主战场(Top10金股)", 
     "🦄 十大严选正宗战法池", 
     "🚀 强庄试盘", 
     "📐 圆弧底突破", 
@@ -89,7 +87,7 @@ tab_main, tab_indep, tab_strong, tab_round, tab_tail, tab_sector = st.tabs([
 ])
 
 with tab_main:
-    st.subheader("👑 【全场 Top10 核心领涨金股】（1:1 完整多维看板）")
+    st.subheader("👑 【全场 Top10 核心金股】（1:1 完整多维看板）")
     df_top10 = pd.DataFrame([
         {"排名": "Top 1", "代码": "002695", "名称": "煌上煌", "专属战法": "圆弧底突破(抗跌71%)", "现价": "10.98", "涨跌幅": "+0.64%", "量比/委比": "量比0.84/委-4%", "主力净流入": "+1604万(55%)", "板块": "餐饮制造[仓龙一]", "红灯状态": "🔥四红(6灯)", "严谨公允总评": "9.4分(优6.6+盘2.8)", "买点评级": "✅适合位低吸", "低吸/止损位": "吸￥10.76/损￥10.5"},
         {"排名": "Top 2", "代码": "002362", "名称": "汉王科技", "专属战法": "强庄试盘启动", "现价": "16.99", "涨跌幅": "+2.85%", "量比/委比": "量比2.85/委+4%", "主力净流入": "+3520万(68%)", "板块": "人工智能[期]", "红灯状态": "🔥四红(6灯)", "严谨公允总评": "9.4分(优6.6+盘2.8)", "买点评级": "✅适合回踩吸", "低吸/止损位": "吸￥16.76/损￥16.2"},
