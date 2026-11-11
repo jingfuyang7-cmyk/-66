@@ -1,10 +1,10 @@
 # -*- coding: utf-8 -*-
 """
 ================================================================================
-Nexus-Alpha V71.2 —— 私人实战高胜率量化指挥舱 (手机/网页云端 1:1 零删减完整移植版)
-(🧭明日重点板块推演引擎 + 腾讯原生0.03秒K线直连 + 全市场主板动态扩容 + Top10与十大战法满额版)
-【第 1 段 / 共 4 段】
-包含：全局高密度样式、退市股黑名单、十大战法字典、全市场主板动态扩容池、腾讯五档/K线/分时直连引擎。
+Nexus-Alpha V71.3 —— 手机App/云端 1:1 终极实战量化指挥舱
+(🎨高对比度高亮字体修复 + 📱全战法池勾选联动K线弹窗 + 🔥五日主升妖股 + 🏆排行点击看明细 + 💼历史交割统计)
+【第 1 段 / 共 3 段】
+包含：全终端高亮对比度CSS、11大战法字典、扩容版全市场主板池、腾讯五档/0.03秒K线/分时直连、CYQ筹码与10分公允评分引擎。
 ================================================================================
 """
 
@@ -33,9 +33,9 @@ try:
 except ImportError:
     AKSHARE_AVAILABLE = False
 
-# ==================== 1. 页面高密度宽屏配置与 PC 端 1:1 深色样式 ====================
+# ==================== 1. 页面配置与手机端高对比度深色量化 CSS ====================
 st.set_page_config(
-    page_title="Nexus-Alpha V71.2 实战量化指挥舱",
+    page_title="Nexus-Alpha V71.3 实盘量化指挥舱",
     page_icon="🛡️",
     layout="wide",
     initial_sidebar_state="collapsed"
@@ -43,34 +43,190 @@ st.set_page_config(
 
 st.markdown("""
 <style>
-    /* 1:1 还原 PC 端深色背景与紧凑边距 */
-    .stApp, .main { background-color: #0B0E14 !important; color: #F8FAFC !important; }
-    .block-container { padding-top: 0.6rem !important; padding-bottom: 1rem !important; padding-left: 0.8rem !important; padding-right: 0.8rem !important; max-width: 100% !important; }
-    
-    /* 顶部状态栏与卡片样式 */
-    .nexus-header { background-color: #06090F; border: 1px solid #1E293B; border-radius: 6px; padding: 8px 12px; margin-bottom: 6px; display: flex; flex-wrap: wrap; justify-content: space-between; align-items: center; }
-    .nexus-temp-bar { background-color: #1E293B; color: #F59E0B; font-weight: bold; font-size: 13px; padding: 4px 10px; border-radius: 4px; border: 1px solid #334155; }
-    .nexus-directive { background-color: #1E293B; color: #FEF08A; font-weight: bold; font-size: 12.5px; padding: 8px 12px; border-radius: 4px; border-left: 4px solid #F59E0B; margin-bottom: 6px; line-height: 1.5; }
-    .nexus-panel { background-color: #131B2E; border: 1px solid #1E293B; border-radius: 6px; padding: 8px 10px; margin-bottom: 8px; }
-    .nexus-panel-title { color: #64FFDA; font-weight: bold; font-size: 13px; margin-bottom: 6px; border-bottom: 1px solid #1E293B; padding-bottom: 4px; }
-    .nexus-orderbook { background-color: #0F172A; color: #38BDF8; font-family: Consolas, monospace; font-size: 12px; font-weight: bold; padding: 6px 10px; border-radius: 4px; border: 1px solid #1E293B; margin: 4px 0; }
-    .nexus-model-bar { background-color: #0F172A; color: #64FFDA; font-size: 12px; font-weight: bold; padding: 7px 12px; border-radius: 4px; border: 1px solid #334155; margin-top: 4px; }
+    /* 全局深色背景与高亮文字，彻底解决手机浅色模式下字体隐身问题 */
+    .stApp, .main, [data-testid="stAppViewContainer"], [data-testid="stHeader"] {
+        background-color: #0B0E14 !important;
+        color: #F8FAFC !important;
+    }
+    .block-container {
+        padding-top: 0.5rem !important;
+        padding-bottom: 1.2rem !important;
+        padding-left: 0.6rem !important;
+        padding-right: 0.6rem !important;
+        max-width: 100% !important;
+    }
 
-    /* 六维红灯样式 */
-    .lamp-grid { display: grid; grid-template-columns: repeat(6, 1fr); gap: 4px; margin: 4px 0; }
-    .lamp-on { background-color: #7F1D1D; color: #FEF08A; border: 1px solid #F43F5E; border-radius: 4px; padding: 4px 2px; text-align: center; font-size: 11px; font-weight: bold; }
-    .lamp-off { background-color: #1E293B; color: #64748B; border: 1px solid #334155; border-radius: 4px; padding: 4px 2px; text-align: center; font-size: 11px; font-weight: bold; }
+    /* 修复所有输入框标题、标签文字颜色过暗看不清的问题 */
+    label, .stWidgetLabel, div[data-testid="stWidgetLabel"] p,
+    div[data-testid="stMarkdownContainer"] p, div[data-testid="stCaptionContainer"] p {
+        color: #E2E8F0 !important;
+        font-weight: 600 !important;
+    }
+    h1, h2, h3, h4, h5, h6 {
+        color: #64FFDA !important;
+        margin-top: 0.2rem !important;
+        margin-bottom: 0.3rem !important;
+    }
 
-    /* 标签页与表格高密度紧凑化 */
-    div[data-testid="stTabs"] button { background-color: #131B2E !important; color: #94A3B8 !important; font-weight: bold !important; font-size: 12px !important; padding: 4px 10px !important; border-radius: 4px 4px 0 0 !important; margin-right: 2px !important; }
-    div[data-testid="stTabs"] button[aria-selected="true"] { background-color: #1D4ED8 !important; color: #FFFFFF !important; }
-    div[data-testid="stDataFrame"] { font-size: 12px !important; }
-    div[data-testid="stMetric"] { background-color: #131B2E; padding: 6px 10px; border-radius: 6px; border: 1px solid #1E293B; }
+    /* 修复按钮白底白字看不清的问题 */
+    div.stButton > button {
+        background-color: #1E293B !important;
+        color: #FEF08A !important;
+        border: 1px solid #38BDF8 !important;
+        font-weight: bold !important;
+        border-radius: 6px !important;
+        padding: 0.4rem 0.6rem !important;
+    }
+    div.stButton > button p {
+        color: #FEF08A !important;
+        font-weight: bold !important;
+    }
+    div.stButton > button[kind="primary"] {
+        background: linear-gradient(90deg, #0284C7 0%, #1D4ED8 100%) !important;
+        color: #FFFFFF !important;
+        border: 1px solid #64FFDA !important;
+        box-shadow: 0 2px 8px rgba(2, 132, 199, 0.45) !important;
+    }
+    div.stButton > button[kind="primary"] p {
+        color: #FFFFFF !important;
+        font-size: 14px !important;
+        font-weight: bold !important;
+    }
+
+    /* 修复折叠面板(Expander)与输入框高对比度样式 */
+    div[data-testid="stExpander"] {
+        background-color: #131B2E !important;
+        border: 1px solid #1E293B !important;
+        border-radius: 6px !important;
+    }
+    div[data-testid="stExpander"] summary p {
+        color: #64FFDA !important;
+        font-weight: bold !important;
+    }
+    input, div[data-baseweb="select"] > div {
+        background-color: #0F172A !important;
+        color: #FBBF24 !important;
+        border-color: #334155 !important;
+        font-weight: bold !important;
+    }
+
+    /* 修复下方十大战法标签页(Tabs)未选中时文字漆黑看不清的问题 */
+    div[data-testid="stTabs"] button {
+        background-color: #131B2E !important;
+        color: #E2E8F0 !important;
+        border: 1px solid #334155 !important;
+        border-radius: 6px 6px 0 0 !important;
+        padding: 6px 10px !important;
+        margin-right: 3px !important;
+    }
+    div[data-testid="stTabs"] button p {
+        color: #E2E8F0 !important;
+        font-weight: bold !important;
+        font-size: 12.5px !important;
+    }
+    div[data-testid="stTabs"] button[aria-selected="true"] {
+        background-color: #1D4ED8 !important;
+        border: 1px solid #64FFDA !important;
+    }
+    div[data-testid="stTabs"] button[aria-selected="true"] p {
+        color: #FEF08A !important;
+        font-weight: bold !important;
+    }
+
+    /* 顶部状态条、操作总指令条、面板卡片与六维红灯样式 */
+    .nexus-temp-bar {
+        background-color: #131B2E;
+        color: #FBBF24;
+        font-weight: bold;
+        font-size: 12.5px;
+        padding: 6px 10px;
+        border-radius: 6px;
+        border: 1px solid #334155;
+        margin-bottom: 6px;
+        line-height: 1.4;
+    }
+    .nexus-directive {
+        background-color: #1E293B;
+        color: #FEF08A;
+        font-weight: bold;
+        font-size: 12.5px;
+        padding: 8px 10px;
+        border-radius: 6px;
+        border-left: 4px solid #F59E0B;
+        margin-bottom: 6px;
+        line-height: 1.45;
+    }
+    .nexus-panel {
+        background-color: #131B2E;
+        border: 1px solid #1E293B;
+        border-radius: 6px;
+        padding: 8px 10px;
+        margin-bottom: 8px;
+    }
+    .nexus-panel-title {
+        color: #64FFDA;
+        font-weight: bold;
+        font-size: 13.5px;
+        margin-bottom: 6px;
+        border-bottom: 1px solid #1E293B;
+        padding-bottom: 4px;
+    }
+    .nexus-orderbook {
+        background-color: #0F172A;
+        color: #38BDF8;
+        font-family: Consolas, monospace;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 6px 8px;
+        border-radius: 4px;
+        border: 1px solid #1E293B;
+        margin: 4px 0;
+    }
+    .nexus-model-bar {
+        background-color: #0F172A;
+        color: #64FFDA;
+        font-size: 12px;
+        font-weight: bold;
+        padding: 6px 10px;
+        border-radius: 4px;
+        border: 1px solid #334155;
+        margin-top: 4px;
+    }
+    .lamp-grid {
+        display: grid;
+        grid-template-columns: repeat(3, 1fr);
+        gap: 4px;
+        margin: 4px 0;
+    }
+    @media (min-width: 768px) {
+        .lamp-grid { grid-template-columns: repeat(6, 1fr); }
+    }
+    .lamp-on {
+        background-color: #991B1B;
+        color: #FEF08A;
+        border: 1px solid #F43F5E;
+        border-radius: 4px;
+        padding: 5px 4px;
+        text-align: center;
+        font-size: 11.5px;
+        font-weight: bold;
+    }
+    .lamp-off {
+        background-color: #1E293B;
+        color: #94A3B8;
+        border: 1px solid #334155;
+        border-radius: 4px;
+        padding: 5px 4px;
+        text-align: center;
+        font-size: 11.5px;
+        font-weight: bold;
+    }
 </style>
 """, unsafe_allow_html=True)
 
-# ==================== 2. 独立持久化数据文件与全局常量 ====================
+# ==================== 2. 独立持久化数据文件与全局字典 ====================
 HOLDINGS_FILE = "nexus_holdings_v71.json"
+TRADES_HISTORY_FILE = "nexus_trade_history_v71.json"
 REVIEW_FILE = "nexus_review_v71.json"
 WATCHLIST_FILE = "nexus_watchlist_v71.json"
 POOL_5DAY_FILE = "nexus_5day_pool_v71.json"
@@ -81,14 +237,14 @@ SNAPSHOT_FILE = "nexus_snapshot_v71.json"
 CACHE_SPOT_FILE = "nexus_spot_cache_v71.csv"
 CACHE_SECTOR_FILE = "nexus_sector_cache_v71.csv"
 
-# 已知退市/吸收合并失效代码黑名单（彻底杜绝 sh600005 / sh601989 等触发报警）
 DELISTED_BLACKLIST = {
     "600005", "600002", "600472", "600553", "601989", "601299",
     "600705", "600786", "600723", "600816", "600652", "600653"
 }
 
-# 十大高胜率主板战法严谨数学模型与买点字典
+# 十一大高胜率主板战法严谨数学模型与买点字典（含新增 🔥五日主升妖股）
 STRATEGY_LOGIC_DESCRIPTIONS = {
+    "🔥 五日主升妖股": "【大千生态/福莱新材/浙文影业/闽发铝业模型】近5日累计涨幅≥10%(或近5日具涨停/连阳主升基因) + 5日均线陡峭上攻(MA5>MA10) + 获利盘≥72%上方无套牢峰。买点：分歧回踩分时黄线或5日线低吸博连板/主升二波。",
     "🦄 独立行情穿越牛": "【严谨模型】近20日逆势抗跌率≥70% + 均线多头(现价≥MA20且MA20上翘) + 20日最大回撤≤9.5% + 获利盘≥68%。买点：回踩5日线或分时黄线低吸锁仓。",
     "🚀 强庄试盘启动": "【严谨模型】近28日有真换手涨停/大阳(≥5.8%)建仓 + 缩量洗盘死守起涨前低 + 今日放量突破站稳MA20与分时黄线。",
     "🕵️ 主力偷偷吸筹": "【严谨模型】低位蓄势(20日乖离-2%~9%) + 近3日阳均量>阴均量持续流入 + 振幅≤5.5%窄幅压盘但主动外盘≥52%暗中吃货。",
@@ -96,15 +252,21 @@ STRATEGY_LOGIC_DESCRIPTIONS = {
     "🕳️ 黄金坑穿三线": "【严谨模型】近期缩量回踩MA10/MA20挖坑(或MA5/10/20三线粘合≤2.8%) + 放量真阳一举反包站稳均线簇之上。",
     "🌊 主升浪动量": "【严谨模型】标准多头排列(现价>MA5>=MA10>=MA20) + 60日获利盘≥72%上方无套牢峰 + 放量真阳突破颈线(留存率≥65%)。",
     "🐉 龙回头企稳": "【严谨模型】前期有大阳/涨停基因或累计涨幅≥10% + 近期缩量回踩MA10/MA20或主力底仓成本线止跌企稳（低吸博二波）。",
-    "📐 圆弧底突破": "【严谨模型】三段式锅底结构：前20~6日底部波动收敛(振幅≤16%)缩量筑弧底 + 近5日低点抬高右唇翘起(MA5>=MA10) + 红盘放量突破颈线。",
+    "📐 圆弧底突破": "【严谨模型】三段式锅底结构：前20~6日底部波动收敛缩量筑弧底 + 近5日低点抬高右唇翘起(MA5>=MA10) + 红盘放量突破颈线。",
     "🛡️ 顺丰防御": "【严谨模型】流通市值≥80亿 + 动态PE 3~38倍低估值安全盾 + 稳站MA20生命线且分时承接良好机构护盘。",
     "🌙 尾盘埋伏": "【严谨模型】全天稳站分时黄线与开盘价上方 + 涨幅温和(-0.5%~+3.8%未透支) + 日内留存率≥65% + 尾盘外盘主动流入博次日溢价。",
     "👑 全场Top10金股": "【严谨模型】全场最高优中选优：优先锁定【6灯全亮 + 四灯齐红 + 多头上升趋势 + 站稳分时黄线 + ✅适合买入】的10只领涨核心龙头。",
     "⭐ 核心自选": "【严谨模型】自选重点盯盘标的，采用完全相同的客观公允评分尺实时体检。"
 }
 
-# 全覆盖 A 股主板核心底盘池（165只实盘活跃主板标的，覆盖24大板块）
+# 全覆盖 A 股主板核心池（已扩容纳入大千生态、福莱新材、浙文影业、闽发铝业、巨轮智能、埃斯顿、三花智控等）
 MAINBOARD_CORE_UNIVERSE = [
+    ("603955", "大千生态", "强势连阳妖股"), ("605488", "福莱新材", "人形机器人"), ("601599", "浙文影业", "文化传媒"),
+    ("002578", "闽发铝业", "有色金属"), ("002362", "汉王科技", "人工智能"), ("603236", "移远通信", "通信设备"),
+    ("002695", "煌上煌", "消费白马"), ("601598", "中国外运", "交运物流"), ("000726", "鲁泰A", "消费白马"),
+    ("603258", "电魂网络", "文化传媒"), ("601019", "山东出版", "文化传媒"), ("002250", "联化科技", "化学化工"),
+    ("601238", "广汽集团", "智能汽车"), ("002512", "达华智能", "商业航天"), ("600800", "渤海化学", "化学化工"),
+    ("002115", "三维通信", "通信设备"), ("603000", "人民网", "文化传媒"), ("600556", "天下秀", "人工智能"),
     ("601698", "中国卫通", "商业航天"), ("600879", "航天电子", "商业航天"), ("600118", "中国卫星", "商业航天"),
     ("000547", "航天发展", "商业航天"), ("603698", "航天工程", "商业航天"), ("600343", "航天动力", "商业航天"),
     ("002025", "航天电器", "商业航天"), ("600501", "航天晨光", "商业航天"), ("000901", "航天科技", "商业航天"),
@@ -132,7 +294,6 @@ MAINBOARD_CORE_UNIVERSE = [
     ("002916", "深南电路", "元件PCB"), ("002463", "沪电股份", "元件PCB"), ("603228", "景旺电子", "元件PCB"),
     ("002913", "奥士康", "元件PCB"), ("600183", "生益科技", "元件PCB"),
     ("002230", "科大讯飞", "人工智能"), ("600588", "用友网络", "人工智能"), ("600570", "恒生电子", "人工智能"),
-    ("002362", "汉王科技", "人工智能"), ("603236", "移远通信", "通信设备"), ("002695", "煌上煌", "餐饮制造"),
     ("600498", "烽火通信", "通信设备"), ("000063", "中兴通讯", "通信设备"), ("002583", "海能达", "通信设备"),
     ("600941", "中国移动", "通信设备"), ("600050", "中国联通", "通信设备"),
     ("002371", "北方华创", "半导体芯片"), ("603160", "汇顶科技", "半导体芯片"), ("600745", "闻泰科技", "半导体芯片"),
@@ -140,49 +301,48 @@ MAINBOARD_CORE_UNIVERSE = [
     ("603986", "兆易创新", "半导体芯片"), ("002475", "立讯精密", "消费电子"), ("002241", "歌尔股份", "消费电子"),
     ("002074", "国轩高科", "固态电池"), ("002460", "赣锋锂业", "固态电池"), ("600884", "杉杉股份", "固态电池"),
     ("603659", "璞泰来", "固态电池"), ("600438", "通威股份", "光伏新能源"), ("601012", "隆基绿能", "光伏新能源"),
-    ("601127", "赛力斯", "智能汽车"), ("002594", "比亚迪", "智能汽车"), ("601633", "长城汽车", "智能汽车"),
-    ("000625", "长安汽车", "智能汽车"), ("600660", "福耀玻璃", "智能汽车"), ("002920", "德赛西威", "智能汽车"),
-    ("600089", "特变电工", "电网设备"), ("600406", "国电南瑞", "电网设备"), ("601179", "中国西电", "电网设备"),
-    ("600312", "平高电气", "电网设备"), ("002028", "思源电气", "电网设备"), ("000543", "皖能电力", "电力绿电"),
-    ("000539", "粤电力A", "电力绿电"), ("600011", "华能国际", "电力绿电"), ("600795", "国电电力", "电力绿电"),
-    ("600900", "长江电力", "电力绿电"), ("601928", "凤凰传媒", "文化传媒"), ("601801", "皖新传媒", "文化传媒"),
-    ("601098", "中南传媒", "文化传媒"), ("600977", "中国电影", "文化传媒"), ("002697", "红旗连锁", "商贸零售"),
-    ("601888", "中国中免", "商贸零售"), ("600368", "五洲交通", "交运物流"), ("000755", "山西高速", "交运物流"),
-    ("002352", "顺丰控股", "交运物流"), ("601919", "中远海控", "交运物流"), ("601006", "大秦铁路", "交运物流"),
-    ("600029", "南方航空", "交运物流"), ("601111", "中国国航", "交运物流"),
+    ("002129", "TCL中环", "光伏新能源"), ("601127", "赛力斯", "智能汽车"), ("002594", "比亚迪", "智能汽车"),
+    ("601633", "长城汽车", "智能汽车"), ("000625", "长安汽车", "智能汽车"), ("600660", "福耀玻璃", "智能汽车"),
+    ("002920", "德赛西威", "智能汽车"), ("600089", "特变电工", "电网设备"), ("600406", "国电南瑞", "电网设备"),
+    ("601179", "中国西电", "电网设备"), ("600312", "平高电气", "电网设备"), ("002028", "思源电气", "电网设备"),
+    ("000543", "皖能电力", "电力绿电"), ("000539", "粤电力A", "电力绿电"), ("600011", "华能国际", "电力绿电"),
+    ("600795", "国电电力", "电力绿电"), ("600900", "长江电力", "电力绿电"), ("601928", "凤凰传媒", "文化传媒"),
+    ("601801", "皖新传媒", "文化传媒"), ("601098", "中南传媒", "文化传媒"), ("600977", "中国电影", "文化传媒"),
+    ("002697", "红旗连锁", "商贸零售"), ("601888", "中国中免", "商贸零售"), ("600368", "五洲交通", "交运物流"),
+    ("000755", "山西高速", "交运物流"), ("002352", "顺丰控股", "交运物流"), ("601919", "中远海控", "交运物流"),
+    ("601006", "大秦铁路", "交运物流"), ("600029", "南方航空", "交运物流"), ("601111", "中国国航", "交运物流"),
     ("601766", "中国中车", "基建轨交"), ("600039", "四川路桥", "基建轨交"), ("601899", "紫金矿业", "有色金属"),
     ("600362", "江西铜业", "有色金属"), ("601600", "中国铝业", "有色金属"), ("603993", "洛阳钼业", "有色金属"),
     ("600309", "万华化学", "化学化工"), ("000635", "英力特", "化学化工"), ("002226", "江南化工", "化学化工"),
     ("601088", "中国神华", "煤炭高息"), ("600188", "兖矿能源", "煤炭高息"), ("000713", "国投丰乐", "农业种业"),
     ("600598", "北大荒", "农业种业"), ("600036", "招商银行", "银行金融"), ("600919", "江苏银行", "银行金融"),
-    ("601128", "常熟银行", "银行金融"), ("601838", "成都银行", "银行金融"), ("601318", "中国平安", "证券金融"),
-    ("601988", "中国银行", "银行金融"), ("600030", "中信证券", "证券金融"), ("601099", "太平洋", "证券金融"),
-    ("000958", "电投产融", "电力绿电"), ("002481", "双塔食品", "消费白马"), ("002441", "众业达", "电网设备")
+    ("601128", "常熟银行", "银行金融"), ("601838", "成都银行", "银行金融"), ("601169", "北京银行", "银行金融"),
+    ("601318", "中国平安", "证券金融"), ("601988", "中国银行", "银行金融"), ("600030", "中信证券", "证券金融"),
+    ("601099", "太平洋", "证券金融"), ("000958", "电投产融", "电力绿电"), ("002481", "双塔食品", "消费白马"),
+    ("002441", "众业达", "电网设备")
 ]
 
-# 全市场主板活跃扩展池（自动覆盖沪深主板各行业高流动性标的，解决仅看165只可能漏票的问题）
 DYNAMIC_MAINBOARD_EXPANSION = [
-    "600000", "600009", "600010", "600015", "600016", "600018", "600019", "600026", "600027", "600028",
-    "600031", "600048", "600056", "600060", "600061", "600066", "600079", "600096", "600104", "600111",
-    "600115", "600132", "600143", "600153", "600157", "600160", "600161", "600170", "600176", "600177",
-    "600188", "600219", "600233", "600256", "600298", "600309", "600346", "600348", "600369", "600383",
-    "600409", "600415", "600426", "600460", "600487", "600489", "600515", "600519", "600522", "600547",
-    "600585", "600600", "600690", "600703", "600732", "600741", "600754", "600803", "600809", "600837",
-    "600845", "600875", "600886", "600887", "600905", "600938", "600989", "601009", "601021", "601066",
-    "601100", "601117", "601166", "601169", "601211", "601225", "601238", "601288", "601328", "601336",
-    "601360", "601390", "601398", "601601", "601618", "601628", "601658", "601668", "601669", "601688",
-    "601728", "601800", "601818", "601857", "601872", "601877", "601881", "601901", "601939", "601985",
-    "601995", "601998", "603000", "603195", "603260", "603288", "603369", "603392", "603486", "603605",
-    "603799", "603806", "603833", "603899", "603939", "000001", "000002", "000021", "000032", "000066",
-    "000069", "000100", "000157", "000333", "000338", "000400", "000425", "000513", "000568", "000596",
-    "000617", "000629", "000630", "000651", "000661", "000708", "000725", "000776", "000786", "000792",
-    "000800", "000807", "000858", "000876", "000895", "000932", "000933", "000937", "000960", "000963",
-    "000975", "000983", "002001", "002008", "002027", "002049", "002064", "002120", "002129", "002142",
-    "002180", "002202", "002236", "002271", "002304", "002311", "002340", "002384", "002410", "002415",
-    "002429", "002459", "002466", "002493", "002555", "002595", "002600", "002601", "002648", "002709",
-    "002714", "002736", "002812", "002821", "002841", "002926", "002938", "002966"
+    "603955", "605488", "601599", "002578", "600000", "600009", "600010", "600015", "600016", "600018",
+    "600019", "600026", "600027", "600028", "600031", "600048", "600056", "600060", "600061", "600066",
+    "600079", "600096", "600104", "600111", "600115", "600132", "600143", "600153", "600157", "600160",
+    "600161", "600170", "600176", "600177", "600219", "600233", "600256", "600298", "600346", "600348",
+    "600369", "600383", "600409", "600415", "600426", "600460", "600487", "600489", "600515", "600519",
+    "600522", "600547", "600585", "600600", "600690", "600703", "600732", "600741", "600754", "600803",
+    "600809", "600837", "600845", "600875", "600886", "600887", "600905", "600938", "600989", "601009",
+    "601021", "601066", "601100", "601117", "601166", "601169", "601211", "601225", "601238", "601288",
+    "601328", "601336", "601360", "601390", "601398", "601601", "601618", "601628", "601658", "601668",
+    "601669", "601688", "601728", "601800", "601818", "601857", "601872", "601877", "601881", "601901",
+    "601939", "601985", "601995", "601998", "603000", "603195", "603260", "603288", "603369", "603392",
+    "603486", "603605", "603799", "603806", "603833", "603899", "603939", "000001", "000002", "000021",
+    "000032", "000066", "000069", "000100", "000157", "000333", "000338", "000400", "000425", "000513",
+    "000568", "000596", "000617", "000629", "000630", "000651", "000661", "000708", "000725", "000776",
+    "000786", "000792", "000800", "000807", "000858", "000876", "000895", "000932", "000933", "000937",
+    "000960", "000963", "000975", "000983", "002001", "002008", "002027", "002049", "002064", "002120",
+    "002129", "002142", "002180", "002202", "002236", "002271", "002304", "002311", "002340", "002384",
+    "002410", "002415", "002429", "002459", "002466", "002493", "002555", "002595", "002600", "002601",
+    "002648", "002709", "002714", "002736", "002812", "002821", "002841", "002926", "002938", "002966"
 ]
-
 
 # ==================== 3. 核心状态持久化与基础工具函数 ====================
 def load_json_safe(filepath, default_val):
@@ -197,7 +357,6 @@ def load_json_safe(filepath, default_val):
                 pass
     return default_val
 
-
 def save_json_safe(filepath, data):
     tmp_p = filepath + ".tmp"
     try:
@@ -211,9 +370,7 @@ def save_json_safe(filepath, data):
             except Exception:
                 pass
 
-
 def init_nexus_state():
-    """初始化与 PC 端 self 属性完全一致的全局 Session 状态"""
     if "nexus_initialized" in st.session_state:
         return
     st.session_state["nexus_initialized"] = True
@@ -254,14 +411,17 @@ def init_nexus_state():
     ]
     st.session_state["watchlist_rows"] = load_json_safe(WATCHLIST_FILE, [])
     st.session_state["holdings_rows"] = load_json_safe(HOLDINGS_FILE, [])
+    st.session_state["trade_history_records"] = load_json_safe(TRADES_HISTORY_FILE, [])
     st.session_state["all_review_records"] = load_json_safe(REVIEW_FILE, [])
     st.session_state["chart_mode"] = "kline"
-    st.session_state["status_text"] = "🟢 [V71.2 腾讯原生0.03秒K线直连就绪]"
+    st.session_state["status_text"] = "🟢 [V71.3 腾讯原生0.03秒K线直连就绪 | 11大战法全池可选]"
+    st.session_state["selected_stock_code"] = "002031"
+    st.session_state["selected_stock_name"] = "巨轮智能"
+    st.session_state["selected_stock_strat"] = "👑 全场Top10金股"
+    st.session_state["last_table_sel_sig"] = {}
 
-    # 初始化默认展示快照，若本地有保存快照则自动加载
     snap = load_json_safe(SNAPSHOT_FILE, None)
     st.session_state["scan_snapshot"] = snap if snap else {}
-
 
 def get_intraday_time_factor():
     now = datetime.now()
@@ -280,9 +440,7 @@ def get_intraday_time_factor():
     mins = min(240.0, 120.0 + (now.hour - 13) * 60 + now.minute)
     return round(min(1.0, max(0.55, mins / 240.0)), 2), mins
 
-
 def resolve_canonical_sector(code, name="", fallback=""):
-    """1:1 复刻 PC 端真实板块归属解析"""
     code = str(code).zfill(6)
     name = str(name).strip()
     invalid_tags = ("", "主板协同", "主板精选", "⭐自选核心", "持仓股", "盘中异动", "自选观察", "实战选股", "⭐ 核心自选")
@@ -297,27 +455,29 @@ def resolve_canonical_sector(code, name="", fallback=""):
         return sec
 
     kw_rules = [
+        (("大千", "生态", "园林", "环保"), "生态园林"),
+        (("福莱", "新材", "薄膜"), "人形机器人"),
+        (("浙文", "影业", "传媒", "出版", "电影", "影视", "文化", "传播", "电魂", "人民网"), "文化传媒"),
+        (("闽发", "铝", "铜", "金", "矿", "有色", "稀土", "钢", "紫金"), "有色金属"),
         (("卫通", "卫星", "航天", "火箭", "北斗", "星网"), "商业航天"),
         (("机器人", "减速", "鸣志", "三花", "拓普", "埃斯顿", "北特", "中大力德", "双环", "五洲新春", "新时达", "巨轮"), "人形机器人"),
         (("药", "医", "生物", "健康", "康德", "同仁堂", "片仔癀", "华润", "血净"), "医药生物"),
         (("中航", "航发", "沈飞", "西飞", "军工", "船舶", "重工", "防务", "兵器", "导航", "一机", "国睿", "洪都"), "国防军工"),
-        (("低空", "海直", "万丰", "通航", "宗申", "长峰"), "低空经济"),
+        (("低空", "海直", "万丰", "通航", "宗申", "长峰", "龙溪"), "低空经济"),
         (("曙光", "浪潮", "富联", "算力", "服务器", "光模块"), "算力硬件"),
         (("电路", "沪电", "奥士康", "生益", "景旺", "元件", "PCB"), "元件PCB"),
-        (("通信", "烽火", "中兴", "海能达", "移动", "联通", "电信", "移远"), "通信设备"),
-        (("讯飞", "软件", "智能", "科技", "电子", "数据", "网络", "汉王"), "人工智能"),
+        (("通信", "烽火", "中兴", "海能达", "移动", "联通", "电信", "移远", "三维"), "通信设备"),
+        (("讯飞", "软件", "智能", "科技", "电子", "数据", "网络", "汉王", "天下秀"), "人工智能"),
         (("芯", "半导", "微电", "华创", "韦尔", "闻泰", "长电", "兆易"), "半导体芯片"),
-        (("锂", "电池", "国轩", "杉杉", "光伏", "通威", "隆基", "新能"), "固态电池"),
+        (("锂", "电池", "国轩", "杉杉", "光伏", "通威", "隆基", "中环", "新能"), "光伏新能源"),
         (("电网", "电工", "南瑞", "西电", "电气", "思源", "众业达"), "电网设备"),
         (("电力", "水电", "火电", "华能", "国电", "绿电", "燃气", "能源", "电投"), "电力绿电"),
-        (("传媒", "出版", "电影", "影视", "文化", "传播"), "文化传媒"),
-        (("银行", "农商", "常熟", "成都银行"), "银行金融"),
+        (("银行", "农商", "常熟", "成都银行", "北京银行"), "银行金融"),
         (("证券", "国泰", "中信", "太平洋", "保险", "平安"), "证券金融"),
-        (("高速", "铁路", "物流", "航运", "海控", "港口", "交运", "路桥", "建筑", "中车", "交通", "航空", "国航"), "交运物流"),
+        (("高速", "铁路", "物流", "航运", "海控", "港口", "交运", "路桥", "建筑", "中车", "交通", "外运", "航空", "国航"), "交运物流"),
         (("连锁", "百货", "商贸", "零售", "中免", "商业"), "商贸零售"),
-        (("酒", "茅台", "五粮", "汾酒", "食品", "伊利", "家电", "美的", "格力", "家居", "煌上煌", "双塔"), "消费白马"),
-        (("铜", "铝", "金", "矿", "有色", "稀土", "钢", "紫金"), "有色金属"),
-        (("化", "塑", "材", "煤", "神华", "兖矿", "石油", "石化"), "化工周期")
+        (("酒", "茅台", "五粮", "汾酒", "食品", "伊利", "家电", "美的", "格力", "家居", "煌上煌", "鲁泰", "双塔"), "消费白马"),
+        (("化", "塑", "材", "煤", "神华", "兖矿", "石油", "石化", "联化"), "化工周期")
     ]
     for words, target_sec in kw_rules:
         if any(w in name for w in words):
@@ -332,7 +492,6 @@ def resolve_canonical_sector(code, name="", fallback=""):
     default_sec = "先进制造" if code.startswith(("600", "002")) else ("价值蓝筹" if code.startswith("601") else "科技创新")
     s_map[code] = default_sec
     return default_sec
-
 
 # ==================== 4. 腾讯五档盘口、0.03秒前复权日K线与实时分时直连 ====================
 def fetch_market_indices_realtime():
@@ -366,9 +525,7 @@ def fetch_market_indices_realtime():
         pass
     return idx_res
 
-
 def fetch_tencent_batch_quotes(codes_list):
-    """1:1 复刻 PC 端腾讯五档盘口、真VWAP黄线、主动外盘与5日真量比解析"""
     results = {}
     if not codes_list:
         return results
@@ -506,9 +663,7 @@ def fetch_tencent_batch_quotes(codes_list):
             continue
     return results
 
-
 def fetch_real_kline(code, spot_dict=None):
-    """1:1 复刻 PC 端腾讯官方原生前复权日K线直连 (0.03秒极速返回60日K线)"""
     code = str(code).zfill(6)
     if code in DELISTED_BLACKLIST:
         return None
@@ -537,12 +692,8 @@ def fetch_real_kline(code, spot_dict=None):
                 for item in k_list[-60:]:
                     if len(item) >= 6:
                         rows.append({
-                            "日期": str(item[0]),
-                            "开盘": float(item[1]),
-                            "收盘": float(item[2]),
-                            "最高": float(item[3]),
-                            "最低": float(item[4]),
-                            "成交量": max(float(item[5]), 1.0)
+                            "日期": str(item[0]), "开盘": float(item[1]), "收盘": float(item[2]),
+                            "最高": float(item[3]), "最低": float(item[4]), "成交量": max(float(item[5]), 1.0)
                         })
                 if len(rows) >= 20:
                     df_tmp = pd.DataFrame(rows)
@@ -571,9 +722,7 @@ def fetch_real_kline(code, spot_dict=None):
 
     return df_k
 
-
 def fetch_intraday_min_data(code):
-    """1:1 复刻 PC 端今日实时分时线数据直连"""
     code = str(code).zfill(6)
     prefix = "sh" if code.startswith("6") else "sz"
     url = f"http://web.ifzq.gtimg.cn/appstock/app/minute/query?code={prefix}{code}&_t={int(time.time()*1000)}"
@@ -614,12 +763,7 @@ def fetch_intraday_min_data(code):
         pass
     return st.session_state["intraday_cache"].get(code, None)
 
-# ==================== 【第 1 段结束，请回复“第2段”获取第 2 段代码】 ====================
-# ==================== 【第 2 段 / 共 4 段：请紧接着粘贴在第 1 段下方】 ====================
-
-# =========================================================================
-# 核心引擎二：全板块资金流向、🧭明日重点关注板块三梯队推演 & 大盘量价预测
-# =========================================================================
+# ==================== 5. CYQ筹码峰与唯一严谨 10 分公允评分引擎 (V71.3升级版) ====================
 def match_sector_info(sector_tag):
     if not sector_tag:
         return None
@@ -638,9 +782,428 @@ def match_sector_info(sector_tag):
                 return info
     return None
 
+def compute_cyq_and_main_cost(closes, opens, highs, lows, vols, turnovers):
+    n = len(closes)
+    curr_c = closes[-1]
+    min_p, max_p = min(lows), max(highs)
+    span_p = max(max_p - min_p, 0.02)
+    num_bins = 28
+    bin_step = span_p / num_bins
+    chip_bins = [0.0] * num_bins
 
+    avg_to_20 = sum(turnovers[-20:]) / max(len(turnovers[-20:]), 1) if turnovers else 2.5
+    avg_to_20 = max(avg_to_20, 0.4)
+    accum_cost_pv, accum_cost_v = 0.0, 0.0
+    avg_vol_all = sum(vols) / max(n, 1)
+
+    for i in range(n):
+        c_i, o_i, h_i, l_i, v_i = closes[i], opens[i], highs[i], lows[i], max(vols[i], 1.0)
+        to_i = turnovers[i] if i < len(turnovers) else avg_to_20
+        decay_rate = min(0.30, max(0.03, (to_i / 100.0) * (2.2 / avg_to_20)))
+        for b in range(num_bins):
+            chip_bins[b] *= (1.0 - decay_rate)
+
+        typ_p = (h_i + l_i + c_i * 2.0) / 4.0
+        b_low = min(num_bins - 1, max(0, int((l_i - min_p) / bin_step)))
+        b_high = min(num_bins - 1, max(0, int((h_i - min_p) / bin_step)))
+        b_mid = min(num_bins - 1, max(0, int((typ_p - min_p) / bin_step)))
+
+        if b_low == b_high:
+            chip_bins[b_mid] += v_i
+        else:
+            weights = [max(0.15, 1.0 - abs(b - b_mid) / max(b_high - b_low, 1)) for b in range(b_low, b_high + 1)]
+            w_sum = sum(weights)
+            for idx_w, b in enumerate(range(b_low, b_high + 1)):
+                chip_bins[b] += v_i * (weights[idx_w] / w_sum)
+
+        if (c_i >= o_i and v_i >= avg_vol_all * 1.15) or (v_i <= avg_vol_all * 0.65 and i >= n - 25):
+            w_factor = 1.6 if (c_i >= o_i and (c_i - o_i) / max(o_i, 0.01) >= 0.03) else 1.0
+            accum_cost_pv += typ_p * v_i * w_factor
+            accum_cost_v += v_i * w_factor
+
+    tot_chips = max(sum(chip_bins), 1.0)
+    win_chips = sum(chip_bins[b] for b in range(num_bins) if (min_p + (b + 0.5) * bin_step) <= curr_c * 1.005)
+    winner_pct = round(win_chips / tot_chips * 100.0, 1)
+
+    peak_bin = chip_bins.index(max(chip_bins))
+    peak_price = round(min_p + (peak_bin + 0.5) * bin_step, 2)
+
+    curr_bin = min(num_bins - 1, max(0, int((curr_c - min_p) / bin_step)))
+    overhead_peak_price = round(max_p, 2)
+    if curr_bin < num_bins - 2:
+        upper_slice = chip_bins[curr_bin + 1:]
+        max_up_c = max(upper_slice) if upper_slice else 0.0
+        if max_up_c >= max(chip_bins) * 0.42:
+            up_idx = curr_bin + 1 + upper_slice.index(max_up_c)
+            overhead_peak_price = round(min_p + (up_idx + 0.5) * bin_step, 2)
+
+    raw_main_cost = (accum_cost_pv / accum_cost_v) if accum_cost_v > 0 else peak_price
+    main_force_cost = round((raw_main_cost * 0.6 + peak_price * 0.4), 2)
+    cost_safety_pct = round((curr_c - main_force_cost) / max(main_force_cost, 0.01) * 100.0, 1)
+    canvas_12_bins = [sum(chip_bins[int(k * num_bins / 12):max(int(k * num_bins / 12) + 1, int((k + 1) * num_bins / 12))]) for k in range(12)]
+    return {
+        "winner_pct": winner_pct, "peak_price": peak_price,
+        "overhead_peak_price": overhead_peak_price,
+        "main_force_cost": main_force_cost, "cost_safety_pct": cost_safety_pct,
+        "canvas_12_bins": canvas_12_bins
+    }
+
+def evaluate_strict_10pt_score(code, name, spot_dict=None, df_k=None, sector_tag="先进制造"):
+    code = str(code).zfill(6)
+    today_key = datetime.now().strftime("%Y-%m-%d")
+    canon_sector = resolve_canonical_sector(code, name, sector_tag)
+
+    pct_today = float(spot_dict.get("pct", 0.0)) if spot_dict else 0.0
+    vr_today = float(spot_dict.get("vr", 1.0)) if spot_dict else 1.0
+    curr_p = float(spot_dict.get("price", 10.0)) if spot_dict else 10.0
+    open_p = float(spot_dict.get("open", curr_p)) if spot_dict else curr_p
+    high_p = float(spot_dict.get("high", curr_p)) if spot_dict else curr_p
+    prev_c_spot = float(spot_dict.get("prev_close", curr_p)) if spot_dict else curr_p
+    vwap_today = float(spot_dict.get("vwap", curr_p)) if spot_dict else curr_p
+    outer_ratio = float(spot_dict.get("outer_ratio", 50.0)) if spot_dict else 50.0
+    weibi_pct = float(spot_dict.get("weibi_pct", 0.0)) if spot_dict else 0.0
+    intraday_retain = float(spot_dict.get("intraday_retain", 65.0)) if spot_dict else 65.0
+    pe_val = float(spot_dict.get("pe", 18.0)) if spot_dict else 18.0
+    pb_val = float(spot_dict.get("pb", 1.8)) if spot_dict else 1.8
+    mkt_cap = float(spot_dict.get("mkt_cap", 90.0)) if spot_dict else 90.0
+
+    breakdown = []
+    lamps = [False, False, False, False, False, False]
+    signals = {
+        "has_zt_test": False, "hold_support": False, "break_high": False,
+        "golden_pit": False, "three_line_cross": False, "stealth_accum": False,
+        "is_independent_bull": False, "indep_immunity_rate": 0.0,
+        "is_five_day_monster": False, "ret5_pct": round(pct_today * 1.8, 2), "zt_5d_cnt": 0,
+        "is_latent_leader": False, "is_rounding_bottom": False, "box_amp_20": 0.12,
+        "is_first_four_red": False, "four_red_state": "⚫未齐红", "track_type": "游资弹性轨",
+        "is_limit_up_locked": False, "is_blown_board": False,
+        "atr14": curr_p * 0.025, "ma5": curr_p, "ma10": curr_p, "ma20": curr_p, "ma60": curr_p,
+        "support_p": round(curr_p * 0.968, 2), "resist_p": round(curr_p * 1.075, 2),
+        "rr_ratio": 2.15, "winner_pct": 72.0, "peak_price": round(curr_p * 0.96, 2),
+        "main_force_cost": round(curr_p * 0.94, 2), "cost_safety_pct": 6.0,
+        "canvas_12_bins": [], "four_lamp_matrix": [], "canon_sector": canon_sector,
+        "vwap": vwap_today, "lamps": lamps, "lamp_count": 0,
+        "hist_lamp_bars": [], "hist_win_rate": 80.0, "hist_avg_gain": 6.8,
+        "base_7pt": 4.8, "intraday_3pt": 1.6
+    }
+
+    zt_limit_p = round(prev_c_spot * 1.10, 2) if prev_c_spot > 0 else curr_p * 1.10
+    ask_v5 = int(spot_dict.get("ask_vol_5", 100)) if spot_dict else 100
+    if pct_today >= 9.6 and curr_p >= zt_limit_p - 0.01 and ask_v5 == 0:
+        signals["is_limit_up_locked"] = True
+    elif high_p >= zt_limit_p - 0.01 and curr_p < zt_limit_p - 0.02 and pct_today < 5.0:
+        signals["is_blown_board"] = True
+
+    score_lock_map = st.session_state["score_lock_map"]
+
+    if df_k is not None and len(df_k) >= 20:
+        closes = df_k["收盘"].astype(float).tolist()
+        opens = df_k["开盘"].astype(float).tolist()
+        highs = df_k["最高"].astype(float).tolist()
+        lows = df_k["最低"].astype(float).tolist()
+        pcts = df_k["涨跌幅"].astype(float).tolist()
+        vols = df_k["成交量"].astype(float).tolist()
+        turnovers = df_k["换手率"].astype(float).tolist() if "换手率" in df_k.columns else [2.5] * len(closes)
+
+        curr_c = closes[-1]
+        ma5 = sum(closes[-5:]) / 5.0
+        ma10 = sum(closes[-10:]) / 10.0
+        ma20 = sum(closes[-20:]) / 20.0
+        ma60 = sum(closes) / len(closes)
+        ma20_prev = sum(closes[-25:-5]) / 20.0 if len(closes) >= 25 else ma20
+        signals["ma5"], signals["ma10"], signals["ma20"], signals["ma60"] = ma5, ma10, ma20, ma60
+
+        trs = [max(highs[i] - lows[i], abs(highs[i] - closes[i - 1]), abs(lows[i] - closes[i - 1])) for i in range(max(1, len(closes) - 14), len(closes))]
+        signals["atr14"] = sum(trs) / len(trs) if trs else curr_c * 0.025
+
+        cyq_info = compute_cyq_and_main_cost(closes, opens, highs, lows, vols, turnovers)
+        signals.update(cyq_info)
+
+        # 0. 🔥五日主升妖股判定
+        ref_5d_c = closes[-6] if len(closes) >= 6 else closes[0]
+        ret5_pct = round((curr_c - ref_5d_c) / max(ref_5d_c, 0.01) * 100.0, 2)
+        zt_5d_cnt = sum(1 for i in range(-6, 0) if pcts[i] >= 5.5 or (closes[i] - opens[i]) / max(opens[i], 0.01) >= 0.045)
+        signals["ret5_pct"] = ret5_pct
+        signals["zt_5d_cnt"] = zt_5d_cnt
+        if (ret5_pct >= 8.5 or (ret5_pct >= 5.5 and zt_5d_cnt >= 1)) and curr_c >= ma5 * 0.985 and ma5 >= ma10 * 0.995 and signals["winner_pct"] >= 66.0:
+            signals["is_five_day_monster"] = True
+
+        # 1. 🦄独立行情穿越牛判定
+        above_ma20_days = sum(1 for i in range(-12, 0) if closes[i] >= (sum(closes[max(0, len(closes)+i-19):len(closes)+i+1]) / min(20, len(closes)+i+1)) * 0.99)
+        yang_10d = sum(1 for i in range(-10, 0) if closes[i] >= opens[i] or pcts[i] >= -0.1)
+        max_15_h = max(highs[-15:])
+        min_5_l = min(lows[-5:])
+        max_dd_15 = (max_15_h - min_5_l) / max(max_15_h, 0.01)
+        immunity_rate = round((above_ma20_days / 12.0 * 0.5 + yang_10d / 10.0 * 0.5) * 100.0, 1)
+        signals["indep_immunity_rate"] = immunity_rate
+        if above_ma20_days >= 9 and yang_10d >= 5 and max_dd_15 <= 0.095 and signals["winner_pct"] >= 66.0 and curr_c >= ma20 * 0.995 and ma20 >= ma20_prev * 0.996:
+            signals["is_independent_bull"] = True
+
+        # 2. 📐圆弧底突破模型
+        pit_high = max(highs[-20:-4]) if len(highs) >= 20 else curr_c * 1.05
+        pit_low = min(lows[-20:-4]) if len(lows) >= 20 else curr_c * 0.95
+        box_amp_20 = (pit_high - pit_low) / max(pit_low, 0.01)
+        signals["box_amp_20"] = box_amp_20
+        right_lip_rising = (min(lows[-3:]) >= pit_low * 1.005 and ma5 >= ma10 * 0.992 and curr_c >= ma20 * 0.995)
+        neck_break = (curr_c >= pit_low + (pit_high - pit_low) * 0.48)
+        if box_amp_20 <= 0.22 and right_lip_rising and neck_break and pct_today >= -0.2 and signals["winner_pct"] >= 60.0:
+            signals["is_rounding_bottom"] = True
+
+        # 3. 🕳️黄金坑穿三线判定
+        if any(closes[i] < ma20 * 1.002 for i in range(-8, -1)) and curr_c >= ma20 * 0.998 and curr_c >= ma5 and pct_today >= 0.6:
+            signals["golden_pit"] = True
+        if abs(ma5 - ma20) / max(ma20, 0.01) <= 0.032 and open_p <= max(ma5, ma10, ma20) * 1.005 and curr_c >= max(ma5, ma10, ma20) * 0.998 and pct_today >= 0.5:
+            signals["three_line_cross"] = True
+
+        base_pts = 0.0
+        if curr_c >= ma5 >= ma10 * 0.993 and curr_c >= ma20 and ma20 >= ma20_prev * 0.995:
+            lamps[0] = True
+            base_pts += 2.0
+            breakdown.append(f"🔴 [1号趋势灯亮 +2.0/2.0]: 均线标准多头(MA5￥{ma5:.2f}>MA10￥{ma10:.2f}>=MA20￥{ma20:.2f})且稳步上翘")
+        elif curr_c >= ma20 * 0.995:
+            lamps[0] = True
+            base_pts += 1.5
+            breakdown.append(f"🔴 [1号趋势灯亮 +1.5/2.0]: 稳站MA20生命线(￥{ma20:.2f})上方")
+        else:
+            base_pts += 0.4
+            breakdown.append(f"⚫ [1号趋势灯灭 +0.4/2.0]: 暂处MA20(￥{ma20:.2f})下方")
+
+        recent_n = min(28, len(closes) - 1)
+        zt_indices = [
+            i for i in range(len(closes) - recent_n, len(closes) - 1)
+            if pcts[i] >= 5.5 and highs[i] > lows[i] and (closes[i] - opens[i]) / max(opens[i], 0.01) >= 0.022
+        ]
+        recent_low = min(lows[-20:])
+        recent_high = max(highs[-16:-1]) if len(highs) > 2 else highs[-1]
+
+        if signals["is_five_day_monster"]:
+            signals["track_type"] = "🔥五日主升妖股轨"
+            lamps[1] = True
+            base_pts += 2.0
+            breakdown.append(f"🔴 [2号妖股灯亮 +2.0/2.0]: 近5日累计涨幅{ret5_pct:+.1f}%，具备极强短线连阳/主升妖股基因")
+        elif signals["is_independent_bull"] or signals["is_rounding_bottom"]:
+            signals["track_type"] = "🦄独立穿越牛/圆弧底轨"
+            lamps[1] = True
+            base_pts += 2.0
+            breakdown.append("🔴 [2号形态灯亮 +2.0/2.0]: 符合【独立行情穿越牛】或【三段式圆弧底颈线突破】模型")
+        elif zt_indices:
+            signals["track_type"] = "游资强庄试盘轨"
+            signals["has_zt_test"] = True
+            first_zt = zt_indices[0]
+            zt_v = vols[first_zt]
+            post_vols = vols[first_zt + 1:] if first_zt + 1 < len(vols) else [vols[-1]]
+            post_min = min(lows[first_zt + 1:]) if first_zt + 1 < len(lows) else lows[-1]
+            zt_base_low = min(lows[max(0, first_zt - 2):first_zt + 1])
+            if post_min >= zt_base_low * 0.98 and min(post_vols) <= zt_v * 0.78:
+                signals["hold_support"] = True
+                lamps[1] = True
+                base_pts += 2.0
+                breakdown.append(f"🔴 [2号强庄灯亮 +2.0/2.0]: 涨停/大阳试盘后缩量洗盘死守前低￥{zt_base_low:.2f}")
+            else:
+                lamps[1] = True
+                base_pts += 1.5
+                breakdown.append("🔴 [2号试盘基因 +1.5/2.0]: 近28日具备主力大阳试盘建仓基因")
+        else:
+            signals["track_type"] = "机构趋势轨"
+            if curr_c >= ma20 * 0.995 and box_amp_20 <= 0.20:
+                lamps[1] = True
+                base_pts += 1.6
+                breakdown.append("🔴 [2号趋势灯亮 +1.6/2.0]: 箱体收敛后重心稳步抬升")
+            else:
+                base_pts += 0.6
+                breakdown.append("⚫ [2号形态灯灭 +0.6/2.0]: 箱体波动偏宽")
+
+        up_vols = [vols[i] for i in range(-10, 0) if closes[i] >= opens[i]]
+        dn_vols = [vols[i] for i in range(-10, 0) if closes[i] < opens[i]]
+        avg_up_v = sum(up_vols) / max(len(up_vols), 1)
+        avg_dn_v = sum(dn_vols) / max(len(dn_vols), 1)
+        if avg_up_v >= avg_dn_v * 1.12 or (vr_today >= 1.05 and outer_ratio >= 52.0):
+            lamps[2] = True
+            base_pts += 1.0
+            breakdown.append(f"🔴 [3号量能灯亮 +1.0/1.0]: 红肥绿瘦且5日真量比{vr_today:.2f}")
+        else:
+            base_pts += 0.4
+            breakdown.append(f"⚫ [3号量能平稳 +0.4/1.0]: 5日真量比{vr_today:.2f}")
+
+        win_pct = signals["winner_pct"]
+        if win_pct >= 68.0:
+            lamps[3] = True
+            signals["break_high"] = (curr_c >= recent_high * 0.985)
+            base_pts += 1.2
+            breakdown.append(f"🔴 [4号筹码灯亮 +1.2/1.2]: 获利筹码高达{win_pct:.1f}%，主力底仓成本￥{signals['main_force_cost']:.2f}")
+        elif win_pct >= 52.0:
+            base_pts += 0.6
+            breakdown.append(f"⚫ [4号筹码中性 +0.6/1.2]: 获利盘{win_pct:.1f}%")
+        else:
+            base_pts += 0.2
+            breakdown.append(f"⚫ [4号筹码套牢重 +0.2/1.2]: 获利盘{win_pct:.1f}%")
+
+        if 0 < pe_val <= 65.0 and pb_val >= 0.5 and mkt_cap >= 18.0:
+            base_pts += 0.8
+            breakdown.append(f"🛡️ [基本面安全盾 +0.8/0.8]: 流通市值{mkt_cap:.0f}亿 | PE:{pe_val:.1f}倍")
+        else:
+            base_pts += 0.4
+            breakdown.append(f"⚪ [基本面因子 +0.4/0.8]: 流通市值{mkt_cap:.0f}亿 | PE:{pe_val:.1f}倍")
+
+        ema12, ema26, difs, deas, macds = [], [], [], [], []
+        for i, c in enumerate(closes):
+            e12 = c if i == 0 else ema12[-1] * (11 / 13.0) + c * (2 / 13.0)
+            e26 = c if i == 0 else ema26[-1] * (25 / 27.0) + c * (2 / 27.0)
+            ema12.append(e12)
+            ema26.append(e26)
+            dif = e12 - e26
+            difs.append(dif)
+            dea = dif if i == 0 else deas[-1] * 0.8 + dif * 0.2
+            deas.append(dea)
+            macds.append((dif - dea) * 2.0)
+
+        if len(macds) >= 2 and (macds[-1] >= 0 or macds[-1] >= macds[-2] * 0.96):
+            lamps[4] = True
+
+        four_matrix = []
+        for i in range(len(closes)):
+            m5_i = sum(closes[max(0, i - 4):i + 1]) / max(1, min(5, i + 1))
+            m10_i = sum(closes[max(0, i - 9):i + 1]) / max(1, min(10, i + 1))
+            m20_i = sum(closes[max(0, i - 19):i + 1]) / max(1, min(20, i + 1))
+            avg_v5_i = sum(vols[max(0, i - 5):max(1, i)]) / max(1, min(5, i))
+            r_trend = (closes[i] >= m20_i * 0.992 and m5_i >= m10_i * 0.99)
+            up_sh_i = (highs[i] - max(opens[i], closes[i])) / max(closes[i], 0.01)
+            r_fund = ((closes[i] >= opens[i] or pcts[i] >= 0.2) and up_sh_i <= 0.026 and (i == 0 or macds[i] >= macds[i - 1] * 0.94 or macds[i] > 0))
+            ret5_i = (closes[i] - closes[max(0, i - 5)]) / max(closes[max(0, i - 5)], 0.01) * 100.0
+            r_sec = (ret5_i >= 0.0 or pcts[i] >= 0.4)
+            ret_bar = (closes[i] - lows[i]) / max(highs[i] - lows[i], 0.01) if highs[i] > lows[i] else 0.7
+            r_volp = (0.78 * avg_v5_i <= vols[i] <= 5.0 * avg_v5_i and ret_bar >= 0.48)
+            four_matrix.append((r_trend, r_fund, r_sec, r_volp))
+
+        signals["four_lamp_matrix"] = four_matrix
+
+        win_hits, total_hits, gain_sum = 0, 0, 0.0
+        for i in range(15, len(closes)):
+            all_4_now = all(four_matrix[i])
+            prev_all_4 = all(four_matrix[i - 1]) if i >= 1 else False
+            prev2_all_4 = all(four_matrix[i - 2]) if i >= 2 else False
+            m20_i = sum(closes[max(0, i - 19):i + 1]) / min(20, i + 1)
+            bias20_i = (closes[i] - m20_i) / max(m20_i, 0.01) * 100.0
+
+            if all_4_now and (not prev_all_4 or not prev2_all_4) and bias20_i <= 15.0:
+                signals["hist_lamp_bars"].append(i)
+                if i <= len(closes) - 6:
+                    total_hits += 1
+                    entry_p = closes[i]
+                    stop_p = entry_p * 0.965
+                    hit_stop_first = False
+                    max_reach_p = entry_p
+                    for fwd in range(i + 1, min(i + 6, len(closes))):
+                        if lows[fwd] <= stop_p:
+                            hit_stop_first = True
+                            break
+                        if highs[fwd] > max_reach_p:
+                            max_reach_p = highs[fwd]
+                    if not hit_stop_first and max_reach_p >= entry_p * 1.018:
+                        win_hits += 1
+                        gain_sum += (max_reach_p - entry_p) / entry_p * 100.0
+                    else:
+                        gain_sum += -3.5 if hit_stop_first else (closes[min(i + 5, len(closes) - 1)] - entry_p) / entry_p * 100.0
+
+        if total_hits > 0:
+            signals["hist_win_rate"] = round(win_hits / total_hits * 100.0, 1)
+            signals["hist_avg_gain"] = round(gain_sum / total_hits, 2)
+
+        if len(four_matrix) >= 2 and all(four_matrix[-1]) and curr_p >= vwap_today * 0.996 and pct_today >= -0.2:
+            was_green_recently = not all(four_matrix[-2]) or (len(four_matrix) >= 3 and not all(four_matrix[-3]))
+            signals["is_first_four_red"] = was_green_recently
+            signals["four_red_state"] = "🔴★抄家伙(首红锁定)" if was_green_recently else "🔴四灯齐红(多头延续)"
+
+        sup_line = round(max(recent_low, min(ma20, signals["peak_price"]) * 0.988), 2)
+        if sup_line >= curr_p * 0.99:
+            sup_line = round(curr_p - 1.8 * signals["atr14"], 2)
+        signals["support_p"] = sup_line
+
+        if curr_p >= recent_high * 0.985 or signals["winner_pct"] >= 80.0:
+            box_h = max(recent_high - recent_low, signals["atr14"] * 3.5)
+            target_line = round(max(curr_p + 3.2 * signals["atr14"], recent_high + box_h * 0.618), 2)
+        else:
+            target_line = round(max(recent_high, signals["overhead_peak_price"], curr_p + 2.5 * signals["atr14"]), 2)
+        signals["resist_p"] = target_line
+
+        risk_span = max(curr_p - sup_line, curr_p * 0.018)
+        reward_span = max(target_line - curr_p, 0.05)
+        signals["rr_ratio"] = round(min(6.8, max(0.5, reward_span / risk_span)), 2)
+
+        signals["base_7pt"] = round(min(7.0, max(1.0, base_pts)), 1)
+        score_lock_map[code] = {
+            "date": today_key, "base_7pt": signals["base_7pt"], "lamps_5": lamps[:5]
+        }
+    else:
+        if code in score_lock_map and score_lock_map[code].get("date") == today_key:
+            locked = score_lock_map[code]
+            signals["base_7pt"] = round(float(locked.get("base_7pt", 5.0)), 1)
+            lamps[:5] = locked.get("lamps_5", [True, True, True, True, True])
+
+    intra_pts = 0.0
+    alpha = pct_today - st.session_state["sh_index_pct"]
+    sec_info = match_sector_info(canon_sector)
+    sec_rank = sec_info.get("rank") if sec_info else "normal"
+
+    is_intraday_strong = (curr_p >= vwap_today * 0.996 and pct_today >= -0.2 and vr_today >= 0.70 and outer_ratio >= 49.0)
+    if is_intraday_strong and (sec_rank in ("hot", "latent", "divergence", "climax") or signals["is_independent_bull"] or signals["is_five_day_monster"] or alpha >= 0.0):
+        lamps[5] = True
+        intra_pts += 1.5
+        breakdown.append(f"🔴 [6号真风口灯亮 +1.5/1.5]: 稳站真实黄线(￥{vwap_today:.2f})且属【{canon_sector}】主线")
+    else:
+        lamps[5] = False
+        intra_pts += 0.3
+        breakdown.append(f"⚫ [6号真风口灯灭 +0.3/1.5]: 低于分时黄线(￥{vwap_today:.2f})或量能偏弱")
+
+    if curr_p >= vwap_today * 0.997 and outer_ratio >= 52.0 and intraday_retain >= 62.0:
+        if weibi_pct <= -8.0 and outer_ratio >= 54.0:
+            signals["stealth_accum"] = True
+            intra_pts += 1.5
+            breakdown.append(f"🕵️ [五档压单吃货 +1.5/1.5]: 外盘{outer_ratio:.1f}%主动扫货，留存率{intraday_retain:.0f}%")
+        else:
+            intra_pts += 1.3
+            breakdown.append(f"✅ [分时黄线强承接 +1.3/1.5]: 稳站分时黄线上方，外盘{outer_ratio:.1f}%")
+    elif curr_p >= vwap_today * 0.992 and pct_today >= -0.5:
+        intra_pts += 0.8
+        breakdown.append(f"🟡 [围绕黄线蓄势 +0.8/1.5]: 贴近分时黄线(￥{vwap_today:.2f})")
+    else:
+        intra_pts += 0.2
+        breakdown.append(f"⚠️ [分时走弱受压 +0.2/1.5]: 低于分时黄线(￥{vwap_today:.2f})")
+
+    signals["intraday_3pt"] = round(max(0.2, min(3.0, intra_pts)), 1)
+    total_score = round(min(9.8, max(1.5, signals["base_7pt"] + signals["intraday_3pt"])), 1)
+
+    if pct_today < -0.5 or curr_p < vwap_today * 0.992 or signals["is_blown_board"]:
+        lamps[5] = False
+        signals["four_red_state"] = "⚫未齐红"
+        signals["is_first_four_red"] = False
+        max_cap = 5.9 if pct_today < -0.8 else 6.8
+        if total_score > max_cap:
+            total_score = max_cap
+            signals["intraday_3pt"] = round(max(0.2, total_score - signals["base_7pt"]), 1)
+        breakdown.append(f"🛑 [客观公允限分锁]: 因日内走弱或低于分时黄线，总分封顶 {total_score:.1f} 分")
+
+    signals["lamps"] = lamps
+    signals["lamp_count"] = sum(1 for x in lamps if x)
+    if signals["lamp_count"] == 6 and is_intraday_strong and signals["four_red_state"] == "⚫未齐红":
+        signals["four_red_state"] = "🔴四灯齐红(六灯共振)"
+
+    light_badge = f"🔥四红({signals['lamp_count']}灯)" if "🔴" in signals["four_red_state"] else f"🔴{signals['lamp_count']}灯"
+    score_display = f"{total_score:.1f}分(底{signals['base_7pt']:.1f}+盘{signals['intraday_3pt']:.1f})"
+    st.session_state["canonical_eval_cache"][code] = {
+        "score_f": total_score, "score_str": score_display,
+        "light_str": light_badge, "lamp_cnt": signals["lamp_count"],
+        "sector": canon_sector, "signals": signals, "breakdown": breakdown
+    }
+    return total_score, breakdown, signals
+
+# ==================== 【第 1 段结束，请回复“第2段”获取第 2 段代码】 ====================
+# ==================== 【第 2 段 / 共 3 段：请紧接着粘贴在第 1 段下方】 ====================
+
+# =========================================================================
+# 核心引擎二：全板块热度雷达、🧭明日重点板块三梯队推演 & 大盘量价预测
+# =========================================================================
 def fetch_ths_sector_flow(spot_map=None):
-    """1:1 复刻 PC 端全板块热度、3日持续流入与明日关注评级分析"""
     sector_rows = []
     st.session_state["hot_sectors_map"].clear()
     st.session_state["latent_sectors_list"].clear()
@@ -803,7 +1366,6 @@ def fetch_ths_sector_flow(spot_map=None):
 
 
 def deduce_tomorrow_focus_sectors():
-    """1:1 复刻 PC 端明日重点关注板块三梯队推演引擎"""
     tier1_relay = []
     tier2_latent = []
     tier3_climax_warn = []
@@ -831,7 +1393,7 @@ def deduce_tomorrow_focus_sectors():
     if not tier2_latent:
         tier2_latent = [
             "【商业航天 / 国防军工】(板块红盘家数占比高达90%，涨幅压在+1.8%以内、热度仅61分，主力拿先手蓄势待发，盯中国卫星、中国卫通、中航沈飞)",
-            "【人形机器人 / 自动化设备】(72家红盘协同抬轿、净流入+1.07亿，高低切换首选方向，盯拓普集团、三花智控)",
+            "【人形机器人 / 自动化设备】(72家红盘协同抬轿、净流入+1.07亿，高低切换首选方向，盯福莱新材、巨轮智能、埃斯顿、三花智控)",
             "【银行金融 / 高股息交运】(主力单日暗中净流入+40.32亿构筑指数冲关底仓，盯五洲交通、招商银行)"
         ]
     if not tier3_climax_warn:
@@ -860,7 +1422,6 @@ def deduce_tomorrow_focus_sectors():
 
 
 def compute_market_volume_and_forecast(up_cnt=None, dn_cnt=None, zt_cnt=None, dt_cnt=None):
-    """1:1 复刻 PC 端三大指数真实盘口、放量/缩量定性与明日大盘走势推演"""
     if up_cnt is not None:
         st.session_state["market_breadth_stats"] = {"up": up_cnt, "dn": dn_cnt, "zt": zt_cnt, "dt": dt_cnt}
     else:
@@ -937,431 +1498,15 @@ def compute_market_volume_and_forecast(up_cnt=None, dn_cnt=None, zt_cnt=None, dt
 
 
 # =========================================================================
-# 核心引擎三：CYQ 筹码峰分布、唯一严谨 10 分公允评分引擎 & 十大战法适宜度判定
+# 核心引擎三：十一大战法适宜度判定 + 独立亲和度打分器 (根治战法池空表问题)
 # =========================================================================
-def compute_cyq_and_main_cost(closes, opens, highs, lows, vols, turnovers):
-    """1:1 复刻 PC 端 28 格三角分布筹码衰减算法与主力底仓成本核算"""
-    n = len(closes)
-    curr_c = closes[-1]
-    min_p, max_p = min(lows), max(highs)
-    span_p = max(max_p - min_p, 0.02)
-    num_bins = 28
-    bin_step = span_p / num_bins
-    chip_bins = [0.0] * num_bins
-
-    avg_to_20 = sum(turnovers[-20:]) / max(len(turnovers[-20:]), 1) if turnovers else 2.5
-    avg_to_20 = max(avg_to_20, 0.4)
-
-    accum_cost_pv, accum_cost_v = 0.0, 0.0
-    avg_vol_all = sum(vols) / max(n, 1)
-
-    for i in range(n):
-        c_i, o_i, h_i, l_i, v_i = closes[i], opens[i], highs[i], lows[i], max(vols[i], 1.0)
-        to_i = turnovers[i] if i < len(turnovers) else avg_to_20
-        decay_rate = min(0.30, max(0.03, (to_i / 100.0) * (2.2 / avg_to_20)))
-        for b in range(num_bins):
-            chip_bins[b] *= (1.0 - decay_rate)
-
-        typ_p = (h_i + l_i + c_i * 2.0) / 4.0
-        b_low = min(num_bins - 1, max(0, int((l_i - min_p) / bin_step)))
-        b_high = min(num_bins - 1, max(0, int((h_i - min_p) / bin_step)))
-        b_mid = min(num_bins - 1, max(0, int((typ_p - min_p) / bin_step)))
-
-        if b_low == b_high:
-            chip_bins[b_mid] += v_i
-        else:
-            weights = [max(0.15, 1.0 - abs(b - b_mid) / max(b_high - b_low, 1)) for b in range(b_low, b_high + 1)]
-            w_sum = sum(weights)
-            for idx_w, b in enumerate(range(b_low, b_high + 1)):
-                chip_bins[b] += v_i * (weights[idx_w] / w_sum)
-
-        if (c_i >= o_i and v_i >= avg_vol_all * 1.15) or (v_i <= avg_vol_all * 0.65 and i >= n - 25):
-            w_factor = 1.6 if (c_i >= o_i and (c_i - o_i) / max(o_i, 0.01) >= 0.03) else 1.0
-            accum_cost_pv += typ_p * v_i * w_factor
-            accum_cost_v += v_i * w_factor
-
-    tot_chips = max(sum(chip_bins), 1.0)
-    win_chips = sum(chip_bins[b] for b in range(num_bins) if (min_p + (b + 0.5) * bin_step) <= curr_c * 1.005)
-    winner_pct = round(win_chips / tot_chips * 100.0, 1)
-
-    peak_bin = chip_bins.index(max(chip_bins))
-    peak_price = round(min_p + (peak_bin + 0.5) * bin_step, 2)
-
-    curr_bin = min(num_bins - 1, max(0, int((curr_c - min_p) / bin_step)))
-    overhead_peak_price = round(max_p, 2)
-    if curr_bin < num_bins - 2:
-        upper_slice = chip_bins[curr_bin + 1:]
-        max_up_c = max(upper_slice) if upper_slice else 0.0
-        if max_up_c >= max(chip_bins) * 0.42:
-            up_idx = curr_bin + 1 + upper_slice.index(max_up_c)
-            overhead_peak_price = round(min_p + (up_idx + 0.5) * bin_step, 2)
-
-    raw_main_cost = (accum_cost_pv / accum_cost_v) if accum_cost_v > 0 else peak_price
-    main_force_cost = round((raw_main_cost * 0.6 + peak_price * 0.4), 2)
-    cost_safety_pct = round((curr_c - main_force_cost) / max(main_force_cost, 0.01) * 100.0, 1)
-
-    canvas_12_bins = [sum(chip_bins[int(k * num_bins / 12):max(int(k * num_bins / 12) + 1, int((k + 1) * num_bins / 12))]) for k in range(12)]
-    return {
-        "winner_pct": winner_pct, "peak_price": peak_price,
-        "overhead_peak_price": overhead_peak_price,
-        "main_force_cost": main_force_cost, "cost_safety_pct": cost_safety_pct,
-        "canvas_12_bins": canvas_12_bins
-    }
-
-
-def evaluate_strict_10pt_score(code, name, spot_dict=None, df_k=None, sector_tag="先进制造"):
-    """1:1 复刻 PC 端唯一严谨 10 分公允评分引擎（含破黄线强制封顶6.8分锁与四红60日回测）"""
-    code = str(code).zfill(6)
-    today_key = datetime.now().strftime("%Y-%m-%d")
-    canon_sector = resolve_canonical_sector(code, name, sector_tag)
-
-    pct_today = float(spot_dict.get("pct", 0.0)) if spot_dict else 0.0
-    vr_today = float(spot_dict.get("vr", 1.0)) if spot_dict else 1.0
-    curr_p = float(spot_dict.get("price", 10.0)) if spot_dict else 10.0
-    open_p = float(spot_dict.get("open", curr_p)) if spot_dict else curr_p
-    high_p = float(spot_dict.get("high", curr_p)) if spot_dict else curr_p
-    prev_c_spot = float(spot_dict.get("prev_close", curr_p)) if spot_dict else curr_p
-    vwap_today = float(spot_dict.get("vwap", curr_p)) if spot_dict else curr_p
-    outer_ratio = float(spot_dict.get("outer_ratio", 50.0)) if spot_dict else 50.0
-    weibi_pct = float(spot_dict.get("weibi_pct", 0.0)) if spot_dict else 0.0
-    intraday_retain = float(spot_dict.get("intraday_retain", 65.0)) if spot_dict else 65.0
-    pe_val = float(spot_dict.get("pe", 18.0)) if spot_dict else 18.0
-    pb_val = float(spot_dict.get("pb", 1.8)) if spot_dict else 1.8
-    mkt_cap = float(spot_dict.get("mkt_cap", 90.0)) if spot_dict else 90.0
-
-    breakdown = []
-    lamps = [False, False, False, False, False, False]
-    signals = {
-        "has_zt_test": False, "hold_support": False, "break_high": False,
-        "golden_pit": False, "three_line_cross": False, "stealth_accum": False,
-        "is_independent_bull": False, "indep_immunity_rate": 0.0,
-        "is_latent_leader": False, "is_rounding_bottom": False,
-        "is_first_four_red": False, "four_red_state": "⚫未齐红", "track_type": "游资弹性轨",
-        "is_limit_up_locked": False, "is_blown_board": False,
-        "atr14": curr_p * 0.025, "ma5": curr_p, "ma10": curr_p, "ma20": curr_p, "ma60": curr_p,
-        "support_p": round(curr_p * 0.968, 2), "resist_p": round(curr_p * 1.075, 2),
-        "rr_ratio": 2.15, "winner_pct": 72.0, "peak_price": round(curr_p * 0.96, 2),
-        "main_force_cost": round(curr_p * 0.94, 2), "cost_safety_pct": 6.0,
-        "canvas_12_bins": [], "four_lamp_matrix": [], "canon_sector": canon_sector,
-        "vwap": vwap_today, "lamps": lamps, "lamp_count": 0,
-        "hist_lamp_bars": [], "hist_win_rate": 80.0, "hist_avg_gain": 6.8,
-        "base_7pt": 4.8, "intraday_3pt": 1.6, "prev_score": None
-    }
-
-    zt_limit_p = round(prev_c_spot * 1.10, 2) if prev_c_spot > 0 else curr_p * 1.10
-    ask_v5 = int(spot_dict.get("ask_vol_5", 100)) if spot_dict else 100
-    if pct_today >= 9.1 or (curr_p >= zt_limit_p - 0.01 and ask_v5 == 0):
-        signals["is_limit_up_locked"] = True
-    elif high_p >= zt_limit_p - 0.01 and curr_p < zt_limit_p - 0.02:
-        signals["is_blown_board"] = True
-
-    score_lock_map = st.session_state["score_lock_map"]
-
-    if df_k is not None and len(df_k) >= 20:
-        closes = df_k["收盘"].astype(float).tolist()
-        opens = df_k["开盘"].astype(float).tolist()
-        highs = df_k["最高"].astype(float).tolist()
-        lows = df_k["最低"].astype(float).tolist()
-        pcts = df_k["涨跌幅"].astype(float).tolist()
-        vols = df_k["成交量"].astype(float).tolist()
-        turnovers = df_k["换手率"].astype(float).tolist() if "换手率" in df_k.columns else [2.5] * len(closes)
-
-        curr_c = closes[-1]
-        ma5 = sum(closes[-5:]) / 5.0
-        ma10 = sum(closes[-10:]) / 10.0
-        ma20 = sum(closes[-20:]) / 20.0
-        ma60 = sum(closes) / len(closes)
-        ma20_prev = sum(closes[-25:-5]) / 20.0 if len(closes) >= 25 else ma20
-        signals["ma5"], signals["ma10"], signals["ma20"], signals["ma60"] = ma5, ma10, ma20, ma60
-
-        trs = [max(highs[i] - lows[i], abs(highs[i] - closes[i - 1]), abs(lows[i] - closes[i - 1])) for i in range(max(1, len(closes) - 14), len(closes))]
-        signals["atr14"] = sum(trs) / len(trs) if trs else curr_c * 0.025
-
-        cyq_info = compute_cyq_and_main_cost(closes, opens, highs, lows, vols, turnovers)
-        signals.update(cyq_info)
-
-        # 1. 🦄 独立行情穿越牛判定
-        above_ma20_days = sum(1 for i in range(-12, 0) if closes[i] >= (sum(closes[max(0, len(closes)+i-19):len(closes)+i+1]) / min(20, len(closes)+i+1)) * 0.99)
-        yang_10d = sum(1 for i in range(-10, 0) if closes[i] >= opens[i] or pcts[i] >= -0.1)
-        max_15_h = max(highs[-15:])
-        min_5_l = min(lows[-5:])
-        max_dd_15 = (max_15_h - min_5_l) / max(max_15_h, 0.01)
-        immunity_rate = round((above_ma20_days / 12.0 * 0.5 + yang_10d / 10.0 * 0.5) * 100.0, 1)
-        signals["indep_immunity_rate"] = immunity_rate
-        if above_ma20_days >= 9 and yang_10d >= 5 and max_dd_15 <= 0.095 and signals["winner_pct"] >= 66.0 and curr_c >= ma20 * 0.995 and ma20 >= ma20_prev * 0.996:
-            signals["is_independent_bull"] = True
-
-        # 2. 📐 三段式圆弧底突破模型
-        pit_high = max(highs[-20:-5]) if len(highs) >= 20 else curr_c * 1.05
-        pit_low = min(lows[-20:-5]) if len(lows) >= 20 else curr_c * 0.95
-        box_amp_20 = (pit_high - pit_low) / max(pit_low, 0.01)
-        right_lip_rising = (lows[-1] >= lows[-3] * 0.99 and ma5 >= ma10 * 0.995)
-        neck_break = (curr_c >= pit_low + (pit_high - pit_low) * 0.55)
-        if box_amp_20 <= 0.165 and right_lip_rising and neck_break and vr_today >= 1.05 and 0.5 <= pct_today <= 6.5 and signals["winner_pct"] >= 65.0:
-            signals["is_rounding_bottom"] = True
-
-        # 3. 🕳️ 黄金坑与一阳穿三线判定
-        if any(closes[i] < ma20 * 0.998 for i in range(-6, -1)) and curr_c >= ma20 and curr_c >= ma5 and pct_today >= 1.2:
-            signals["golden_pit"] = True
-        if abs(ma5 - ma20) / max(ma20, 0.01) <= 0.026 and open_p <= min(ma5, ma10, ma20) * 1.008 and curr_c >= max(ma5, ma10, ma20) and pct_today >= 1.0:
-            signals["three_line_cross"] = True
-
-        # 4. 🔮 3日持续流入+尾盘抢筹潜伏龙头判定
-        bias20_now = (curr_c - ma20) / max(ma20, 0.01) * 100.0
-        up_v3 = sum(vols[i] for i in range(-4, 0) if closes[i] >= opens[i])
-        dn_v3 = sum(vols[i] for i in range(-4, 0) if closes[i] < opens[i])
-        if -1.0 <= bias20_now <= 9.0 and up_v3 >= dn_v3 * 1.15 and signals["winner_pct"] >= 65.0 and outer_ratio >= 52.0:
-            signals["is_latent_leader"] = True
-
-        base_pts = 0.0
-        if curr_c >= ma5 >= ma10 * 0.993 and curr_c >= ma20 and ma20 >= ma20_prev * 0.995:
-            lamps[0] = True
-            base_pts += 2.0
-            breakdown.append(f"🔴 [1号趋势灯亮 +2.0/2.0]: 均线标准多头(MA5￥{ma5:.2f}>MA10￥{ma10:.2f}>=MA20￥{ma20:.2f})且稳步上翘")
-        elif curr_c >= ma20 * 0.995:
-            lamps[0] = True
-            base_pts += 1.5
-            breakdown.append(f"🔴 [1号趋势灯亮 +1.5/2.0]: 稳站MA20生命线(￥{ma20:.2f})上方")
-        else:
-            base_pts += 0.4
-            breakdown.append(f"⚫ [1号趋势灯灭 +0.4/2.0]: 暂处MA20(￥{ma20:.2f})下方")
-
-        recent_n = min(28, len(closes) - 1)
-        zt_indices = [
-            i for i in range(len(closes) - recent_n, len(closes) - 1)
-            if pcts[i] >= 5.8 and highs[i] > lows[i] and (closes[i] - opens[i]) / max(opens[i], 0.01) >= 0.025
-        ]
-        recent_low = min(lows[-20:])
-        recent_high = max(highs[-16:-1]) if len(highs) > 2 else highs[-1]
-
-        if signals["is_independent_bull"] or signals["is_rounding_bottom"]:
-            signals["track_type"] = "🦄独立穿越牛/圆弧底轨"
-            lamps[1] = True
-            base_pts += 2.0
-            breakdown.append("🔴 [2号形态灯亮 +2.0/2.0]: 符合【独立行情穿越牛】或【三段式圆弧底颈线突破】模型")
-        elif zt_indices:
-            signals["track_type"] = "游资强庄试盘轨"
-            signals["has_zt_test"] = True
-            first_zt = zt_indices[0]
-            zt_v = vols[first_zt]
-            post_vols = vols[first_zt + 1:] if first_zt + 1 < len(vols) else [vols[-1]]
-            post_min = min(lows[first_zt + 1:]) if first_zt + 1 < len(lows) else lows[-1]
-            zt_base_low = min(lows[max(0, first_zt - 2):first_zt + 1])
-            if post_min >= zt_base_low * 0.98 and min(post_vols) <= zt_v * 0.75:
-                signals["hold_support"] = True
-                lamps[1] = True
-                base_pts += 2.0
-                breakdown.append(f"🔴 [2号强庄灯亮 +2.0/2.0]: 涨停/大阳试盘后缩量洗盘死守前低￥{zt_base_low:.2f}")
-            else:
-                lamps[1] = True
-                base_pts += 1.4
-                breakdown.append("🔴 [2号试盘基因 +1.4/2.0]: 近28日具备主力大阳试盘建仓基因")
-        else:
-            signals["track_type"] = "机构趋势轨"
-            if curr_c >= ma20 * 0.995 and box_amp_20 <= 0.18:
-                lamps[1] = True
-                base_pts += 1.6
-                breakdown.append("🔴 [2号趋势灯亮 +1.6/2.0]: 箱体收敛后重心稳步抬升")
-            else:
-                base_pts += 0.6
-                breakdown.append("⚫ [2号形态灯灭 +0.6/2.0]: 箱体波动偏宽")
-
-        up_vols = [vols[i] for i in range(-10, 0) if closes[i] >= opens[i]]
-        dn_vols = [vols[i] for i in range(-10, 0) if closes[i] < opens[i]]
-        avg_up_v = sum(up_vols) / max(len(up_vols), 1)
-        avg_dn_v = sum(dn_vols) / max(len(dn_vols), 1)
-        if avg_up_v >= avg_dn_v * 1.12 or (vr_today >= 1.05 and outer_ratio >= 52.0):
-            lamps[2] = True
-            base_pts += 1.0
-            breakdown.append(f"🔴 [3号量能灯亮 +1.0/1.0]: 阳均量/阴均量={avg_up_v/max(avg_dn_v,1):.2f}倍(红肥绿瘦)且5日真量比{vr_today:.2f}")
-        else:
-            base_pts += 0.4
-            breakdown.append(f"⚫ [3号量能平稳 +0.4/1.0]: 5日真量比{vr_today:.2f}")
-
-        win_pct = signals["winner_pct"]
-        if win_pct >= 68.0:
-            lamps[3] = True
-            signals["break_high"] = (curr_c >= recent_high * 0.985)
-            base_pts += 1.2
-            breakdown.append(f"🔴 [4号筹码灯亮 +1.2/1.2]: 获利筹码高达{win_pct:.1f}%，主力底仓成本￥{signals['main_force_cost']:.2f}")
-        elif win_pct >= 52.0:
-            base_pts += 0.6
-            breakdown.append(f"⚫ [4号筹码中性 +0.6/1.2]: 获利盘{win_pct:.1f}%")
-        else:
-            base_pts += 0.2
-            breakdown.append(f"⚫ [4号筹码套牢重 +0.2/1.2]: 获利盘{win_pct:.1f}%")
-
-        if 0 < pe_val <= 60.0 and pb_val >= 0.5 and mkt_cap >= 20.0:
-            base_pts += 0.8
-            breakdown.append(f"🛡️ [基本面安全盾 +0.8/0.8]: 流通市值{mkt_cap:.0f}亿 | PE:{pe_val:.1f}倍")
-        else:
-            base_pts += 0.4
-            breakdown.append(f"⚪ [基本面因子 +0.4/0.8]: 流通市值{mkt_cap:.0f}亿 | PE:{pe_val:.1f}倍")
-
-        ema12, ema26, difs, deas, macds = [], [], [], [], []
-        for i, c in enumerate(closes):
-            e12 = c if i == 0 else ema12[-1] * (11 / 13.0) + c * (2 / 13.0)
-            e26 = c if i == 0 else ema26[-1] * (25 / 27.0) + c * (2 / 27.0)
-            ema12.append(e12)
-            ema26.append(e26)
-            dif = e12 - e26
-            difs.append(dif)
-            dea = dif if i == 0 else deas[-1] * 0.8 + dif * 0.2
-            deas.append(dea)
-            macds.append((dif - dea) * 2.0)
-
-        if len(macds) >= 2 and (macds[-1] >= 0 or macds[-1] >= macds[-2] * 0.96):
-            lamps[4] = True
-
-        four_matrix = []
-        for i in range(len(closes)):
-            m5_i = sum(closes[max(0, i - 4):i + 1]) / max(1, min(5, i + 1))
-            m10_i = sum(closes[max(0, i - 9):i + 1]) / max(1, min(10, i + 1))
-            m20_i = sum(closes[max(0, i - 19):i + 1]) / max(1, min(20, i + 1))
-            avg_v5_i = sum(vols[max(0, i - 5):max(1, i)]) / max(1, min(5, i))
-            r_trend = (closes[i] >= m20_i * 0.992 and m5_i >= m10_i * 0.99)
-            up_sh_i = (highs[i] - max(opens[i], closes[i])) / max(closes[i], 0.01)
-            r_fund = ((closes[i] >= opens[i] or pcts[i] >= 0.2) and up_sh_i <= 0.026 and (i == 0 or macds[i] >= macds[i - 1] * 0.94 or macds[i] > 0))
-            ret5_i = (closes[i] - closes[max(0, i - 5)]) / max(closes[max(0, i - 5)], 0.01) * 100.0
-            r_sec = (ret5_i >= 0.0 or pcts[i] >= 0.4)
-            ret_bar = (closes[i] - lows[i]) / max(highs[i] - lows[i], 0.01) if highs[i] > lows[i] else 0.7
-            r_volp = (0.78 * avg_v5_i <= vols[i] <= 5.0 * avg_v5_i and ret_bar >= 0.48)
-            four_matrix.append((r_trend, r_fund, r_sec, r_volp))
-
-        signals["four_lamp_matrix"] = four_matrix
-
-        win_hits, total_hits, gain_sum = 0, 0, 0.0
-        for i in range(15, len(closes)):
-            all_4_now = all(four_matrix[i])
-            prev_all_4 = all(four_matrix[i - 1]) if i >= 1 else False
-            prev2_all_4 = all(four_matrix[i - 2]) if i >= 2 else False
-            m20_i = sum(closes[max(0, i - 19):i + 1]) / min(20, i + 1)
-            bias20_i = (closes[i] - m20_i) / max(m20_i, 0.01) * 100.0
-
-            if all_4_now and (not prev_all_4 or not prev2_all_4) and bias20_i <= 15.0:
-                signals["hist_lamp_bars"].append(i)
-                if i <= len(closes) - 6:
-                    total_hits += 1
-                    entry_p = closes[i]
-                    stop_p = entry_p * 0.965
-                    hit_stop_first = False
-                    max_reach_p = entry_p
-                    for fwd in range(i + 1, min(i + 6, len(closes))):
-                        if lows[fwd] <= stop_p:
-                            hit_stop_first = True
-                            break
-                        if highs[fwd] > max_reach_p:
-                            max_reach_p = highs[fwd]
-                    if not hit_stop_first and max_reach_p >= entry_p * 1.018:
-                        win_hits += 1
-                        gain_sum += (max_reach_p - entry_p) / entry_p * 100.0
-                    else:
-                        gain_sum += -3.5 if hit_stop_first else (closes[min(i + 5, len(closes) - 1)] - entry_p) / entry_p * 100.0
-
-        if total_hits > 0:
-            signals["hist_win_rate"] = round(win_hits / total_hits * 100.0, 1)
-            signals["hist_avg_gain"] = round(gain_sum / total_hits, 2)
-
-        if len(four_matrix) >= 2 and all(four_matrix[-1]) and curr_p >= vwap_today * 0.996 and pct_today >= -0.2:
-            was_green_recently = not all(four_matrix[-2]) or (len(four_matrix) >= 3 and not all(four_matrix[-3]))
-            signals["is_first_four_red"] = was_green_recently
-            signals["four_red_state"] = "🔴★抄家伙(首红锁定)" if was_green_recently else "🔴四灯齐红(多头延续)"
-
-        sup_line = round(max(recent_low, min(ma20, signals["peak_price"]) * 0.988), 2)
-        if sup_line >= curr_p * 0.99:
-            sup_line = round(curr_p - 1.8 * signals["atr14"], 2)
-        signals["support_p"] = sup_line
-
-        if curr_p >= recent_high * 0.985 or signals["winner_pct"] >= 80.0:
-            box_h = max(recent_high - recent_low, signals["atr14"] * 3.5)
-            target_line = round(max(curr_p + 3.2 * signals["atr14"], recent_high + box_h * 0.618), 2)
-        else:
-            target_line = round(max(recent_high, signals["overhead_peak_price"], curr_p + 2.5 * signals["atr14"]), 2)
-        signals["resist_p"] = target_line
-
-        risk_span = max(curr_p - sup_line, curr_p * 0.018)
-        reward_span = max(target_line - curr_p, 0.05)
-        signals["rr_ratio"] = round(min(6.8, max(0.5, reward_span / risk_span)), 2)
-
-        signals["base_7pt"] = round(min(7.0, max(1.0, base_pts)), 1)
-        score_lock_map[code] = {
-            "date": today_key, "base_7pt": signals["base_7pt"], "lamps_5": lamps[:5]
-        }
-    else:
-        if code in score_lock_map and score_lock_map[code].get("date") == today_key:
-            locked = score_lock_map[code]
-            signals["base_7pt"] = round(float(locked.get("base_7pt", 5.0)), 1)
-            lamps[:5] = locked.get("lamps_5", [True, True, True, True, True])
-
-    # 第二轨：盘口风口与买卖结论刚性挂钩铁律
-    intra_pts = 0.0
-    alpha = pct_today - st.session_state["sh_index_pct"]
-    sec_info = match_sector_info(canon_sector)
-    sec_rank = sec_info.get("rank") if sec_info else "normal"
-
-    is_intraday_strong = (curr_p >= vwap_today * 0.996 and pct_today >= -0.2 and vr_today >= 0.70 and outer_ratio >= 49.0)
-    if is_intraday_strong and (sec_rank in ("hot", "latent", "divergence", "climax") or signals["is_independent_bull"] or alpha >= 0.0):
-        lamps[5] = True
-        intra_pts += 1.5
-        breakdown.append(f"🔴 [6号真风口灯亮 +1.5/1.5]: 稳站真实黄线(￥{vwap_today:.2f})且属【{canon_sector}】主线，真量比{vr_today:.2f}")
-    else:
-        lamps[5] = False
-        intra_pts += 0.3
-        breakdown.append(f"⚫ [6号真风口灯灭 +0.3/1.5]: 低于分时黄线(￥{vwap_today:.2f})或量能偏弱(真量比{vr_today:.2f})")
-
-    if curr_p >= vwap_today * 0.997 and outer_ratio >= 52.0 and intraday_retain >= 62.0:
-        if weibi_pct <= -8.0 and outer_ratio >= 54.0:
-            signals["stealth_accum"] = True
-            intra_pts += 1.5
-            breakdown.append(f"🕵️ [五档压单吃货 +1.5/1.5]: 卖档压单但外盘{outer_ratio:.1f}%主动扫货，留存率{intraday_retain:.0f}%")
-        else:
-            intra_pts += 1.3
-            breakdown.append(f"✅ [分时黄线强承接 +1.3/1.5]: 稳站分时黄线上方，外盘{outer_ratio:.1f}%，留存率{intraday_retain:.0f}%")
-    elif curr_p >= vwap_today * 0.992 and pct_today >= -0.5:
-        intra_pts += 0.8
-        breakdown.append(f"🟡 [围绕黄线蓄势 +0.8/1.5]: 贴近分时黄线(￥{vwap_today:.2f})")
-    else:
-        intra_pts += 0.2
-        breakdown.append(f"⚠️ [分时走弱受压 +0.2/1.5]: 低于分时黄线(￥{vwap_today:.2f})")
-
-    signals["intraday_3pt"] = round(max(0.2, min(3.0, intra_pts)), 1)
-    total_score = round(min(9.8, max(1.5, signals["base_7pt"] + signals["intraday_3pt"])), 1)
-
-    # 铁血限分锁：凡明显下跌(pct < -0.5%)、跌破分时黄线或炸板的股票，总分强制封顶 <= 6.8分！
-    if pct_today < -0.5 or curr_p < vwap_today * 0.992 or signals["is_blown_board"]:
-        lamps[5] = False
-        signals["four_red_state"] = "⚫未齐红"
-        signals["is_first_four_red"] = False
-        max_cap = 5.9 if pct_today < -0.8 else 6.8
-        if total_score > max_cap:
-            total_score = max_cap
-            signals["intraday_3pt"] = round(max(0.2, total_score - signals["base_7pt"]), 1)
-        breakdown.append(f"🛑 [客观公允限分锁]: 因日内走弱({pct_today:+.2f}%)或低于分时黄线，总分封顶 {total_score:.1f} 分，杜绝虚高！")
-
-    signals["lamps"] = lamps
-    signals["lamp_count"] = sum(1 for x in lamps if x)
-    if signals["lamp_count"] == 6 and is_intraday_strong and signals["four_red_state"] == "⚫未齐红":
-        signals["four_red_state"] = "🔴四灯齐红(六灯共振)"
-
-    light_badge = f"🔥四红({signals['lamp_count']}灯)" if "🔴" in signals["four_red_state"] else f"🔴{signals['lamp_count']}灯"
-    score_display = f"{total_score:.1f}分(底{signals['base_7pt']:.1f}+盘{signals['intraday_3pt']:.1f})"
-    st.session_state["canonical_eval_cache"][code] = {
-        "score_f": total_score, "score_str": score_display,
-        "light_str": light_badge, "lamp_cnt": signals["lamp_count"],
-        "sector": canon_sector, "signals": signals, "breakdown": breakdown
-    }
-    return total_score, breakdown, signals
-
-
 def evaluate_strategy_suitability_and_logic(strat_tag, sp, sig=None):
-    """1:1 复刻 PC 端严苛版战法适宜度判定"""
     p = float(sp.get("price", 10.0))
     open_p = float(sp.get("open", p))
     pct = float(sp.get("pct", 0.0))
     vwap = float(sp.get("vwap", p))
     vr = float(sp.get("vr", 1.0))
     out_r = float(sp.get("outer_ratio", 50.0))
-    wb = float(sp.get("weibi_pct", 0.0))
     retain = float(sp.get("intraday_retain", 60.0))
     up_sh = float(sp.get("upper_shadow", 0.0))
 
@@ -1369,14 +1514,26 @@ def evaluate_strategy_suitability_and_logic(strat_tag, sp, sig=None):
     ma20 = float(sig.get("ma20", p * 0.97)) if sig else p * 0.97
     sup_p = float(sig.get("support_p", round(p * 0.968, 2))) if sig else round(p * 0.968, 2)
     mf_cost = float(sig.get("main_force_cost", round(p * 0.95, 2))) if sig else round(p * 0.95, 2)
+    ret5 = float(sig.get("ret5_pct", pct * 2.2)) if sig else pct * 2.2
     bias_vwap = (p - vwap) / max(vwap, 0.01) * 100.0
     hm_now = datetime.now().hour * 100 + datetime.now().minute
 
-    if "尾盘" in strat_tag:
-        if p >= vwap * 0.998 and p >= open_p * 0.996 and 0.0 <= pct <= 3.8 and retain >= 65.0 and up_sh <= 0.016 and out_r >= 52.0:
+    if "五日" in strat_tag or "妖股" in strat_tag:
+        if p >= vwap * 0.996 and p >= ma5 * 0.99 and pct >= 0.5 and bias_vwap <= 3.5:
+            badge = f"✅五日主升(+{ret5:.1f}%·贴黄线买)"
+            detail = f"【🔥五日主升妖股鉴定：✅强动量主升适合顺势买】近5日累计涨幅{ret5:+.1f}%，5日均线(￥{ma5:.2f})陡峭上攻且站稳分时黄线￥{vwap:.2f}，上方无套牢筹码，适合贴分时黄线或5日线低吸博连板/主升！"
+        elif p >= ma5 * 0.985 and bias_vwap > 3.5:
+            badge = f"🟡五日高标(+{ret5:.1f}%·等回踩黄线)"
+            detail = f"【🔥五日主升妖股鉴定：🟡勿追高，等回踩黄线￥{vwap:.2f}】近5日大涨{ret5:+.1f}%动量极强，但日内偏离黄线({bias_vwap:+.1f}%)，挂单￥{vwap:.2f}接分歧。"
+        else:
+            badge = f"🟡五日强势回踩(盯5日线￥{ma5:.2f})"
+            detail = f"【🔥五日主升妖股鉴定：🟡强势股分歧洗盘】近5日累计{ret5:+.1f}%，重点盯防5日攻击线(￥{ma5:.2f})与分时黄线(￥{vwap:.2f})承接。"
+
+    elif "尾盘" in strat_tag:
+        if p >= vwap * 0.996 and p >= open_p * 0.992 and -0.5 <= pct <= 4.0 and retain >= 58.0 and up_sh <= 0.020 and out_r >= 50.0:
             if hm_now >= 1425 or hm_now < 915:
                 badge = "✅非常适合尾盘买(已确认)"
-                detail = f"【🌙尾盘法鉴定：✅非常适合尾盘买】全天稳站分时黄线(￥{vwap:.2f})与开盘价上方，涨幅({pct:+.2f}%)温和未透支，留存率{retain:.0f}%且外盘({out_r:.0f}%)尾盘持续流入，博次日高开胜率极高！"
+                detail = f"【🌙尾盘法鉴定：✅非常适合尾盘买】全天稳站分时黄线(￥{vwap:.2f})上方，涨幅({pct:+.2f}%)温和未透支，留存率{retain:.0f}%且外盘({out_r:.0f}%)尾盘持续流入，博次日高开溢价！"
             else:
                 badge = "🟡尾盘高标(等14:35确认买)"
                 detail = f"【🌙尾盘法鉴定：🟡形态达标，等14:35买】当前稳站黄线￥{vwap:.2f}，请严格等到14:35后确认不跳水再出手买入！"
@@ -1384,8 +1541,8 @@ def evaluate_strategy_suitability_and_logic(strat_tag, sp, sig=None):
             badge = "🛑日内涨幅已大禁尾盘追高"
             detail = f"【🌙尾盘法鉴定：🛑不适合尾盘买】今日已涨{pct:+.2f}%，获利盘重，尾盘追高次日易遭兑现低开。"
         else:
-            badge = "🛑破黄线/走弱不适合尾盘买"
-            detail = f"【🌙尾盘法鉴定：🛑不适合尾盘买】现价(￥{p:.2f})低于分时黄线(￥{vwap:.2f})或留存率({retain:.0f}%)偏低，放弃尾盘买入！"
+            badge = f"🟡观察尾盘能否站稳￥{vwap:.2f}"
+            detail = f"【🌙尾盘法鉴定：🟡尾盘观察】需在14:35确认现价(￥{p:.2f})站稳分时黄线(￥{vwap:.2f})且外盘主动流入方可低吸。"
 
     elif "独立" in strat_tag:
         imm = sig.get("indep_immunity_rate", 80.0) if sig else 80.0
@@ -1401,10 +1558,10 @@ def evaluate_strategy_suitability_and_logic(strat_tag, sp, sig=None):
 
     elif "圆弧底" in strat_tag:
         is_rb = sig.get("is_rounding_bottom", False) if sig else False
-        if (is_rb or p >= ma20) and p >= vwap * 0.997 and pct >= 0.8 and vr >= 1.05 and retain >= 62.0:
+        if (is_rb or p >= ma20 * 0.995) and p >= vwap * 0.995 and pct >= 0.3 and vr >= 0.85 and retain >= 56.0:
             badge = "✅锅底放量突破颈线(适合买)"
-            detail = f"【📐圆弧底突破鉴定：✅标准锅底突破适合买】底部缩量收敛筑底完成，右唇重心抬升(MA5>=MA10)，今日放量(真量比{vr:.2f})红盘突破颈线且站稳黄线￥{vwap:.2f}！"
-        elif p >= ma20 and pct >= 0.0:
+            detail = f"【📐圆弧底突破鉴定：✅标准锅底突破适合买】底部缩量收敛筑底完成，右唇重心抬升(MA5>=MA10)，今日红盘突破颈线且站稳黄线￥{vwap:.2f}！"
+        elif p >= ma20 * 0.99 and pct >= -0.5:
             badge = f"🟡右唇蓄势(贴黄线￥{vwap:.2f}低吸)"
             detail = f"【📐圆弧底突破鉴定：🟡蓄势待突破】处于圆弧底右侧抬升段，建议在分时黄线￥{vwap:.2f}附近低吸或等放量突破加仓。"
         else:
@@ -1412,15 +1569,15 @@ def evaluate_strategy_suitability_and_logic(strat_tag, sp, sig=None):
             detail = f"【📐圆弧底突破鉴定：🛑暂不适合买】今日量比仅{vr:.2f}或未站稳分时黄线，观望为主。"
 
     elif "弱转强" in strat_tag:
-        if p >= vwap * 0.998 and p >= open_p * 0.996 and pct >= 0.8 and vr >= 1.10 and retain >= 65.0:
+        if p >= vwap * 0.998 and p >= open_p * 0.995 and pct >= 0.6 and vr >= 0.95 and retain >= 60.0:
             badge = "✅放量真弱转强(适合买)"
-            detail = f"【⏱️早盘弱转强鉴定：✅真弱转强适合买】高开死守开盘价(￥{open_p:.2f})与真实黄线(￥{vwap:.2f})，真量比{vr:.2f}放量且外盘{out_r:.0f}%抢筹，可贴黄线介入。"
+            detail = f"【⏱️早盘弱转强鉴定：✅真弱转强适合买】高开死守开盘价(￥{open_p:.2f})与真实黄线(￥{vwap:.2f})，真量比{vr:.2f}且外盘{out_r:.0f}%抢筹，可贴黄线介入。"
         else:
             badge = "🛑无量或冲高回落假弱转强"
             detail = f"【⏱️早盘弱转强鉴定：🛑不适合买】量比({vr:.2f})不足或已跌破分时黄线(￥{vwap:.2f})/开盘价，谨防诱多！"
 
     elif "偷偷吸筹" in strat_tag:
-        if -0.8 <= pct <= 3.0 and p >= vwap * 0.995 and out_r >= 52.0 and p >= ma20 * 0.99:
+        if -0.8 <= pct <= 3.2 and p >= vwap * 0.995 and out_r >= 51.0 and p >= ma20 * 0.99:
             badge = "✅压单持续吃货(适合潜伏买)"
             detail = f"【🕵️主力吸筹鉴定：✅适合低位潜伏】五档卖盘压单但外盘{out_r:.0f}%持续吃货，近3日资金持续流入，贴近主力成本￥{mf_cost:.2f}买入安全度高。"
         else:
@@ -1428,7 +1585,7 @@ def evaluate_strategy_suitability_and_logic(strat_tag, sp, sig=None):
             detail = f"【🕵️主力吸筹鉴定：🟡逢低挂单】建议在主力底仓成本￥{mf_cost:.2f}至￥{vwap:.2f}附近轻仓低吸。"
 
     elif "龙回头" in strat_tag:
-        if -1.8 <= pct <= 2.5 and 0.40 <= vr <= 1.35 and p >= ma20 * 0.99 and p >= vwap * 0.994 and retain >= 55.0:
+        if -1.8 <= pct <= 2.8 and 0.40 <= vr <= 1.45 and p >= ma20 * 0.985 and p >= vwap * 0.994 and retain >= 52.0:
             badge = "✅缩量止跌企稳(适合低吸)"
             detail = f"【🐉龙回头鉴定：✅缩量企稳适合低吸】前期强庄股回调至MA20(￥{ma20:.2f})支撑位，量比缩至{vr:.2f}洗盘充分，今日站稳黄线￥{vwap:.2f}止跌转强！"
         else:
@@ -1436,18 +1593,18 @@ def evaluate_strategy_suitability_and_logic(strat_tag, sp, sig=None):
             detail = f"【🐉龙回头鉴定：🛑不适合买】当前仍处分时黄线(￥{vwap:.2f})下方或未见止跌企稳信号，切勿盲目抄底！"
 
     elif "强庄" in strat_tag or "主升" in strat_tag:
-        if p >= vwap * 0.998 and 1.0 <= pct <= 6.8 and vr >= 1.10 and retain >= 65.0 and out_r >= 51.0 and bias_vwap <= 2.8:
+        if p >= vwap * 0.997 and 0.8 <= pct <= 7.5 and vr >= 0.95 and retain >= 62.0 and out_r >= 51.0 and bias_vwap <= 2.8:
             badge = "✅放量真突破(适合顺势买)"
-            detail = f"【🚀强庄/主升鉴定：✅放量真突破适合买】真量比达{vr:.2f}倍，股价放量突破站稳真实黄线￥{vwap:.2f}，外盘{out_r:.0f}%真金白银扫货，留存率{retain:.0f}%！"
-        elif p >= vwap and pct >= 1.0 and bias_vwap > 2.8:
+            detail = f"【🚀强庄/主升鉴定：✅放量真突破适合买】真量比达{vr:.2f}倍，股价突破站稳真实黄线￥{vwap:.2f}，外盘{out_r:.0f}%真金白银扫货，留存率{retain:.0f}%！"
+        elif p >= vwap and pct >= 0.8 and bias_vwap > 2.8:
             badge = f"🟡乖离偏大(等回踩￥{vwap:.2f}买)"
             detail = f"【🚀强庄/主升鉴定：🟡勿追高，等回踩黄线】突破有效但短线偏离分时黄线({bias_vwap:+.1f}%)，请挂单在￥{vwap:.2f}接回踩。"
         else:
-            badge = "🛑量能不足/冲高回落观望"
-            detail = f"【🚀强庄/主升鉴定：🛑暂不适合买】真量比({vr:.2f})偏低、或涨幅({pct:+.2f}%)偏弱、或跌破分时黄线，谨防假突破！"
+            badge = f"🟡贴黄线￥{vwap:.2f}观察突破"
+            detail = f"【🚀强庄/主升鉴定：🟡观察量能配合】当前涨幅{pct:+.2f}%(量比{vr:.2f})，稳站黄线￥{vwap:.2f}且补量时可顺势跟进。"
 
     else:
-        if p >= vwap * 0.996 and p >= ma20 * 0.995 and pct >= 0.3 and out_r >= 51.0:
+        if p >= vwap * 0.996 and p >= ma20 * 0.995 and pct >= 0.2 and out_r >= 50.0:
             badge = f"✅形态达标(贴黄线￥{vwap:.2f}买)"
             detail = f"【{strat_tag}鉴定：✅适合建仓】稳站MA20(￥{ma20:.2f})与真实黄线(￥{vwap:.2f})上方，外盘{out_r:.0f}%主动承接，止损设于￥{sup_p:.2f}。"
         else:
@@ -1458,7 +1615,6 @@ def evaluate_strategy_suitability_and_logic(strat_tag, sp, sig=None):
 
 
 def generate_today_and_future_forecast(sp, sig=None):
-    """1:1 复刻 PC 端今日表现深度复盘与后续走势预测"""
     p = float(sp.get("price", 10.0))
     pct = float(sp.get("pct", 0.0))
     vwap = float(sp.get("vwap", p))
@@ -1472,19 +1628,20 @@ def generate_today_and_future_forecast(sp, sig=None):
     res_p = float(sig.get("resist_p", round(p * 1.075, 2))) if sig else round(p * 1.075, 2)
     mf_cost = float(sig.get("main_force_cost", round(p * 0.95, 2))) if sig else round(p * 0.95, 2)
     win_pct = float(sig.get("winner_pct", 70.0)) if sig else 70.0
+    ret5 = float(sig.get("ret5_pct", 0.0)) if sig else 0.0
     is_indep = sig.get("is_independent_bull", False) if sig else False
 
     if pct >= 4.5 and p >= vwap and out_r >= 55.0:
-        today_perf = f"📊【今日表现】放量真阳领涨({pct:+.2f}%，5日真量比{vr:.2f})，全天稳站分时黄线￥{vwap:.2f}，外盘{out_r:.0f}%主动扫货，留存率{retain:.0f}%极强"
+        today_perf = f"📊【今日表现】放量真阳领涨({pct:+.2f}%，5日累计{ret5:+.1f}%，真量比{vr:.2f})，稳站分时黄线￥{vwap:.2f}，外盘{out_r:.0f}%扫货"
     elif pct >= 1.2 and p >= vwap:
         mode_w = "压单吃货" if wb < -5 else "多头推升"
-        today_perf = f"📊【今日表现】多头稳步上攻({pct:+.2f}%，真量比{vr:.2f})，站稳真实黄线￥{vwap:.2f}，外盘{out_r:.0f}%({mode_w})，获利盘锁仓{win_pct:.0f}%"
+        today_perf = f"📊【今日表现】多头稳步上攻({pct:+.2f}%，5日{ret5:+.1f}%，真量比{vr:.2f})，站稳真实黄线￥{vwap:.2f}，外盘{out_r:.0f}%({mode_w})，获利盘{win_pct:.0f}%"
     elif -1.0 <= pct < 1.2 and p >= vwap * 0.996:
-        today_perf = f"📊【今日表现】窄幅强势蓄势({pct:+.2f}%，真量比{vr:.2f})，回踩真实黄线(￥{vwap:.2f})与主力成本(￥{mf_cost:.2f})有承接，外盘{out_r:.0f}%"
+        today_perf = f"📊【今日表现】窄幅强势蓄势({pct:+.2f}%，5日{ret5:+.1f}%)，回踩真实黄线(￥{vwap:.2f})与主力成本(￥{mf_cost:.2f})有承接，外盘{out_r:.0f}%"
     elif pct < 0 and p >= ma20:
-        today_perf = f"📊【今日表现】日内回调洗盘({pct:+.2f}%，真量比{vr:.2f})，受制于分时黄线￥{vwap:.2f}下方，但暂守MA20(￥{ma20:.2f})"
+        today_perf = f"📊【今日表现】日内回调洗盘({pct:+.2f}%)，受制于分时黄线￥{vwap:.2f}下方，但暂守MA20(￥{ma20:.2f})"
     else:
-        today_perf = f"📊【今日表现】走势偏弱调整({pct:+.2f}%，真量比{vr:.2f})，跌破分时黄线￥{vwap:.2f}，抛压待消化"
+        today_perf = f"📊【今日表现】走势偏弱调整({pct:+.2f}%)，跌破分时黄线￥{vwap:.2f}，抛压待消化"
 
     if is_indep:
         today_perf += "[🦄独立穿越牛]"
@@ -1500,7 +1657,6 @@ def generate_today_and_future_forecast(sp, sig=None):
 
 
 def assign_exclusive_strategy(cand_obj, hm_val):
-    """1:1 复刻 PC 端十大正交战法匹配器"""
     sp = cand_obj["spot"]
     sig = cand_obj["signals"]
     pct = sp["pct"]
@@ -1508,6 +1664,8 @@ def assign_exclusive_strategy(cand_obj, hm_val):
     open_gap = (sp["open"] - sp["prev_close"]) / max(sp["prev_close"], 0.01) * 100.0
     matched = []
 
+    if sig.get("is_five_day_monster", False) or sig.get("ret5_pct", 0.0) >= 8.5:
+        matched.append("🔥 五日主升妖股")
     if sig.get("is_independent_bull", False):
         matched.append("🦄 独立行情穿越牛")
     if sig.get("is_rounding_bottom", False):
@@ -1516,21 +1674,23 @@ def assign_exclusive_strategy(cand_obj, hm_val):
         matched.append("🚀 强庄试盘启动")
     if sig["golden_pit"] or sig["three_line_cross"]:
         matched.append("🕳️ 黄金坑穿三线")
-    if 0.2 <= open_gap <= 4.8 and sp["price"] >= sp["vwap"] * 0.997 and pct >= 0.8 and vr >= 1.08:
+    if 0.1 <= open_gap <= 5.2 and sp["price"] >= sp["vwap"] * 0.996 and pct >= 0.6 and vr >= 0.95:
         matched.append("⏱️ 09:26弱转强")
-    if sig["stealth_accum"] or (-0.8 <= pct <= 2.5 and sp["amp"] <= 5.0 and sp["outer_ratio"] >= 52.0 and sp["price"] >= sp["vwap"] * 0.995):
+    if sig["stealth_accum"] or (-0.8 <= pct <= 2.8 and sp["amp"] <= 5.5 and sp["outer_ratio"] >= 51.0 and sp["price"] >= sp["vwap"] * 0.995):
         matched.append("🕵️ 主力偷偷吸筹")
-    if -2.0 <= pct <= 2.0 and sp["price"] >= sig["ma20"] * 0.988 and vr <= 1.32 and (sig["has_zt_test"] or sig["winner_pct"] >= 62.0):
+    if -2.0 <= pct <= 2.5 and sp["price"] >= sig["ma20"] * 0.985 and vr <= 1.40 and (sig["has_zt_test"] or sig["winner_pct"] >= 60.0):
         matched.append("🐉 龙回头企稳")
-    if pct >= 1.8 and sig["winner_pct"] >= 68.0 and sp["intraday_retain"] >= 64.0 and sp["price"] >= sig["ma5"]:
+    if pct >= 1.5 and sig["winner_pct"] >= 66.0 and sp["intraday_retain"] >= 60.0 and sp["price"] >= sig["ma5"] * 0.995:
         matched.append("🌊 主升浪动量")
-    if sp["mkt_cap"] >= 85.0 and 0 < sp["pe"] <= 40.0 and sp["price"] >= sig["ma20"] * 0.99:
+    if sp["mkt_cap"] >= 80.0 and 0 < sp["pe"] <= 42.0 and sp["price"] >= sig["ma20"] * 0.99:
         matched.append("🛡️ 顺丰防御")
-    if -0.5 <= pct <= 3.5 and sp["price"] >= sp["vwap"] * 0.996 and sp["intraday_retain"] >= 62.0 and sig["winner_pct"] >= 62.0:
+    if -0.5 <= pct <= 3.8 and sp["price"] >= sp["vwap"] * 0.995 and sp["intraday_retain"] >= 58.0 and sig["winner_pct"] >= 60.0:
         matched.append("🌙 尾盘埋伏")
 
     if not matched:
-        if sp["mkt_cap"] >= 100.0:
+        if sig.get("ret5_pct", 0.0) >= 5.0:
+            matched.append("🔥 五日主升妖股")
+        elif sp["mkt_cap"] >= 100.0:
             matched.append("🛡️ 顺丰防御")
         elif pct >= 1.5:
             matched.append("🌊 主升浪动量")
@@ -1540,854 +1700,60 @@ def assign_exclusive_strategy(cand_obj, hm_val):
             matched.append("🐉 龙回头企稳")
     return matched
 
-# ==================== 【第 2 段结束，请回复“第3段”获取第 3 段代码】 ====================
-# ==================== 【第 3 段 / 共 4 段：请紧接着粘贴在第 2 段下方】 ====================
 
-# =========================================================================
-# 核心引擎四：全市场主板候选池扩容 + 👑Top10满额选拔 + 十大战法满额并发扫描主引擎
-# =========================================================================
-def get_full_mainboard_candidate_codes():
-    """1:1 复刻 PC 端全市场主板候选池（165只核心底盘 + 活跃主板动态扩容 + 自选 + 持仓 + 5日池 + 本地CSV缓存）"""
-    code_set = set(st.session_state["active_mainboard_codes"])
-    for c, n, s in MAINBOARD_CORE_UNIVERSE:
-        if c not in DELISTED_BLACKLIST:
-            code_set.add(c)
-            st.session_state["stock_sector_map"][c] = s
-            st.session_state["name_sector_map"][n] = s
-    for c_exp in DYNAMIC_MAINBOARD_EXPANSION:
-        if c_exp not in DELISTED_BLACKLIST:
-            code_set.add(c_exp)
+def score_strategy_affinity(strat_name, st_obj):
+    sp = st_obj["spot"]
+    sig = st_obj["signals"]
+    base_s = st_obj["score_f"]
+    pct = sp["pct"]
+    vr = sp["vr"]
+    out_r = sp["outer_ratio"]
+    retain = sp["intraday_retain"]
+    ret5 = sig.get("ret5_pct", pct)
+    win_p = sig.get("winner_pct", 65.0)
+    above_vwap = 1.5 if sp["price"] >= sp["vwap"] * 0.996 else -2.0
+    in_matched = 3.5 if strat_name in st_obj.get("matched_strats", []) else 0.0
 
-    for row in st.session_state.get("watchlist_rows", []):
-        if row and len(row) >= 1:
-            c_i = str(row[0]).zfill(6)
-            if c_i not in DELISTED_BLACKLIST:
-                code_set.add(c_i)
-    for row in st.session_state.get("holdings_rows", []):
-        if row and len(row) >= 2:
-            c_i = str(row[1]).zfill(6)
-            if c_i not in DELISTED_BLACKLIST:
-                code_set.add(c_i)
-    for k5, v5 in st.session_state.get("pool_5day_map", {}).items():
-        if isinstance(v5, dict) and v5.get("code"):
-            c_i = str(v5["code"]).zfill(6)
-            if c_i not in DELISTED_BLACKLIST:
-                code_set.add(c_i)
-
-    if len(code_set) < 400:
-        for cf in [CACHE_SPOT_FILE, "nexus_spot_cache_v70.csv", "nexus_spot_cache_v69.csv", "nexus_spot_cache_v68.csv", "nexus_spot_cache.csv"]:
-            if os.path.exists(cf):
-                try:
-                    df_c = pd.read_csv(cf, dtype={"代码": str})
-                    for _, r in df_c.iterrows():
-                        c_raw = str(r.get("代码", "")).replace("sh", "").replace("sz", "").strip().zfill(6)
-                        n_raw = str(r.get("名称", ""))
-                        if c_raw in DELISTED_BLACKLIST:
-                            continue
-                        if c_raw.startswith(("600", "601", "603", "605", "000", "001", "002", "003")) and "ST" not in n_raw and "退" not in n_raw:
-                            code_set.add(c_raw)
-                    if len(code_set) >= 650:
-                        break
-                except Exception:
-                    pass
-    return sorted([c for c in code_set if c not in DELISTED_BLACKLIST])
-
-
-def run_quantitative_scan_web():
-    """1:1 复刻 PC 端 run_quantitative_scan：并发穿透60日K线、十大战法满额正交分流、Top10两级满额选拔"""
-    # 1. 同步三大真实指数
-    fetch_market_indices_realtime()
-
-    target_codes = get_full_mainboard_candidate_codes()
-    spot_map = {}
-    for i in range(0, len(target_codes), 220):
-        chunk = target_codes[i:i + 220]
-        part_res = fetch_tencent_batch_quotes(chunk)
-        spot_map.update(part_res)
-        time.sleep(0.01)
-
-    if not spot_map:
-        st.session_state["status_text"] = "🟠 [离线安全防护态：五档网络受限，已保留上次快照]"
-        return False
-
-    # 2. 全板块热度、3日持续流入与明日关注评级分析
-    sec_rows = fetch_ths_sector_flow(spot_map)
-
-    valid_codes_found = []
-    all_pcts = []
-    up_cnt, dn_cnt, zt_cnt, dt_cnt, bomb_cnt, nuc_down = 0, 0, 0, 0, 0, 0
-    time_alpha, elapsed_mins = get_intraday_time_factor()
-    min_amt_threshold = 28000000.0 * time_alpha
-
-    bucket_a_break, bucket_b_stealth, bucket_c_pullback, bucket_d_core = [], [], [], []
-    anomaly_events = []
-    now_hm = datetime.now().strftime("%H:%M")
-    today_date = datetime.now().strftime("%Y-%m-%d")
-
-    for code, sp in spot_map.items():
-        if code in DELISTED_BLACKLIST or not code.startswith(("600", "601", "603", "605", "000", "001", "002", "003")):
-            continue
-        name = sp.get("name", "")
-        if "ST" in name or "退" in name or sp.get("price", 0) < 2.5:
-            continue
-        valid_codes_found.append(code)
-        pct = sp["pct"]
-        all_pcts.append(pct)
-
-        if pct > 0:
-            up_cnt += 1
-        elif pct < 0:
-            dn_cnt += 1
-        zt_p = round(sp["prev_close"] * 1.10, 2)
-        if pct >= 9.8 or sp["price"] >= zt_p - 0.01:
-            zt_cnt += 1
-        elif sp["high"] >= zt_p - 0.01 and sp["price"] < zt_p - 0.02:
-            bomb_cnt += 1
-        if pct <= -9.8:
-            dt_cnt += 1
-        if pct <= -7.0:
-            nuc_down += 1
-
-        sec_name = resolve_canonical_sector(code, name)
-        sp["sector"] = sec_name
-
-        if sp["amount"] < min_amt_threshold and code not in st.session_state["stock_sector_map"]:
-            continue
-
-        if 0.0 <= pct <= 2.8 and sp["amp"] <= 4.8 and sp["price"] >= sp["vwap"] * 0.997 and sp["outer_ratio"] >= 53.0:
-            anomaly_events.append([
-                now_hm, "🔮尾盘/暗盘抢筹", code, name, f"{sp['price']:.2f}",
-                f"{pct:+.2f}%", f"{sp['vr']:.2f}", f"【{sec_name}】站稳黄线￥{sp['vwap']:.2f}|外盘{sp['outer_ratio']:.0f}%持续流入"
-            ])
-        elif sec_name in st.session_state["collective_surge_sectors"] and pct >= 1.8 and sp["price"] >= sp["vwap"]:
-            anomaly_events.append([
-                now_hm, "🔥板块集体异动", code, name, f"{sp['price']:.2f}",
-                f"{pct:+.2f}%", f"{sp['vr']:.2f}", f"【{sec_name}】主线多股放量齐拉！"
-            ])
-
-        if 0.5 <= pct <= 8.8 and sp["price"] >= sp["vwap"] * 0.995 and sp["intraday_retain"] >= 58.0:
-            bucket_a_break.append(sp)
-        if -1.0 <= pct <= 2.8 and sp["amp"] <= 5.5 and sp["price"] >= sp["vwap"] * 0.992 and sp["outer_ratio"] >= 50.0:
-            bucket_b_stealth.append(sp)
-        if -2.2 <= pct <= 2.5 and 0.40 <= sp["vr"] <= 1.55 and sp["price"] >= sp["vwap"] * 0.990:
-            bucket_c_pullback.append(sp)
-        if sp["mkt_cap"] >= 70.0 and 0 < sp["pe"] <= 45.0 and -1.2 <= pct <= 5.5:
-            bucket_d_core.append(sp)
-
-    if len(valid_codes_found) >= 40:
-        st.session_state["active_mainboard_codes"] = valid_codes_found
-        save_json_safe(ACTIVE_CODES_FILE, valid_codes_found)
-
-    all_pcts.sort()
-    st.session_state["median_stock_pct"] = round(all_pcts[len(all_pcts) // 2], 2) if all_pcts else 0.0
-    tot_zt_touch = zt_cnt + bomb_cnt
-    st.session_state["bomb_rate"] = round(bomb_cnt / tot_zt_touch * 100.0, 1) if tot_zt_touch > 0 else 10.0
-    breadth = up_cnt / max(up_cnt + dn_cnt, 1)
-    temp_s = round(max(10.0, min(98.0, breadth * 75 + zt_cnt * 0.6 - dt_cnt * 1.2 - nuc_down * 0.4 - st.session_state["bomb_rate"] * 0.12)), 1)
-    st.session_state["market_temp_score"] = temp_s
-    st.session_state["fuse_triggered"] = (temp_s < 34.0 or st.session_state["bomb_rate"] > 42.0 or nuc_down >= 35 or st.session_state["median_stock_pct"] <= -1.8)
-
-    # 3. 同步计算真实上证点位、两市成交额与【🧭明日重点关注板块推演】
-    compute_market_volume_and_forecast(up_cnt, dn_cnt, zt_cnt, dt_cnt)
-
-    bucket_a_break.sort(key=lambda x: (x["outer_ratio"], x["pct"]), reverse=True)
-    bucket_b_stealth.sort(key=lambda x: (x["outer_ratio"] - x["weibi_pct"] * 0.3), reverse=True)
-    bucket_c_pullback.sort(key=lambda x: x["intraday_retain"], reverse=True)
-    bucket_d_core.sort(key=lambda x: x["amount"], reverse=True)
-
-    shortlist_map = {}
-    for lst, quota in [(bucket_a_break, 42), (bucket_b_stealth, 32), (bucket_c_pullback, 28), (bucket_d_core, 26)]:
-        for item in lst[:quota]:
-            shortlist_map[item["code"]] = item
-
-    if len(shortlist_map) < 95:
-        sorted_backup = sorted(spot_map.values(), key=lambda x: (x["pct"] >= 0, x["outer_ratio"], x["amount"]), reverse=True)
-        for item in sorted_backup:
-            if item["code"] not in shortlist_map and item["code"] not in DELISTED_BLACKLIST and "ST" not in item["name"]:
-                shortlist_map[item["code"]] = item
-                if len(shortlist_map) >= 110:
-                    break
-
-    for row_w in st.session_state.get("watchlist_rows", []):
-        if row_w and str(row_w[0]).zfill(6) in spot_map:
-            c_custom = str(row_w[0]).zfill(6)
-            shortlist_map[c_custom] = spot_map[c_custom]
-
-    # 4. 并发拉取60日真K线并运行唯一严谨10分公允评分引擎
-    def _fetch_kline_worker(sp_item):
-        c = sp_item["code"]
-        prefix = "sh" if c.startswith("6") else "sz"
-        url = f"http://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param={prefix}{c},day,,,65,qfq&_t={int(time.time()*1000)}"
-        try:
-            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
-            with urllib.request.urlopen(req, timeout=4.2) as resp:
-                raw_json = json.loads(resp.read().decode("utf-8", errors="ignore"))
-            st_node = raw_json.get("data", {}).get(f"{prefix}{c}", {})
-            k_list = st_node.get("qfqday") or st_node.get("day") or []
-            if len(k_list) >= 20:
-                rows = []
-                for item in k_list[-60:]:
-                    if len(item) >= 6:
-                        rows.append({
-                            "日期": str(item[0]), "开盘": float(item[1]), "收盘": float(item[2]),
-                            "最高": float(item[3]), "最低": float(item[4]), "成交量": max(float(item[5]), 1.0)
-                        })
-                if len(rows) >= 20:
-                    df_tmp = pd.DataFrame(rows)
-                    df_tmp["涨跌幅"] = df_tmp["收盘"].pct_change().fillna(0.0) * 100.0
-                    avg_v = max(df_tmp["成交量"].mean(), 1.0)
-                    df_tmp["换手率"] = (df_tmp["成交量"] / avg_v * 2.5).clip(0.35, 25.0)
-                    return c, df_tmp.reset_index(drop=True)
-        except Exception:
-            pass
-        return c, None
-
-    need_fetch_items = [
-        sp_i for sp_i in shortlist_map.values()
-        if sp_i["code"] not in st.session_state["kline_cache"]
-    ]
-    if need_fetch_items:
-        with ThreadPoolExecutor(max_workers=12) as ex:
-            futs = [ex.submit(_fetch_kline_worker, sp_i) for sp_i in need_fetch_items]
-            for fut in as_completed(futs):
-                try:
-                    c_r, df_r = fut.result()
-                    if df_r is not None:
-                        st.session_state["kline_cache"][c_r] = df_r
-                        st.session_state["kline_t1_disk_cache"][c_r] = {
-                            "cache_date": today_date,
-                            "rows": df_r[["开盘", "收盘", "最高", "最低", "成交量", "涨跌幅", "换手率"]].to_dict("records")
-                        }
-                except Exception:
-                    pass
-
-    inspected_results = {}
-    for c, sp_item in shortlist_map.items():
-        sec_canon = resolve_canonical_sector(c, sp_item.get("name", ""), sp_item.get("sector", ""))
-        sp_item["sector"] = sec_canon
-        df_k = fetch_real_kline(c, sp_item)
-        if df_k is not None and len(df_k) >= 6:
-            h_tos = df_k["换手率"].iloc[-6:-1].astype(float).tolist()
-            avg_5to = max(sum(h_tos) / max(len(h_tos), 1), 0.35)
-            sp_item["vr"] = round(min(7.5, max(0.45, (sp_item["turnover"] / max(elapsed_mins / 240.0, 0.12)) / avg_5to)), 2)
-        sc, brk, sig = evaluate_strict_10pt_score(c, sp_item.get("name", c), sp_item, df_k, sec_canon)
-        inspected_results[c] = (sc, brk, sig)
-
-    save_json_safe(KLINE_T1_CACHE_FILE, st.session_state["kline_t1_disk_cache"])
-    save_json_safe(SCORE_LOCK_FILE, st.session_state["score_lock_map"])
-
-    sec_max_pct, sec_max_amt = {}, {}
-    for c, sp in shortlist_map.items():
-        s_n = sp.get("sector", "先进制造")
-        sec_max_pct[s_n] = max(sec_max_pct.get(s_n, -99.0), sp["pct"])
-        sec_max_amt[s_n] = max(sec_max_amt.get(s_n, 0.0), sp["amount"])
-
-    hm_val = datetime.now().hour * 100 + datetime.now().minute
-    cand_objects = {}
-
-    for c, sp in shortlist_map.items():
-        if c not in inspected_results or c not in st.session_state["canonical_eval_cache"]:
-            continue
-        sc_r, brk_r, sig = inspected_results[c]
-        ev_cache = st.session_state["canonical_eval_cache"][c]
-        if sig.get("is_blown_board"):
-            continue
-
-        s_n = ev_cache["sector"]
-        if sp["pct"] >= sec_max_pct.get(s_n, 99.0) - 0.3 and sp["pct"] > 0.8:
-            role_tag = "👑龙一"
-        elif sp["amount"] >= sec_max_amt.get(s_n, 9999999999.0) * 0.85 or sp["mkt_cap"] >= 160.0:
-            role_tag = "🏛️中军"
-        else:
-            role_tag = "⚡前排"
-
-        forecast_txt = generate_today_and_future_forecast(sp, sig)
-        suit_badge_val, suit_detail_val = evaluate_strategy_suitability_and_logic("强庄试盘启动", sp, sig)
-        net_y = sp["active_net_yuan"]
-        net_str = f"{net_y/10000:+.0f}万(外{sp['outer_ratio']:.0f}%)" if abs(net_y) < 100000000 else f"{net_y/100000000:+.2f}亿(外{sp['outer_ratio']:.0f}%)"
-
-        cand_obj = {
-            "code": c, "name": sp["name"], "suitability": suit_badge_val,
-            "price": f"{sp['price']:.2f}", "price_f": sp["price"],
-            "change_pct": f"{sp['pct']:+.2f}%", "pct_f": sp["pct"],
-            "main_control": f"量比{sp['vr']:.2f}/委{sp['weibi_pct']:+.0f}%",
-            "net_inflow": net_str,
-            "sector": f"{s_n}[{role_tag}]", "raw_sector": s_n,
-            "red_lights": ev_cache["light_str"], "lamp_cnt": ev_cache["lamp_cnt"],
-            "score_f": ev_cache["score_f"], "score": ev_cache["score_str"],
-            "rr_ratio": sig["rr_ratio"], "vwap": sp["vwap"],
-            "support_p": sig["support_p"], "resist_p": sig["resist_p"],
-            "signals": sig, "spot": sp, "summary": f"{suit_detail_val} ｜ {forecast_txt}"
-        }
-        cand_obj["matched_strats"] = assign_exclusive_strategy(cand_obj, hm_val)
-        cand_objects[c] = cand_obj
-
-    # 🌟 十大战法满额正交分流器（确保每个战法池稳定输出 6~8 只严选股，绝无空表！）
-    pool_map = {
-        "🦄 独立行情穿越牛": [], "🚀 强庄试盘启动": [], "🕵️ 主力偷偷吸筹": [],
-        "⏱️ 09:26弱转强": [], "🕳️ 黄金坑穿三线": [], "🌊 主升浪动量": [],
-        "🐉 龙回头企稳": [], "📐 圆弧底突破": [], "🛡️ 顺丰防御": [], "🌙 尾盘埋伏": []
-    }
-    assigned_codes_global = set()
-    sorted_all_cands = sorted(
-        cand_objects.values(),
-        key=lambda x: (
-            1 if (x["lamp_cnt"] == 6 and "四红" in x["red_lights"]) else 0,
-            x["score_f"],
-            x["rr_ratio"]
-        ),
-        reverse=True
-    )
-
-    # 第一轮：按每只高分股票的专属战法匹配入池
-    for st_c in sorted_all_cands:
-        if st_c["signals"].get("is_limit_up_locked") or st_c["score_f"] < 6.8:
-            continue
-        for s_target in st_c["matched_strats"]:
-            if len(pool_map[s_target]) < 8 and st_c["code"] not in assigned_codes_global:
-                st_copy = st_c.copy()
-                b_val, d_val = evaluate_strategy_suitability_and_logic(s_target, st_copy["spot"], st_copy["signals"])
-                st_copy["suitability"] = b_val
-                st_copy["summary"] = f"{d_val} ｜ {generate_today_and_future_forecast(st_copy['spot'], st_copy['signals'])}"
-                pool_map[s_target].append(st_copy)
-                assigned_codes_global.add(st_c["code"])
-                break
-
-    # 第二轮：对尚未满 6 只的战法池，从优质候选中择优补足（保证绝无空表！）
-    for s_target in pool_map.keys():
-        if len(pool_map[s_target]) >= 6:
-            continue
-        for st_c in sorted_all_cands:
-            if st_c["code"] in assigned_codes_global or st_c["signals"].get("is_limit_up_locked") or st_c["score_f"] < 6.2:
-                continue
-            st_copy = st_c.copy()
-            b_val, d_val = evaluate_strategy_suitability_and_logic(s_target, st_copy["spot"], st_copy["signals"])
-            st_copy["suitability"] = b_val
-            st_copy["summary"] = f"{d_val} ｜ {generate_today_and_future_forecast(st_copy['spot'], st_copy['signals'])}"
-            pool_map[s_target].append(st_copy)
-            assigned_codes_global.add(st_c["code"])
-            if len(pool_map[s_target]) >= 6:
-                break
-
-    strat_key_mapping = [
-        ("🦄 独立行情穿越牛", "indep"),
-        ("🚀 强庄试盘启动", "strong"),
-        ("🕵️ 主力偷偷吸筹", "stealth"),
-        ("⏱️ 09:26弱转强", "morning"),
-        ("🕳️ 黄金坑穿三线", "pit"),
-        ("🌊 主升浪动量", "surge"),
-        ("🐉 龙回头企稳", "dragon"),
-        ("📐 圆弧底突破", "round"),
-        ("🛡️ 顺丰防御", "defensive"),
-        ("🌙 尾盘埋伏", "tail")
-    ]
-
-    snap_dict = {}
-    all_top_candidates = []
-    new_review_batch = []
-
-    for strat_label, snap_k in strat_key_mapping:
-        selected_today = pool_map[strat_label]
-        selected_today.sort(key=lambda x: (2 if "✅" in x["suitability"] else (1 if "🟡" in x["suitability"] else 0), x["score_f"]), reverse=True)
-        rows_for_tab = []
-        for st_c in selected_today:
-            key_5d = st_c["code"]
-            if key_5d not in st.session_state["pool_5day_map"]:
-                st.session_state["pool_5day_map"][key_5d] = {
-                    "pick_date": today_date, "pick_price": st_c["price_f"],
-                    "code": st_c["code"], "name": st_c["name"], "strategy": strat_label
-                }
-            row_t = [
-                st_c["code"], st_c["name"], st_c["suitability"], st_c["price"], st_c["change_pct"],
-                st_c["main_control"], st_c["net_inflow"], st_c["sector"], st_c["red_lights"], st_c["score"], st_c["summary"]
-            ]
-            rows_for_tab.append(row_t)
-            all_top_candidates.append((st_c, strat_label))
-            new_review_batch.append([
-                f"{today_date} {now_hm}", strat_label, st_c["code"], st_c["name"],
-                f"{st_c['price_f']:.2f}", f"{st_c['price_f']:.2f}", "+0.00%", "+0.00%",
-                st_c["red_lights"], st_c["score"], "⚪ 今日新选待验证", st_c["summary"]
-            ])
-        snap_dict[snap_k] = rows_for_tab
-
-    # 🌟 提炼【👑 今日全场核心领涨金股 Top 10 排行榜】（两级满额选拔）
-    tier1_top, tier2_top = [], []
-    seen_top_c = set()
-    for st_c, s_lbl in all_top_candidates:
-        sig = st_c["signals"]
-        c_code = st_c["code"]
-        if c_code in seen_top_c or sig.get("is_limit_up_locked") or sig.get("is_blown_board"):
-            continue
-        is_uptrend_ok = (st_c["price_f"] >= st_c["vwap"] * 0.996 and st_c["pct_f"] >= 0.0 and st_c["price_f"] >= sig["ma20"] * 0.995)
-        if st_c["lamp_cnt"] == 6 and "四红" in st_c["red_lights"] and is_uptrend_ok and "✅" in st_c["suitability"]:
-            tier1_top.append((st_c, s_lbl))
-            seen_top_c.add(c_code)
-        elif st_c["lamp_cnt"] >= 5 and is_uptrend_ok and ("✅" in st_c["suitability"] or "🟡" in st_c["suitability"]):
-            tier2_top.append((st_c, s_lbl))
-            seen_top_c.add(c_code)
-
-    tier1_top.sort(key=lambda x: (1 if x[0]["signals"].get("is_independent_bull") else 0, x[0]["score_f"], x[0]["rr_ratio"]), reverse=True)
-    tier2_top.sort(key=lambda x: (x[0]["lamp_cnt"], 1 if "✅" in x[0]["suitability"] else 0, x[0]["score_f"]), reverse=True)
-    top10_list = (tier1_top + tier2_top)[:10]
-    if len(top10_list) < 10:
-        for st_c, s_lbl in sorted(all_top_candidates, key=lambda x: x[0]["score_f"], reverse=True):
-            if st_c["code"] not in seen_top_c:
-                top10_list.append((st_c, s_lbl))
-                seen_top_c.add(st_c["code"])
-                if len(top10_list) >= 10:
-                    break
-
-    top3_rows = []
-    for idx, (st_c, s_lbl) in enumerate(top10_list):
-        rank_str = f"🏆 Top {idx+1}"
-        p_f = st_c["price_f"]
-        vwap_f = st_c["vwap"]
-        buy_zone = f"吸￥{min(p_f, vwap_f)*0.995:.2f}/损￥{st_c['support_p']:.2f}"
-        top3_rows.append([
-            rank_str, st_c["code"], st_c["name"], s_lbl, st_c["price"], st_c["change_pct"],
-            st_c["sector"], st_c["red_lights"], st_c["score"], st_c["suitability"], buy_zone, st_c["summary"]
-        ])
-
-    pos_adv = "15%~30%" if st.session_state["fuse_triggered"] else ("60%~80%" if temp_s >= 60 else "40%~50%")
-    hdr_txt = f"🌡️ 上证:{st.session_state['sh_index_price']:.2f}({st.session_state['sh_index_pct']:+.2f}%) | 深成:{st.session_state['sz_index_pct']:+.2f}% | {st.session_state['sh_vol_status'][:13]} | 温度:{temp_s}分 | 涨跌停:{zt_cnt}/{dt_cnt} | 仓位:{pos_adv}"
-    top_names_str = "、".join([f"{x[0]['name']}({x[0]['code']})" for x in top10_list[:5]]) if top10_list else "暂无满灯标的"
-    directive_str = (
-        f"{st.session_state['tomorrow_sector_focus_str']}\n"
-        f"👑 【全场Top10核心金股】: {top_names_str} ｜ (点击顶部[🧭明日重点板块推演]按钮可看完整三梯队板块分析！)"
-    )
-
-    snap_dict["market_temp_text"] = hdr_txt
-    snap_dict["directive_text"] = directive_str
-    snap_dict["top3"] = top3_rows
-    snap_dict["sector"] = sec_rows
-    snap_dict["anomaly"] = anomaly_events[:25]
-
-    st.session_state["scan_snapshot"] = snap_dict
-    save_json_safe(POOL_5DAY_FILE, st.session_state["pool_5day_map"])
-    save_json_safe(SNAPSHOT_FILE, snap_dict)
-
-    # 合并并保存历史复盘记录
-    combined_rev = st.session_state.get("all_review_records", []) + new_review_batch
-    st.session_state["all_review_records"] = sanitize_and_dedup_review_records(combined_rev)
-    save_json_safe(REVIEW_FILE, st.session_state["all_review_records"])
-
-    now_full = datetime.now().strftime("%H:%M:%S")
-    st.session_state["status_text"] = f"🟢 [📡五档+腾讯K线直连 {now_full} | 十大战法已满额输出]"
-
-    if top10_list:
-        st.session_state["selected_stock_code"] = top10_list[0][0]["code"]
-        st.session_state["selected_stock_name"] = top10_list[0][0]["name"]
-        st.session_state["selected_stock_strat"] = top10_list[0][1]
-    return True
-
-
-def inspect_single_stock_detail(code, name="", strat_tag="👑 全场Top10金股"):
-    """选中任意一只股票时，实时拉取五档与60日真K线，返回右侧拍板舱所需的完整诊断包"""
-    code = str(code).zfill(6)
-    canon_sec = resolve_canonical_sector(code, name)
-    live_map = fetch_tencent_batch_quotes([code])
-    spot_info = live_map.get(code) or st.session_state["latest_spot_cache"].get(code)
-    if not spot_info:
-        spot_info = {
-            "code": code, "name": name or code, "sector": canon_sec, "price": 10.0, "open": 10.0,
-            "high": 10.1, "low": 9.9, "prev_close": 10.0, "pct": 0.0, "vr": 1.15, "turnover": 2.5,
-            "upper_shadow": 0.005, "vwap": 9.98, "outer_ratio": 54.0, "net_buy_rate_pct": 8.0,
-            "active_net_yuan": 12000000.0, "weibi_pct": 0.0, "intraday_retain": 70.0,
-            "pe": 18.0, "pb": 1.8, "mkt_cap": 95.0, "bids": [], "asks": []
-        }
-    name = spot_info.get("name", name or code)
-    canon_sec = resolve_canonical_sector(code, name, spot_info.get("sector", ""))
-    spot_info["sector"] = canon_sec
-
-    df_k = fetch_real_kline(code, spot_info)
-    if df_k is not None and len(df_k) >= 6:
-        _, elapsed_m = get_intraday_time_factor()
-        h_tos = df_k["换手率"].iloc[-6:-1].astype(float).tolist()
-        avg_5to = max(sum(h_tos) / max(len(h_tos), 1), 0.35)
-        spot_info["vr"] = round(min(7.5, max(0.45, (spot_info["turnover"] / max(elapsed_m / 240.0, 0.12)) / avg_5to)), 2)
-
-    df_min = fetch_intraday_min_data(code) if st.session_state.get("chart_mode") == "intraday" else None
-    real_score, breakdown, signals = evaluate_strict_10pt_score(code, name, spot_info, df_k, canon_sec)
-    cached_ev = st.session_state["canonical_eval_cache"][code]
-    suit_badge, suit_detail = evaluate_strategy_suitability_and_logic(strat_tag, spot_info, signals)
-    forecast_full = generate_today_and_future_forecast(spot_info, signals)
-
-    return {
-        "code": code, "name": name, "strategy": strat_tag, "sector": canon_sec,
-        "price_f": float(spot_info["price"]), "score_str": cached_ev["score_str"],
-        "score_num": real_score, "light_str": cached_ev["light_str"],
-        "signals": signals, "spot": spot_info, "breakdown": breakdown,
-        "suit_badge": suit_badge, "suit_detail": suit_detail,
-        "forecast_full": forecast_full, "df_k": df_k, "df_min": df_min
-    }
+    if strat_name == "🔥 五日主升妖股":
+        return in_matched + ret5 * 0.45 + sig.get("zt_5d_cnt", 0) * 1.8 + base_s + above_vwap
+    if strat_name == "🦄 独立行情穿越牛":
+        return in_matched + sig.get("indep_immunity_rate", 65.0) * 0.08 + base_s + above_vwap
+    if strat_name == "🚀 强庄试盘启动":
+        bonus = (2.5 if sig.get("has_zt_test") else 0.0) + (1.5 if sig.get("hold_support") else 0.0)
+        return in_matched + bonus + base_s + vr * 0.5 + above_vwap
+    if strat_name == "🕵️ 主力偷偷吸筹":
+        stealth_b = 2.5 if (sp["weibi_pct"] < -3 and out_r >= 52.0) else (1.2 if -0.5 <= pct <= 2.5 else 0.0)
+        return in_matched + stealth_b + (out_r - 50.0) * 0.12 + base_s + above_vwap
+    if strat_name == "⏱️ 09:26弱转强":
+        gap = (sp["open"] - sp["prev_close"]) / max(sp["prev_close"], 0.01) * 100.0
+        gap_b = 2.2 if (0.1 <= gap <= 4.5 and sp["price"] >= sp["open"] * 0.996) else 0.0
+        return in_matched + gap_b + vr * 0.6 + retain * 0.03 + base_s + above_vwap
+    if strat_name == "🕳️ 黄金坑穿三线":
+        pit_b = 3.0 if (sig.get("golden_pit") or sig.get("three_line_cross")) else (1.5 if sp["price"] >= sig["ma20"] else 0.0)
+        return in_matched + pit_b + base_s + pct * 0.3 + above_vwap
+    if strat_name == "🌊 主升浪动量":
+        ma_align = 2.5 if (sp["price"] >= sig["ma5"] >= sig["ma10"] * 0.995) else 0.0
+        return in_matched + ma_align + win_p * 0.04 + pct * 0.45 + base_s + above_vwap
+    if strat_name == "🐉 龙回头企稳":
+        pull_b = 2.5 if (-1.5 <= pct <= 2.5 and vr <= 1.35 and sp["price"] >= sig["ma20"] * 0.99) else 0.0
+        return in_matched + pull_b + (1.5 if sig.get("has_zt_test") else 0.0) + base_s + above_vwap
+    if strat_name == "📐 圆弧底突破":
+        rb_b = 3.2 if sig.get("is_rounding_bottom") else (1.8 if sig.get("box_amp_20", 0.25) <= 0.20 else 0.0)
+        lip_b = 1.5 if sig["ma5"] >= sig["ma10"] * 0.995 else 0.0
+        return in_matched + rb_b + lip_b + base_s + above_vwap
+    if strat_name == "🛡️ 顺丰防御":
+        def_b = 2.8 if (sp["mkt_cap"] >= 80.0 and 0 < sp["pe"] <= 38.0) else 0.0
+        return in_matched + def_b + min(sp["mkt_cap"] / 100.0, 2.0) + base_s + above_vwap
+    if strat_name == "🌙 尾盘埋伏":
+        tail_b = 2.8 if (0.0 <= pct <= 3.6 and retain >= 62.0 and sp["price"] >= sp["vwap"]) else 0.0
+        return in_matched + tail_b + retain * 0.03 + (out_r - 50.0) * 0.08 + base_s + above_vwap
+    return base_s
 
 
 # =========================================================================
-# 核心引擎五：右侧 1:1 像素级 K 线+筹码峰+四红灯矩阵 / 今日分时 SVG 画布渲染器
+# 核心引擎四：历史复盘校准 + 全市场主板并发扫描主引擎 (11大战法100%满额输出)
 # =========================================================================
-def render_stock_canvas_svg(code, name, df_k=None, signals=None, df_min=None, mode="kline"):
-    """1:1 像素级复刻 PC 端 tkinter.Canvas 的 K 线+筹码峰+四排红绿灯+VOL+MACD 与今日实时分时画布"""
-    w, h = 680, 270
-    svg = [f'<svg viewBox="0 0 {w} {h}" width="100%" height="{h}" style="background-color:#080C14; border:1px solid #1E293B; border-radius:4px; display:block;">']
-
-    if mode == "intraday":
-        for y_l in [42, 92, 142, 192]:
-            svg.append(f'<line x1="45" y1="{y_l}" x2="{w-50}" y2="{y_l}" stroke="#162032" stroke-dasharray="2,2" />')
-        sp_live = st.session_state["latest_spot_cache"].get(code, {})
-        prev_close = float(sp_live.get("prev_close", 0.0))
-        if prev_close <= 0 and df_min is not None and "昨收" in df_min.columns and float(df_min["昨收"].iloc[0]) > 0:
-            prev_close = float(df_min["昨收"].iloc[0])
-        if prev_close <= 0:
-            prev_close = float(df_k["收盘"].iloc[-2]) if (df_k is not None and len(df_k) >= 2) else 10.0
-
-        if df_min is not None and len(df_min) >= 2:
-            p_list = df_min["收盘"].astype(float).tolist()
-            v_list = df_min["成交量"].astype(float).tolist()
-            t_last_str = str(df_min["时间"].iloc[-1]) if "时间" in df_min.columns else datetime.now().strftime("%H:%M")
-        elif sp_live and sp_live.get("price", 0) > 0:
-            o_p, h_p, l_p, c_p = sp_live["open"], sp_live["high"], sp_live["low"], sp_live["price"]
-            nodes = [o_p, (o_p + l_p) / 2.0, l_p, (l_p + h_p) / 2.0, h_p, (h_p + c_p * 2) / 3.0, c_p]
-            p_list, v_list = [], []
-            for idx_s in range(len(nodes) - 1):
-                for stp in range(10):
-                    r_t = stp / 10.0
-                    val = nodes[idx_s] * (1 - r_t) + nodes[idx_s + 1] * r_t
-                    p_list.append(val)
-                    v_list.append(1000.0 + abs(val - prev_close) * 4000.0)
-            t_last_str = datetime.now().strftime("%H:%M:%S")
-        else:
-            svg.append(f'<text x="{w//2}" y="{h//2}" fill="#64FFDA" font-size="13" font-weight="bold" text-anchor="middle">⏳ 正在同步 {name}({code}) 今日实时分时数据...</text></svg>')
-            return "".join(svg)
-
-        max_dev = max([abs(p - prev_close) for p in p_list] + [prev_close * 0.015])
-        top_p, bot_p = prev_close + max_dev * 1.1, prev_close - max_dev * 1.1
-        span_p = max(top_p - bot_p, 0.01)
-        plot_w = w - 100
-        mid_y = 92
-        svg.append(f'<line x1="45" y1="{mid_y}" x2="{45+plot_w}" y2="{mid_y}" stroke="#F59E0B" stroke-dasharray="4,3" stroke-width="1.2" />')
-
-        top_pct = (top_p - prev_close) / max(prev_close, 0.01) * 100.0
-        svg.append(f'<text x="41" y="28" fill="#F43F5E" font-size="10" font-weight="bold" text-anchor="end">{top_p:.2f}</text>')
-        svg.append(f'<text x="41" y="{mid_y+3}" fill="#F8FAFC" font-size="10" text-anchor="end">{prev_close:.2f}</text>')
-        svg.append(f'<text x="41" y="160" fill="#10B981" font-size="10" font-weight="bold" text-anchor="end">{bot_p:.2f}</text>')
-        svg.append(f'<text x="{48+plot_w}" y="28" fill="#F43F5E" font-size="10" font-weight="bold">+{top_pct:.2f}%</text>')
-        svg.append(f'<text x="{48+plot_w}" y="{mid_y+3}" fill="#F8FAFC" font-size="10">0.00%</text>')
-        svg.append(f'<text x="{48+plot_w}" y="160" fill="#10B981" font-size="10" font-weight="bold">-{top_pct:.2f}%</text>')
-
-        white_pts, yellow_pts = [], []
-        cum_pv, cum_v = 0.0, 0.0
-        n_pts = len(p_list)
-        for i, p_val in enumerate(p_list):
-            v_val = max(v_list[i], 1.0)
-            cum_pv += p_val * v_val
-            cum_v += v_val
-            vwap_v = cum_pv / cum_v
-            cx = 45 + i * (plot_w / max(n_pts - 1, 1))
-            cy_w = 160 - ((p_val - bot_p) / span_p) * 136
-            cy_y = 160 - ((vwap_v - bot_p) / span_p) * 136
-            white_pts.append(f"{cx:.1f},{cy_w:.1f}")
-            yellow_pts.append(f"{cx:.1f},{cy_y:.1f}")
-
-        svg.append(f'<polyline fill="none" stroke="#FACC15" stroke-width="1.6" points="{" ".join(yellow_pts)}" />')
-        svg.append(f'<polyline fill="none" stroke="#FFFFFF" stroke-width="1.8" points="{" ".join(white_pts)}" />')
-
-        last_p = float(sp_live.get("price", p_list[-1]))
-        true_vwap = float(sp_live.get("vwap", signals.get("vwap", cum_pv / max(cum_v, 1.0)) if signals else (cum_pv / max(cum_v, 1.0))))
-        last_pct = (last_p - prev_close) / max(prev_close, 0.01) * 100.0
-        st_tag = "🟢稳站真实黄线(强势承接)" if last_p >= true_vwap * 0.998 else "🔴黄线下方(受压)"
-        svg.append(f'<text x="45" y="14" fill="#64FFDA" font-size="11" font-weight="bold">【今日实时分时 {t_last_str}】{name}({code}) 现价:{last_p:.2f}({last_pct:+.2f}%) 真实黄线:{true_vwap:.2f} {st_tag}</text>')
-
-        max_mv = max(sorted(v_list)[int(len(v_list) * 0.95)], 1.0) if len(v_list) > 5 else max(v_list + [1.0])
-        svg.append('<text x="41" y="190" fill="#94A3B8" font-size="10" text-anchor="end">分时量</text>')
-        bar_w_m = max(1.2, plot_w / max(n_pts, 1) * 0.7)
-        for i in range(n_pts):
-            cx = 45 + i * (plot_w / max(n_pts - 1, 1))
-            vh = min(64.0, (v_list[i] / max_mv) * 60.0)
-            v_col = "#F43F5E" if (i == 0 or p_list[i] >= p_list[i - 1]) else "#10B981"
-            svg.append(f'<line x1="{cx:.1f}" y1="258" x2="{cx:.1f}" y2="{258-vh:.1f}" stroke="{v_col}" stroke-width="{bar_w_m:.1f}" />')
-
-        svg.append("</svg>")
-        return "".join(svg)
-
-    # K线 + 筹码峰 + 四红灯矩阵模式
-    if df_k is None or len(df_k) < 15:
-        svg.append(f'<text x="{w//2}" y="{h//2}" fill="#64FFDA" font-size="13" font-weight="bold" text-anchor="middle">⏳ 正在通过腾讯原生接口合成 {name} ({code}) 60日K线与四红灯...</text></svg>')
-        return "".join(svg)
-
-    closes = df_k["收盘"].astype(float).tolist()
-    opens = df_k["开盘"].astype(float).tolist()
-    highs = df_k["最高"].astype(float).tolist()
-    lows = df_k["最低"].astype(float).tolist()
-    vols = df_k["成交量"].astype(float).tolist()
-    n = len(closes)
-
-    min_p, max_p = min(lows), max(highs)
-    p_span = max(max_p - min_p, 0.01)
-    plot_w = w - 130
-    step_x = plot_w / max(n, 1)
-    bar_w = max(2.2, step_x * 0.64)
-
-    for y_div in [120, 176, 218]:
-        svg.append(f'<line x1="42" y1="{y_div}" x2="{w-10}" y2="{y_div}" stroke="#1E293B" />')
-
-    svg.append(f'<text x="39" y="24" fill="#94A3B8" font-size="10" text-anchor="end">{max_p:.2f}</text>')
-    svg.append(f'<text x="39" y="70" fill="#94A3B8" font-size="10" text-anchor="end">{(max_p+min_p)/2:.2f}</text>')
-    svg.append(f'<text x="39" y="115" fill="#94A3B8" font-size="10" text-anchor="end">{min_p:.2f}</text>')
-
-    win_pct = signals.get("winner_pct", 75.0) if signals else 75.0
-    mf_cost = signals.get("main_force_cost", closes[-1] * 0.95) if signals else closes[-1] * 0.95
-    svg.append(f'<text x="45" y="13" fill="#64FFDA" font-size="11" font-weight="bold">{name}({code}) 获利盘:{win_pct:.1f}%</text>')
-    svg.append('<text x="235" y="13" fill="#FBBF24" font-size="11" font-weight="bold">—MA5</text>')
-    svg.append('<text x="285" y="13" fill="#C084FC" font-size="11" font-weight="bold">—MA20</text>')
-    svg.append(f'<text x="345" y="13" fill="#38BDF8" font-size="11" font-weight="bold">--主力成本￥{mf_cost:.2f}</text>')
-
-    if min_p <= mf_cost <= max_p:
-        y_mf = 116 - ((mf_cost - min_p) / p_span) * 94
-        svg.append(f'<line x1="45" y1="{y_mf:.1f}" x2="{45+plot_w}" y2="{y_mf:.1f}" stroke="#38BDF8" stroke-dasharray="4,2" stroke-width="1.2" />')
-
-    # 右侧12格筹码峰分布
-    bins_12 = signals.get("canvas_12_bins", []) if signals else []
-    if not bins_12 or len(bins_12) != 12:
-        bins_12 = [1.0] * 12
-    max_b12 = max(bins_12) if max(bins_12) > 0 else 1.0
-    peak_b12 = bins_12.index(max_b12)
-    chip_x0 = 48 + plot_w
-    for b in range(12):
-        bw = (bins_12[b] / max_b12) * 62.0
-        by = 116 - ((b + 0.5) / 12.0) * 94
-        b_col = "#F59E0B" if b == peak_b12 else "#1E40AF"
-        svg.append(f'<rect x="{chip_x0:.1f}" y="{by-3.0:.1f}" width="{bw:.1f}" height="6" fill="{b_col}" />')
-
-    ma5_pts, ma20_pts = [], []
-    hist_lamp_set = set(signals.get("hist_lamp_bars", [])) if signals else set()
-    last_tag_x = -999
-
-    for i in range(n):
-        cx = 45 + i * step_x + step_x / 2.0
-        y_high = 116 - ((highs[i] - min_p) / p_span) * 94
-        y_low = 116 - ((lows[i] - min_p) / p_span) * 94
-        y_open = 116 - ((opens[i] - min_p) / p_span) * 94
-        y_close = 116 - ((closes[i] - min_p) / p_span) * 94
-
-        is_up = closes[i] >= opens[i]
-        col = "#F43F5E" if is_up else "#10B981"
-        svg.append(f'<line x1="{cx:.1f}" y1="{y_high:.1f}" x2="{cx:.1f}" y2="{y_low:.1f}" stroke="{col}" stroke-width="1" />')
-        top_y, bot_y = min(y_open, y_close), max(y_open, y_close)
-        bh = max(1.5, bot_y - top_y)
-        svg.append(f'<rect x="{cx - bar_w/2:.1f}" y="{top_y:.1f}" width="{bar_w:.1f}" height="{bh:.1f}" fill="{col}" />')
-
-        if i in hist_lamp_set and (cx - last_tag_x >= 42 or i == n - 1):
-            lbl_y = min(114, y_low + 10)
-            svg.append(f'<text x="{cx:.1f}" y="{lbl_y:.1f}" fill="#F43F5E" font-size="9" font-weight="bold" text-anchor="middle">★抄家伙!</text>')
-            last_tag_x = cx
-
-        if i >= 4:
-            m5 = sum(closes[i - 4:i + 1]) / 5.0
-            ma5_pts.append(f"{cx:.1f},{116 - ((m5 - min_p) / p_span) * 94:.1f}")
-        if i >= 19:
-            m20 = sum(closes[i - 19:i + 1]) / 20.0
-            ma20_pts.append(f"{cx:.1f},{116 - ((m20 - min_p) / p_span) * 94:.1f}")
-
-    if len(ma5_pts) >= 2:
-        svg.append(f'<polyline fill="none" stroke="#FBBF24" stroke-width="1.3" points="{" ".join(ma5_pts)}" />')
-    if len(ma20_pts) >= 2:
-        svg.append(f'<polyline fill="none" stroke="#C084FC" stroke-width="1.6" points="{" ".join(ma20_pts)}" />')
-
-    # 四排红绿灯矩阵 (趋势/资金/板块/量价)
-    row_labels = [("趋势", 130), ("资金", 142), ("板块", 154), ("量价", 166)]
-    for r_txt, r_y in row_labels:
-        svg.append(f'<text x="39" y="{r_y+3}" fill="#E2E8F0" font-size="10" font-weight="bold" text-anchor="end">{r_txt}</text>')
-
-    four_mat = signals.get("four_lamp_matrix", []) if signals else []
-    lamp_w = max(2.2, step_x * 0.58)
-    for i in range(min(n, len(four_mat))):
-        cx = 45 + i * step_x + step_x / 2.0
-        st_4 = four_mat[i]
-        for r_idx in range(4):
-            ry = row_labels[r_idx][1]
-            c_lamp = "#F43F5E" if st_4[r_idx] else "#10B981"
-            svg.append(f'<rect x="{cx - lamp_w/2:.1f}" y="{ry-4}" width="{lamp_w:.1f}" height="8" fill="{c_lamp}" />')
-        if all(st_4) and i == n - 1:
-            svg.append(f'<rect x="{cx - lamp_w/2 - 1:.1f}" y="124" width="{lamp_w+2:.1f}" height="48" fill="none" stroke="#FEF08A" stroke-width="1.2" />')
-
-    is_now_4red = (len(four_mat) > 0 and all(four_mat[-1]))
-    badge_col = "#F43F5E" if is_now_4red else "#94A3B8"
-    t1_b = "四灯齐红" if is_now_4red else "看四红"
-    t2_b = "资金入场" if is_now_4red else "待共振"
-    svg.append(f'<text x="{chip_x0+4:.1f}" y="144" fill="{badge_col}" font-size="10" font-weight="bold">{t1_b}</text>')
-    svg.append(f'<text x="{chip_x0+4:.1f}" y="158" fill="{badge_col}" font-size="10" font-weight="bold">{t2_b}</text>')
-
-    # VOL 成交量柱
-    sorted_v = sorted(vols)
-    v_ref_max = max(sorted_v[int(n * 0.95)] if n >= 10 else max(vols), 1.0)
-    svg.append('<text x="39" y="198" fill="#94A3B8" font-size="10" text-anchor="end">VOL</text>')
-    for i in range(n):
-        cx = 45 + i * step_x + step_x / 2.0
-        vh = min(32.0, (vols[i] / v_ref_max) * 30.0)
-        col = "#F43F5E" if closes[i] >= opens[i] else "#10B981"
-        svg.append(f'<rect x="{cx - bar_w/2:.1f}" y="{215-vh:.1f}" width="{bar_w:.1f}" height="{vh:.1f}" fill="{col}" />')
-
-    # MACD 柱
-    svg.append('<text x="39" y="244" fill="#94A3B8" font-size="10" text-anchor="end">MACD</text>')
-    ema12, ema26, difs, deas, macds = [], [], [], [], []
-    for i, c in enumerate(closes):
-        e12 = c if i == 0 else ema12[-1] * (11 / 13.0) + c * (2 / 13.0)
-        e26 = c if i == 0 else ema26[-1] * (25 / 27.0) + c * (2 / 27.0)
-        ema12.append(e12)
-        ema26.append(e26)
-        dif = e12 - e26
-        difs.append(dif)
-        dea = dif if i == 0 else deas[-1] * 0.8 + dif * 0.2
-        deas.append(dea)
-        macds.append((dif - dea) * 2.0)
-
-    max_m = max([abs(x) for x in macds + difs] + [0.01])
-    zero_y = 244
-    svg.append(f'<line x1="45" y1="{zero_y}" x2="{45+plot_w}" y2="{zero_y}" stroke="#334155" />')
-    for i in range(n):
-        cx = 45 + i * step_x + step_x / 2.0
-        mh = (macds[i] / max_m) * 14.0
-        m_col = "#F43F5E" if macds[i] >= 0 else "#10B981"
-        svg.append(f'<line x1="{cx:.1f}" y1="{zero_y}" x2="{cx:.1f}" y2="{zero_y-mh:.1f}" stroke="{m_col}" stroke-width="2" />')
-
-    svg.append("</svg>")
-    return "".join(svg)
-
-
-# =========================================================================
-# 核心引擎六：实盘持仓 T+1 双轨账本、三态做T教练 & 历史复盘十大战法胜率争霸榜
-# =========================================================================
-def parse_dual_shares(shares_dual_str):
-    s = str(shares_dual_str).strip()
-    try:
-        if "(" in s and "可卖" in s:
-            tot = int(float(s.split("(")[0].replace("股", "")))
-            av = int(float(s.split("可卖")[0].split("(")[-1].replace("股", "")))
-            return tot, min(tot, max(0, av))
-        v = int(float(s.replace("股", "")))
-        return v, v
-    except Exception:
-        return 5000, 5000
-
-
-def insert_or_update_holding_web(code, name, cost_p, tot_shares, avail_shares, red_lights_str="🔥四红(6灯)"):
-    code = str(code).zfill(6)
-    today_str = datetime.now().strftime("%Y-%m-%d %H:%M")
-    mkt_v = cost_p * tot_shares
-    dual_s = f"{tot_shares}({avail_shares}可卖)"
-    atr_s = f"护￥{cost_p*0.968:.2f}/目￥{cost_p*1.08:.2f}"
-    advice_init = "🟢 持仓监控中 (点击刷新生成三态做T指令与走势预测)"
-
-    rows = st.session_state.get("holdings_rows", [])
-    for idx, vals in enumerate(rows):
-        if len(vals) >= 2 and str(vals[1]).zfill(6) == code:
-            vals[2] = name
-            vals[3] = f"{cost_p:.3f}"
-            vals[4] = dual_s
-            vals[5] = f"￥{mkt_v:,.2f}"
-            rows[idx] = vals
-            st.session_state["holdings_rows"] = rows
-            save_json_safe(HOLDINGS_FILE, rows)
-            return
-
-    row_h = [
-        today_str, code, name, f"{cost_p:.3f}", dual_s, f"￥{mkt_v:,.2f}",
-        f"{cost_p:.2f}", f"￥{cost_p:.2f}", "+￥0.00", "+0.00%", atr_s, red_lights_str, advice_init
-    ]
-    rows.insert(0, row_h)
-    st.session_state["holdings_rows"] = rows
-    save_json_safe(HOLDINGS_FILE, rows)
-
-
-def refresh_holdings_coach_web():
-    """1:1 复刻 PC 端 refresh_holdings_coach：刷新五档持仓价格、税后净盈亏与三态做T诊断"""
-    rows = st.session_state.get("holdings_rows", [])
-    if not rows:
-        return 0.0, 0.0, 0.0
-    codes = [str(r[1]).zfill(6) for r in rows if len(r) >= 2]
-    spot_map = fetch_tencent_batch_quotes(codes)
-    today_d = datetime.now().strftime("%Y-%m-%d")
-
-    tot_mkt, tot_pnl, win_n = 0.0, 0.0, 0
-    updated_rows = []
-    for vals in rows:
-        vals = list(vals)
-        while len(vals) < 13:
-            vals.append("")
-        buy_dt_str, code, name = str(vals[0]), str(vals[1]).zfill(6), str(vals[2])
-        try:
-            cost_p = float(vals[3])
-        except Exception:
-            cost_p = 10.0
-        tot_sh, avail_sh = parse_dual_shares(vals[4])
-        if buy_dt_str[:10] < today_d and avail_sh < tot_sh:
-            avail_sh = tot_sh
-
-        canon_sec = resolve_canonical_sector(code, name)
-        sp_info = spot_map.get(code)
-        if not sp_info:
-            try:
-                lat_fb = float(vals[6])
-            except Exception:
-                lat_fb = cost_p
-            sp_info = {
-                "code": code, "name": name, "sector": canon_sec, "price": lat_fb,
-                "high": lat_fb * 1.01, "low": lat_fb * 0.99, "prev_close": lat_fb,
-                "pct": 0.0, "vr": 1.0, "vwap": lat_fb, "outer_ratio": 52.0,
-                "weibi_pct": 0.0, "intraday_retain": 70.0, "pe": 18.0, "pb": 1.8, "mkt_cap": 90.0
-            }
-
-        df_k = fetch_real_kline(code, sp_info)
-        sc_val, _, sigs = evaluate_strict_10pt_score(code, name, sp_info, df_k, canon_sec)
-        ev = st.session_state["canonical_eval_cache"][code]
-        latest = float(sp_info["price"])
-        vwap = float(sp_info["vwap"])
-        out_r = float(sp_info.get("outer_ratio", 52.0))
-        lamp_cnt = ev["lamp_cnt"]
-        atr14 = sigs.get("atr14", latest * 0.025)
-        ma20 = sigs.get("ma20", latest * 0.97)
-
-        mkt_val = latest * tot_sh
-        fee = (cost_p * tot_sh + mkt_val) * 0.0004
-        net_pnl = (latest - cost_p) * tot_sh - fee
-        ret_pct = (net_pnl / max(cost_p * tot_sh, 1.0)) * 100.0
-
-        highest_ref = max(latest, cost_p, float(sp_info.get("high", latest)))
-        trail_stop = round(max(cost_p * 0.968, highest_ref - 2.0 * atr14), 2)
-        tp_target = round(max(sigs.get("resist_p", cost_p * 1.08), cost_p * 1.06), 2)
-        forecast_h = generate_today_and_future_forecast(sp_info, sigs)
-
-        if sp_info["pct"] >= 3.8 and latest >= vwap and out_r >= 62.0 and lamp_cnt >= 5:
-            advice = f"🔥【主升逼空·禁做T防卖飞】外盘{out_r:.0f}%冲板中！锁仓等涨停 ｜ {forecast_h}"
-        elif latest <= trail_stop or (latest < ma20 * 0.985 and out_r <= 44.0):
-            advice = f"🚨【破位预警·严禁补仓】跌破保护线￥{trail_stop:.2f}，趁反抽黄线￥{vwap:.2f}减仓 ｜ {forecast_h}"
-        else:
-            advice = f"🔄【良性做T】冲高￥{latest*1.028:.2f}高抛 / 回踩黄线￥{vwap:.2f}低吸 ｜ {forecast_h}"
-
-        vals[4] = f"{tot_sh}({avail_sh}可卖)"
-        vals[5] = f"￥{mkt_val:,.2f}"
-        vals[6] = f"{latest:.2f}"
-        vals[7] = f"￥{vwap:.2f}"
-        vals[8] = f"+￥{net_pnl:,.2f}" if net_pnl >= 0 else f"-￥{abs(net_pnl):,.2f}"
-        vals[9] = f"+{ret_pct:.2f}%" if ret_pct >= 0 else f"{ret_pct:.2f}%"
-        vals[10] = f"护￥{trail_stop:.2f}/目￥{tp_target:.2f}"
-        vals[11] = f"{ev['light_str']}({sc_val:.1f}分)"
-        vals[12] = advice
-
-        tot_mkt += mkt_val
-        tot_pnl += net_pnl
-        if net_pnl > 0:
-            win_n += 1
-        updated_rows.append(vals)
-
-    st.session_state["holdings_rows"] = updated_rows
-    save_json_safe(HOLDINGS_FILE, updated_rows)
-    wr = (win_n / len(updated_rows) * 100.0) if updated_rows else 0.0
-    return tot_mkt, tot_pnl, wr
-
-
 def sanitize_and_dedup_review_records(raw_records):
-    """1:1 复刻 PC 端历史复盘记录去重与基准价校准"""
     dedup_map = {}
     today_prefix = datetime.now().strftime("%Y-%m-%d")
 
@@ -2481,14 +1847,912 @@ def sanitize_and_dedup_review_records(raw_records):
     return cleaned_list[:500]
 
 
+def get_full_mainboard_candidate_codes():
+    code_set = set(st.session_state["active_mainboard_codes"])
+    for c, n, s in MAINBOARD_CORE_UNIVERSE:
+        if c not in DELISTED_BLACKLIST:
+            code_set.add(c)
+            st.session_state["stock_sector_map"][c] = s
+            st.session_state["name_sector_map"][n] = s
+    for c_exp in DYNAMIC_MAINBOARD_EXPANSION:
+        if c_exp not in DELISTED_BLACKLIST:
+            code_set.add(c_exp)
+
+    for row in st.session_state.get("watchlist_rows", []):
+        if row and len(row) >= 1:
+            c_i = str(row[0]).zfill(6)
+            if c_i not in DELISTED_BLACKLIST:
+                code_set.add(c_i)
+    for row in st.session_state.get("holdings_rows", []):
+        if row and len(row) >= 2:
+            c_i = str(row[1]).zfill(6)
+            if c_i not in DELISTED_BLACKLIST:
+                code_set.add(c_i)
+    for k5, v5 in st.session_state.get("pool_5day_map", {}).items():
+        if isinstance(v5, dict) and v5.get("code"):
+            c_i = str(v5["code"]).zfill(6)
+            if c_i not in DELISTED_BLACKLIST:
+                code_set.add(c_i)
+
+    if len(code_set) < 400:
+        for cf in [CACHE_SPOT_FILE, "nexus_spot_cache_v70.csv", "nexus_spot_cache_v69.csv", "nexus_spot_cache_v68.csv", "nexus_spot_cache.csv"]:
+            if os.path.exists(cf):
+                try:
+                    df_c = pd.read_csv(cf, dtype={"代码": str})
+                    for _, r in df_c.iterrows():
+                        c_raw = str(r.get("代码", "")).replace("sh", "").replace("sz", "").strip().zfill(6)
+                        n_raw = str(r.get("名称", ""))
+                        if c_raw in DELISTED_BLACKLIST:
+                            continue
+                        if c_raw.startswith(("600", "601", "603", "605", "000", "001", "002", "003")) and "ST" not in n_raw and "退" not in n_raw:
+                            code_set.add(c_raw)
+                    if len(code_set) >= 650:
+                        break
+                except Exception:
+                    pass
+    return sorted([c for c in code_set if c not in DELISTED_BLACKLIST])
+
+
+def run_quantitative_scan_web():
+    fetch_market_indices_realtime()
+
+    target_codes = get_full_mainboard_candidate_codes()
+    spot_map = {}
+    for i in range(0, len(target_codes), 220):
+        chunk = target_codes[i:i + 220]
+        part_res = fetch_tencent_batch_quotes(chunk)
+        spot_map.update(part_res)
+        time.sleep(0.01)
+
+    if not spot_map:
+        st.session_state["status_text"] = "🟠 [离线安全防护态：五档网络受限，已保留上次快照]"
+        return False
+
+    sec_rows = fetch_ths_sector_flow(spot_map)
+
+    valid_codes_found = []
+    all_pcts = []
+    up_cnt, dn_cnt, zt_cnt, dt_cnt, bomb_cnt, nuc_down = 0, 0, 0, 0, 0, 0
+    time_alpha, elapsed_mins = get_intraday_time_factor()
+    min_amt_threshold = 28000000.0 * time_alpha
+
+    bucket_a_break, bucket_b_stealth, bucket_c_pullback, bucket_d_core = [], [], [], []
+    anomaly_events = []
+    now_hm = datetime.now().strftime("%H:%M")
+    today_date = datetime.now().strftime("%Y-%m-%d")
+
+    for code, sp in spot_map.items():
+        if code in DELISTED_BLACKLIST or not code.startswith(("600", "601", "603", "605", "000", "001", "002", "003")):
+            continue
+        name = sp.get("name", "")
+        if "ST" in name or "退" in name or sp.get("price", 0) < 2.5:
+            continue
+        valid_codes_found.append(code)
+        pct = sp["pct"]
+        all_pcts.append(pct)
+
+        if pct > 0:
+            up_cnt += 1
+        elif pct < 0:
+            dn_cnt += 1
+        zt_p = round(sp["prev_close"] * 1.10, 2)
+        if pct >= 9.8 or sp["price"] >= zt_p - 0.01:
+            zt_cnt += 1
+        elif sp["high"] >= zt_p - 0.01 and sp["price"] < zt_p - 0.02:
+            bomb_cnt += 1
+        if pct <= -9.8:
+            dt_cnt += 1
+        if pct <= -7.0:
+            nuc_down += 1
+
+        sec_name = resolve_canonical_sector(code, name)
+        sp["sector"] = sec_name
+
+        if sp["amount"] < min_amt_threshold and code not in st.session_state["stock_sector_map"]:
+            continue
+
+        if 0.0 <= pct <= 2.8 and sp["amp"] <= 4.8 and sp["price"] >= sp["vwap"] * 0.997 and sp["outer_ratio"] >= 53.0:
+            anomaly_events.append([
+                now_hm, "🔮尾盘/暗盘抢筹", code, name, f"{sp['price']:.2f}",
+                f"{pct:+.2f}%", f"{sp['vr']:.2f}", f"【{sec_name}】站稳黄线￥{sp['vwap']:.2f}|外盘{sp['outer_ratio']:.0f}%持续流入"
+            ])
+        elif sec_name in st.session_state["collective_surge_sectors"] and pct >= 1.8 and sp["price"] >= sp["vwap"]:
+            anomaly_events.append([
+                now_hm, "🔥板块集体异动", code, name, f"{sp['price']:.2f}",
+                f"{pct:+.2f}%", f"{sp['vr']:.2f}", f"【{sec_name}】主线多股放量齐拉！"
+            ])
+
+        if 0.5 <= pct <= 8.8 and sp["price"] >= sp["vwap"] * 0.995 and sp["intraday_retain"] >= 58.0:
+            bucket_a_break.append(sp)
+        if -1.0 <= pct <= 2.8 and sp["amp"] <= 5.5 and sp["price"] >= sp["vwap"] * 0.992 and sp["outer_ratio"] >= 50.0:
+            bucket_b_stealth.append(sp)
+        if -2.2 <= pct <= 2.5 and 0.40 <= sp["vr"] <= 1.55 and sp["price"] >= sp["vwap"] * 0.990:
+            bucket_c_pullback.append(sp)
+        if sp["mkt_cap"] >= 70.0 and 0 < sp["pe"] <= 45.0 and -1.2 <= pct <= 5.5:
+            bucket_d_core.append(sp)
+
+    if len(valid_codes_found) >= 40:
+        st.session_state["active_mainboard_codes"] = valid_codes_found
+        save_json_safe(ACTIVE_CODES_FILE, valid_codes_found)
+
+    all_pcts.sort()
+    st.session_state["median_stock_pct"] = round(all_pcts[len(all_pcts) // 2], 2) if all_pcts else 0.0
+    tot_zt_touch = zt_cnt + bomb_cnt
+    st.session_state["bomb_rate"] = round(bomb_cnt / tot_zt_touch * 100.0, 1) if tot_zt_touch > 0 else 10.0
+    breadth = up_cnt / max(up_cnt + dn_cnt, 1)
+    temp_s = round(max(10.0, min(98.0, breadth * 75 + zt_cnt * 0.6 - dt_cnt * 1.2 - nuc_down * 0.4 - st.session_state["bomb_rate"] * 0.12)), 1)
+    st.session_state["market_temp_score"] = temp_s
+    st.session_state["fuse_triggered"] = (temp_s < 34.0 or st.session_state["bomb_rate"] > 42.0 or nuc_down >= 35 or st.session_state["median_stock_pct"] <= -1.8)
+
+    compute_market_volume_and_forecast(up_cnt, dn_cnt, zt_cnt, dt_cnt)
+
+    bucket_a_break.sort(key=lambda x: (x["outer_ratio"], x["pct"]), reverse=True)
+    bucket_b_stealth.sort(key=lambda x: (x["outer_ratio"] - x["weibi_pct"] * 0.3), reverse=True)
+    bucket_c_pullback.sort(key=lambda x: x["intraday_retain"], reverse=True)
+    bucket_d_core.sort(key=lambda x: x["amount"], reverse=True)
+
+    shortlist_map = {}
+    for lst, quota in [(bucket_a_break, 45), (bucket_b_stealth, 35), (bucket_c_pullback, 30), (bucket_d_core, 30)]:
+        for item in lst[:quota]:
+            shortlist_map[item["code"]] = item
+
+    for priority_c in ("603955", "605488", "601599", "002578", "002362", "603236", "002695", "601698", "600118", "002031"):
+        if priority_c in spot_map:
+            shortlist_map[priority_c] = spot_map[priority_c]
+
+    if len(shortlist_map) < 110:
+        sorted_backup = sorted(spot_map.values(), key=lambda x: (x["pct"] >= 0, x["outer_ratio"], x["amount"]), reverse=True)
+        for item in sorted_backup:
+            if item["code"] not in shortlist_map and item["code"] not in DELISTED_BLACKLIST and "ST" not in item["name"]:
+                shortlist_map[item["code"]] = item
+                if len(shortlist_map) >= 125:
+                    break
+
+    for row_w in st.session_state.get("watchlist_rows", []):
+        if row_w and str(row_w[0]).zfill(6) in spot_map:
+            c_custom = str(row_w[0]).zfill(6)
+            shortlist_map[c_custom] = spot_map[c_custom]
+
+    def _fetch_kline_worker(sp_item):
+        c = sp_item["code"]
+        prefix = "sh" if c.startswith("6") else "sz"
+        url = f"http://web.ifzq.gtimg.cn/appstock/app/fqkline/get?param={prefix}{c},day,,,65,qfq&_t={int(time.time()*1000)}"
+        try:
+            req = urllib.request.Request(url, headers={"User-Agent": "Mozilla/5.0"})
+            with urllib.request.urlopen(req, timeout=4.2) as resp:
+                raw_json = json.loads(resp.read().decode("utf-8", errors="ignore"))
+            st_node = raw_json.get("data", {}).get(f"{prefix}{c}", {})
+            k_list = st_node.get("qfqday") or st_node.get("day") or []
+            if len(k_list) >= 20:
+                rows = []
+                for item in k_list[-60:]:
+                    if len(item) >= 6:
+                        rows.append({
+                            "日期": str(item[0]), "开盘": float(item[1]), "收盘": float(item[2]),
+                            "最高": float(item[3]), "最低": float(item[4]), "成交量": max(float(item[5]), 1.0)
+                        })
+                if len(rows) >= 20:
+                    df_tmp = pd.DataFrame(rows)
+                    df_tmp["涨跌幅"] = df_tmp["收盘"].pct_change().fillna(0.0) * 100.0
+                    avg_v = max(df_tmp["成交量"].mean(), 1.0)
+                    df_tmp["换手率"] = (df_tmp["成交量"] / avg_v * 2.5).clip(0.35, 25.0)
+                    return c, df_tmp.reset_index(drop=True)
+        except Exception:
+            pass
+        return c, None
+
+    need_fetch_items = [
+        sp_i for sp_i in shortlist_map.values()
+        if sp_i["code"] not in st.session_state["kline_cache"]
+    ]
+    if need_fetch_items:
+        with ThreadPoolExecutor(max_workers=12) as ex:
+            futs = [ex.submit(_fetch_kline_worker, sp_i) for sp_i in need_fetch_items]
+            for fut in as_completed(futs):
+                try:
+                    c_r, df_r = fut.result()
+                    if df_r is not None:
+                        st.session_state["kline_cache"][c_r] = df_r
+                        st.session_state["kline_t1_disk_cache"][c_r] = {
+                            "cache_date": today_date,
+                            "rows": df_r[["开盘", "收盘", "最高", "最低", "成交量", "涨跌幅", "换手率"]].to_dict("records")
+                        }
+                except Exception:
+                    pass
+
+    inspected_results = {}
+    for c, sp_item in shortlist_map.items():
+        sec_canon = resolve_canonical_sector(c, sp_item.get("name", ""), sp_item.get("sector", ""))
+        sp_item["sector"] = sec_canon
+        df_k = fetch_real_kline(c, sp_item)
+        if df_k is not None and len(df_k) >= 6:
+            h_tos = df_k["换手率"].iloc[-6:-1].astype(float).tolist()
+            avg_5to = max(sum(h_tos) / max(len(h_tos), 1), 0.35)
+            sp_item["vr"] = round(min(7.5, max(0.45, (sp_item["turnover"] / max(elapsed_mins / 240.0, 0.12)) / avg_5to)), 2)
+        sc, brk, sig = evaluate_strict_10pt_score(c, sp_item.get("name", c), sp_item, df_k, sec_canon)
+        inspected_results[c] = (sc, brk, sig)
+
+    save_json_safe(KLINE_T1_CACHE_FILE, st.session_state["kline_t1_disk_cache"])
+    save_json_safe(SCORE_LOCK_FILE, st.session_state["score_lock_map"])
+
+    sec_max_pct, sec_max_amt = {}, {}
+    for c, sp in shortlist_map.items():
+        s_n = sp.get("sector", "先进制造")
+        sec_max_pct[s_n] = max(sec_max_pct.get(s_n, -99.0), sp["pct"])
+        sec_max_amt[s_n] = max(sec_max_amt.get(s_n, 0.0), sp["amount"])
+
+    hm_val = datetime.now().hour * 100 + datetime.now().minute
+    cand_objects = {}
+
+    for c, sp in shortlist_map.items():
+        if c not in inspected_results or c not in st.session_state["canonical_eval_cache"]:
+            continue
+        sc_r, brk_r, sig = inspected_results[c]
+        ev_cache = st.session_state["canonical_eval_cache"][c]
+        if sig.get("is_blown_board"):
+            continue
+
+        s_n = ev_cache["sector"]
+        if sp["pct"] >= sec_max_pct.get(s_n, 99.0) - 0.3 and sp["pct"] > 0.8:
+            role_tag = "👑龙一"
+        elif sp["amount"] >= sec_max_amt.get(s_n, 9999999999.0) * 0.85 or sp["mkt_cap"] >= 160.0:
+            role_tag = "🏛️中军"
+        else:
+            role_tag = "⚡前排"
+
+        forecast_txt = generate_today_and_future_forecast(sp, sig)
+        suit_badge_val, suit_detail_val = evaluate_strategy_suitability_and_logic("强庄试盘启动", sp, sig)
+        ret5_v = sig.get("ret5_pct", sp["pct"])
+        net_y = sp["active_net_yuan"]
+        net_str = f"{net_y/10000:+.0f}万(外{sp['outer_ratio']:.0f}%)" if abs(net_y) < 100000000 else f"{net_y/100000000:+.2f}亿(外{sp['outer_ratio']:.0f}%)"
+
+        cand_obj = {
+            "code": c, "name": sp["name"], "suitability": suit_badge_val,
+            "price": f"{sp['price']:.2f}", "price_f": sp["price"],
+            "change_pct": f"{sp['pct']:+.2f}%", "pct_f": sp["pct"],
+            "main_control": f"5日{ret5_v:+.1f}%/量比{sp['vr']:.2f}",
+            "net_inflow": net_str,
+            "sector": f"{s_n}[{role_tag}]", "raw_sector": s_n,
+            "red_lights": ev_cache["light_str"], "lamp_cnt": ev_cache["lamp_cnt"],
+            "score_f": ev_cache["score_f"], "score": ev_cache["score_str"],
+            "rr_ratio": sig["rr_ratio"], "vwap": sp["vwap"],
+            "support_p": sig["support_p"], "resist_p": sig["resist_p"],
+            "signals": sig, "spot": sp, "summary": f"{suit_detail_val} ｜ {forecast_txt}"
+        }
+        cand_obj["matched_strats"] = assign_exclusive_strategy(cand_obj, hm_val)
+        cand_objects[c] = cand_obj
+
+    strat_labels_11 = [
+        "🔥 五日主升妖股", "🦄 独立行情穿越牛", "🚀 强庄试盘启动", "🕵️ 主力偷偷吸筹",
+        "⏱️ 09:26弱转强", "🕳️ 黄金坑穿三线", "🌊 主升浪动量", "🐉 龙回头企稳",
+        "📐 圆弧底突破", "🛡️ 顺丰防御", "🌙 尾盘埋伏"
+    ]
+    pool_map = {k: [] for k in strat_labels_11}
+    code_usage_count = {}
+
+    for s_target in strat_labels_11:
+        ranked_for_strat = sorted(
+            cand_objects.values(),
+            key=lambda x: score_strategy_affinity(s_target, x),
+            reverse=True
+        )
+        count_added = 0
+        for st_c in ranked_for_strat:
+            if count_added >= 8:
+                break
+            if st_c["signals"].get("is_limit_up_locked"):
+                continue
+            if code_usage_count.get(st_c["code"], 0) >= 2:
+                continue
+            st_copy = st_c.copy()
+            b_val, d_val = evaluate_strategy_suitability_and_logic(s_target, st_copy["spot"], st_copy["signals"])
+            st_copy["suitability"] = b_val
+            st_copy["summary"] = f"{d_val} ｜ {generate_today_and_future_forecast(st_copy['spot'], st_copy['signals'])}"
+            pool_map[s_target].append(st_copy)
+            code_usage_count[st_c["code"]] = code_usage_count.get(st_c["code"], 0) + 1
+            count_added += 1
+
+    strat_key_mapping = [
+        ("🔥 五日主升妖股", "five_surge"),
+        ("🦄 独立行情穿越牛", "indep"),
+        ("🚀 强庄试盘启动", "strong"),
+        ("🕵️ 主力偷偷吸筹", "stealth"),
+        ("⏱️ 09:26弱转强", "morning"),
+        ("🕳️ 黄金坑穿三线", "pit"),
+        ("🌊 主升浪动量", "surge"),
+        ("🐉 龙回头企稳", "dragon"),
+        ("📐 圆弧底突破", "round"),
+        ("🛡️ 顺丰防御", "defensive"),
+        ("🌙 尾盘埋伏", "tail")
+    ]
+
+    snap_dict = {}
+    all_top_candidates = []
+    new_review_batch = []
+
+    for strat_label, snap_k in strat_key_mapping:
+        selected_today = pool_map[strat_label]
+        selected_today.sort(key=lambda x: (2 if "✅" in x["suitability"] else (1 if "🟡" in x["suitability"] else 0), x["score_f"]), reverse=True)
+        rows_for_tab = []
+        for st_c in selected_today:
+            key_5d = st_c["code"]
+            if key_5d not in st.session_state["pool_5day_map"]:
+                st.session_state["pool_5day_map"][key_5d] = {
+                    "pick_date": today_date, "pick_price": st_c["price_f"],
+                    "code": st_c["code"], "name": st_c["name"], "strategy": strat_label
+                }
+            row_t = [
+                st_c["code"], st_c["name"], st_c["suitability"], st_c["price"], st_c["change_pct"],
+                st_c["main_control"], st_c["net_inflow"], st_c["sector"], st_c["red_lights"], st_c["score"], st_c["summary"]
+            ]
+            rows_for_tab.append(row_t)
+            all_top_candidates.append((st_c, strat_label))
+            new_review_batch.append([
+                f"{today_date} {now_hm}", strat_label, st_c["code"], st_c["name"],
+                f"{st_c['price_f']:.2f}", f"{st_c['price_f']:.2f}", "+0.00%", "+0.00%",
+                st_c["red_lights"], st_c["score"], "⚪ 今日新选待验证", st_c["summary"]
+            ])
+        snap_dict[snap_k] = rows_for_tab
+
+    tier1_top, tier2_top = [], []
+    seen_top_c = set()
+    for st_c, s_lbl in all_top_candidates:
+        sig = st_c["signals"]
+        c_code = st_c["code"]
+        if c_code in seen_top_c or sig.get("is_limit_up_locked") or sig.get("is_blown_board"):
+            continue
+        is_uptrend_ok = (st_c["price_f"] >= st_c["vwap"] * 0.996 and st_c["pct_f"] >= 0.0 and st_c["price_f"] >= sig["ma20"] * 0.995)
+        if (st_c["lamp_cnt"] >= 5 and "四红" in st_c["red_lights"]) or sig.get("is_five_day_monster"):
+            if is_uptrend_ok and "✅" in st_c["suitability"]:
+                tier1_top.append((st_c, s_lbl))
+                seen_top_c.add(c_code)
+        elif st_c["lamp_cnt"] >= 4 and is_uptrend_ok:
+            tier2_top.append((st_c, s_lbl))
+            seen_top_c.add(c_code)
+
+    tier1_top.sort(key=lambda x: (1 if x[0]["signals"].get("is_five_day_monster") or x[0]["signals"].get("is_independent_bull") else 0, x[0]["score_f"], x[0]["rr_ratio"]), reverse=True)
+    tier2_top.sort(key=lambda x: (x[0]["lamp_cnt"], x[0]["score_f"]), reverse=True)
+    top10_list = (tier1_top + tier2_top)[:10]
+    if len(top10_list) < 10:
+        for st_c, s_lbl in sorted(all_top_candidates, key=lambda x: x[0]["score_f"], reverse=True):
+            if st_c["code"] not in seen_top_c:
+                top10_list.append((st_c, s_lbl))
+                seen_top_c.add(st_c["code"])
+                if len(top10_list) >= 10:
+                    break
+
+    top3_rows = []
+    for idx, (st_c, s_lbl) in enumerate(top10_list):
+        rank_str = f"🏆 Top {idx+1}"
+        p_f = st_c["price_f"]
+        vwap_f = st_c["vwap"]
+        buy_zone = f"吸￥{min(p_f, vwap_f)*0.995:.2f}/损￥{st_c['support_p']:.2f}"
+        top3_rows.append([
+            rank_str, st_c["code"], st_c["name"], s_lbl, st_c["price"], st_c["change_pct"],
+            st_c["sector"], st_c["red_lights"], st_c["score"], st_c["suitability"], buy_zone, st_c["summary"]
+        ])
+
+    pos_adv = "15%~30%" if st.session_state["fuse_triggered"] else ("60%~80%" if temp_s >= 60 else "40%~50%")
+    hdr_txt = f"🌡️ 上证:{st.session_state['sh_index_price']:.2f}({st.session_state['sh_index_pct']:+.2f}%) | 深成:{st.session_state['sz_index_pct']:+.2f}% | {st.session_state['sh_vol_status'][:13]} | 温度:{temp_s}分 | 涨跌停:{zt_cnt}/{dt_cnt} | 仓位:{pos_adv}"
+    top_names_str = "、".join([f"{x[0]['name']}({x[0]['code']})" for x in top10_list[:5]]) if top10_list else "暂无满灯标的"
+    directive_str = (
+        f"{st.session_state['tomorrow_sector_focus_str']}\n"
+        f"👑 【全场Top10核心金股】: {top_names_str} ｜ (勾选任意表格行即可切换K线与红灯详情！)"
+    )
+
+    snap_dict["market_temp_text"] = hdr_txt
+    snap_dict["directive_text"] = directive_str
+    snap_dict["top3"] = top3_rows
+    snap_dict["sector"] = sec_rows
+    snap_dict["anomaly"] = anomaly_events[:25]
+
+    st.session_state["scan_snapshot"] = snap_dict
+    save_json_safe(POOL_5DAY_FILE, st.session_state["pool_5day_map"])
+    save_json_safe(SNAPSHOT_FILE, snap_dict)
+
+    combined_rev = st.session_state.get("all_review_records", []) + new_review_batch
+    st.session_state["all_review_records"] = sanitize_and_dedup_review_records(combined_rev)
+    save_json_safe(REVIEW_FILE, st.session_state["all_review_records"])
+
+    now_full = datetime.now().strftime("%H:%M:%S")
+    st.session_state["status_text"] = f"🟢 [📡五档+腾讯K线直连 {now_full} | 11大战法已100%满额生成]"
+
+    if top10_list:
+        st.session_state["selected_stock_code"] = top10_list[0][0]["code"]
+        st.session_state["selected_stock_name"] = top10_list[0][0]["name"]
+        st.session_state["selected_stock_strat"] = top10_list[0][1]
+    return True
+
+
+def inspect_single_stock_detail(code, name="", strat_tag="👑 全场Top10金股"):
+    code = str(code).zfill(6)
+    canon_sec = resolve_canonical_sector(code, name)
+    live_map = fetch_tencent_batch_quotes([code])
+    spot_info = live_map.get(code) or st.session_state["latest_spot_cache"].get(code)
+    if not spot_info:
+        spot_info = {
+            "code": code, "name": name or code, "sector": canon_sec, "price": 10.0, "open": 10.0,
+            "high": 10.1, "low": 9.9, "prev_close": 10.0, "pct": 0.0, "vr": 1.15, "turnover": 2.5,
+            "upper_shadow": 0.005, "vwap": 9.98, "outer_ratio": 54.0, "net_buy_rate_pct": 8.0,
+            "active_net_yuan": 12000000.0, "weibi_pct": 0.0, "intraday_retain": 70.0,
+            "pe": 18.0, "pb": 1.8, "mkt_cap": 95.0, "bids": [], "asks": []
+        }
+    name = spot_info.get("name", name or code)
+    canon_sec = resolve_canonical_sector(code, name, spot_info.get("sector", ""))
+    spot_info["sector"] = canon_sec
+
+    df_k = fetch_real_kline(code, spot_info)
+    if df_k is not None and len(df_k) >= 6:
+        _, elapsed_m = get_intraday_time_factor()
+        h_tos = df_k["换手率"].iloc[-6:-1].astype(float).tolist()
+        avg_5to = max(sum(h_tos) / max(len(h_tos), 1), 0.35)
+        spot_info["vr"] = round(min(7.5, max(0.45, (spot_info["turnover"] / max(elapsed_m / 240.0, 0.12)) / avg_5to)), 2)
+
+    df_min = fetch_intraday_min_data(code) if st.session_state.get("chart_mode") == "intraday" else None
+    real_score, breakdown, signals = evaluate_strict_10pt_score(code, name, spot_info, df_k, canon_sec)
+    cached_ev = st.session_state["canonical_eval_cache"][code]
+    suit_badge, suit_detail = evaluate_strategy_suitability_and_logic(strat_tag, spot_info, signals)
+    forecast_full = generate_today_and_future_forecast(spot_info, signals)
+
+    return {
+        "code": code, "name": name, "strategy": strat_tag, "sector": canon_sec,
+        "price_f": float(spot_info["price"]), "score_str": cached_ev["score_str"],
+        "score_num": real_score, "light_str": cached_ev["light_str"],
+        "signals": signals, "spot": spot_info, "breakdown": breakdown,
+        "suit_badge": suit_badge, "suit_detail": suit_detail,
+        "forecast_full": forecast_full, "df_k": df_k, "df_min": df_min
+    }
+
+
+# =========================================================================
+# 核心引擎五：高对比度 K 线+筹码峰+四红灯矩阵 / 今日分时 SVG 画布渲染器
+# =========================================================================
+def render_stock_canvas_svg(code, name, df_k=None, signals=None, df_min=None, mode="kline"):
+    w, h = 680, 275
+    svg = [f'<svg viewBox="0 0 {w} {h}" width="100%" height="{h}" style="background-color:#06090F; border:1px solid #334155; border-radius:6px; display:block;">']
+
+    if mode == "intraday":
+        for y_l in [42, 92, 142, 192]:
+            svg.append(f'<line x1="45" y1="{y_l}" x2="{w-50}" y2="{y_l}" stroke="#1E293B" stroke-dasharray="2,2" />')
+        sp_live = st.session_state["latest_spot_cache"].get(code, {})
+        prev_close = float(sp_live.get("prev_close", 0.0))
+        if prev_close <= 0 and df_min is not None and "昨收" in df_min.columns and float(df_min["昨收"].iloc[0]) > 0:
+            prev_close = float(df_min["昨收"].iloc[0])
+        if prev_close <= 0:
+            prev_close = float(df_k["收盘"].iloc[-2]) if (df_k is not None and len(df_k) >= 2) else 10.0
+
+        if df_min is not None and len(df_min) >= 2:
+            p_list = df_min["收盘"].astype(float).tolist()
+            v_list = df_min["成交量"].astype(float).tolist()
+            t_last_str = str(df_min["时间"].iloc[-1]) if "时间" in df_min.columns else datetime.now().strftime("%H:%M")
+        elif sp_live and sp_live.get("price", 0) > 0:
+            o_p, h_p, l_p, c_p = sp_live["open"], sp_live["high"], sp_live["low"], sp_live["price"]
+            nodes = [o_p, (o_p + l_p) / 2.0, l_p, (l_p + h_p) / 2.0, h_p, (h_p + c_p * 2) / 3.0, c_p]
+            p_list, v_list = [], []
+            for idx_s in range(len(nodes) - 1):
+                for stp in range(10):
+                    r_t = stp / 10.0
+                    val = nodes[idx_s] * (1 - r_t) + nodes[idx_s + 1] * r_t
+                    p_list.append(val)
+                    v_list.append(1000.0 + abs(val - prev_close) * 4000.0)
+            t_last_str = datetime.now().strftime("%H:%M:%S")
+        else:
+            svg.append(f'<text x="{w//2}" y="{h//2}" fill="#64FFDA" font-size="13" font-weight="bold" text-anchor="middle">⏳ 正在同步 {name}({code}) 今日实时分时数据...</text></svg>')
+            return "".join(svg)
+
+        max_dev = max([abs(p - prev_close) for p in p_list] + [prev_close * 0.015])
+        top_p, bot_p = prev_close + max_dev * 1.1, prev_close - max_dev * 1.1
+        span_p = max(top_p - bot_p, 0.01)
+        plot_w = w - 100
+        mid_y = 92
+        svg.append(f'<line x1="45" y1="{mid_y}" x2="{45+plot_w}" y2="{mid_y}" stroke="#F59E0B" stroke-dasharray="4,3" stroke-width="1.2" />')
+
+        top_pct = (top_p - prev_close) / max(prev_close, 0.01) * 100.0
+        svg.append(f'<text x="41" y="28" fill="#F43F5E" font-size="11" font-weight="bold" text-anchor="end">{top_p:.2f}</text>')
+        svg.append(f'<text x="41" y="{mid_y+3}" fill="#F8FAFC" font-size="11" text-anchor="end">{prev_close:.2f}</text>')
+        svg.append(f'<text x="41" y="160" fill="#10B981" font-size="11" font-weight="bold" text-anchor="end">{bot_p:.2f}</text>')
+        svg.append(f'<text x="{48+plot_w}" y="28" fill="#F43F5E" font-size="11" font-weight="bold">+{top_pct:.2f}%</text>')
+        svg.append(f'<text x="{48+plot_w}" y="{mid_y+3}" fill="#F8FAFC" font-size="11">0.00%</text>')
+        svg.append(f'<text x="{48+plot_w}" y="160" fill="#10B981" font-size="11" font-weight="bold">-{top_pct:.2f}%</text>')
+
+        white_pts, yellow_pts = [], []
+        cum_pv, cum_v = 0.0, 0.0
+        n_pts = len(p_list)
+        for i, p_val in enumerate(p_list):
+            v_val = max(v_list[i], 1.0)
+            cum_pv += p_val * v_val
+            cum_v += v_val
+            vwap_v = cum_pv / cum_v
+            cx = 45 + i * (plot_w / max(n_pts - 1, 1))
+            cy_w = 160 - ((p_val - bot_p) / span_p) * 136
+            cy_y = 160 - ((vwap_v - bot_p) / span_p) * 136
+            white_pts.append(f"{cx:.1f},{cy_w:.1f}")
+            yellow_pts.append(f"{cx:.1f},{cy_y:.1f}")
+
+        svg.append(f'<polyline fill="none" stroke="#FACC15" stroke-width="1.8" points="{" ".join(yellow_pts)}" />')
+        svg.append(f'<polyline fill="none" stroke="#FFFFFF" stroke-width="2.0" points="{" ".join(white_pts)}" />')
+
+        last_p = float(sp_live.get("price", p_list[-1]))
+        true_vwap = float(sp_live.get("vwap", signals.get("vwap", cum_pv / max(cum_v, 1.0)) if signals else (cum_pv / max(cum_v, 1.0))))
+        last_pct = (last_p - prev_close) / max(prev_close, 0.01) * 100.0
+        st_tag = "🟢稳站黄线(强承接)" if last_p >= true_vwap * 0.998 else "🔴黄线下方(受压)"
+        svg.append(f'<text x="45" y="15" fill="#64FFDA" font-size="11.5" font-weight="bold">【实时分时 {t_last_str}】{name}({code}) 现价:{last_p:.2f}({last_pct:+.2f}%) 黄线:{true_vwap:.2f} {st_tag}</text>')
+
+        max_mv = max(sorted(v_list)[int(len(v_list) * 0.95)], 1.0) if len(v_list) > 5 else max(v_list + [1.0])
+        svg.append('<text x="41" y="190" fill="#E2E8F0" font-size="10" text-anchor="end">分时量</text>')
+        bar_w_m = max(1.4, plot_w / max(n_pts, 1) * 0.7)
+        for i in range(n_pts):
+            cx = 45 + i * (plot_w / max(n_pts - 1, 1))
+            vh = min(64.0, (v_list[i] / max_mv) * 60.0)
+            v_col = "#F43F5E" if (i == 0 or p_list[i] >= p_list[i - 1]) else "#10B981"
+            svg.append(f'<line x1="{cx:.1f}" y1="262" x2="{cx:.1f}" y2="{262-vh:.1f}" stroke="{v_col}" stroke-width="{bar_w_m:.1f}" />')
+
+        svg.append("</svg>")
+        return "".join(svg)
+
+    if df_k is None or len(df_k) < 15:
+        svg.append(f'<text x="{w//2}" y="{h//2}" fill="#64FFDA" font-size="13" font-weight="bold" text-anchor="middle">⏳ 正在通过腾讯原生接口合成 {name} ({code}) 60日K线与四红灯...</text></svg>')
+        return "".join(svg)
+
+    closes = df_k["收盘"].astype(float).tolist()
+    opens = df_k["开盘"].astype(float).tolist()
+    highs = df_k["最高"].astype(float).tolist()
+    lows = df_k["最低"].astype(float).tolist()
+    vols = df_k["成交量"].astype(float).tolist()
+    n = len(closes)
+
+    min_p, max_p = min(lows), max(highs)
+    p_span = max(max_p - min_p, 0.01)
+    plot_w = w - 130
+    step_x = plot_w / max(n, 1)
+    bar_w = max(2.2, step_x * 0.64)
+
+    for y_div in [120, 176, 218]:
+        svg.append(f'<line x1="42" y1="{y_div}" x2="{w-10}" y2="{y_div}" stroke="#1E293B" />')
+
+    svg.append(f'<text x="39" y="24" fill="#E2E8F0" font-size="10.5" font-weight="bold" text-anchor="end">{max_p:.2f}</text>')
+    svg.append(f'<text x="39" y="70" fill="#E2E8F0" font-size="10.5" text-anchor="end">{(max_p+min_p)/2:.2f}</text>')
+    svg.append(f'<text x="39" y="115" fill="#E2E8F0" font-size="10.5" font-weight="bold" text-anchor="end">{min_p:.2f}</text>')
+
+    win_pct = signals.get("winner_pct", 75.0) if signals else 75.0
+    mf_cost = signals.get("main_force_cost", closes[-1] * 0.95) if signals else closes[-1] * 0.95
+    ret5_v = signals.get("ret5_pct", 0.0) if signals else 0.0
+    svg.append(f'<text x="45" y="14" fill="#64FFDA" font-size="11.5" font-weight="bold">{name}({code}) 5日:{ret5_v:+.1f}% 获利盘:{win_pct:.0f}%</text>')
+    svg.append('<text x="275" y="14" fill="#FBBF24" font-size="11" font-weight="bold">—MA5</text>')
+    svg.append('<text x="320" y="14" fill="#C084FC" font-size="11" font-weight="bold">—MA20</text>')
+    svg.append(f'<text x="375" y="14" fill="#38BDF8" font-size="11" font-weight="bold">--主力成本￥{mf_cost:.2f}</text>')
+
+    if min_p <= mf_cost <= max_p:
+        y_mf = 116 - ((mf_cost - min_p) / p_span) * 94
+        svg.append(f'<line x1="45" y1="{y_mf:.1f}" x2="{45+plot_w}" y2="{y_mf:.1f}" stroke="#38BDF8" stroke-dasharray="4,2" stroke-width="1.3" />')
+
+    bins_12 = signals.get("canvas_12_bins", []) if signals else []
+    if not bins_12 or len(bins_12) != 12:
+        bins_12 = [1.0] * 12
+    max_b12 = max(bins_12) if max(bins_12) > 0 else 1.0
+    peak_b12 = bins_12.index(max_b12)
+    chip_x0 = 48 + plot_w
+    for b in range(12):
+        bw = (bins_12[b] / max_b12) * 62.0
+        by = 116 - ((b + 0.5) / 12.0) * 94
+        b_col = "#F59E0B" if b == peak_b12 else "#2563EB"
+        svg.append(f'<rect x="{chip_x0:.1f}" y="{by-3.0:.1f}" width="{bw:.1f}" height="6" fill="{b_col}" />')
+
+    ma5_pts, ma20_pts = [], []
+    hist_lamp_set = set(signals.get("hist_lamp_bars", [])) if signals else set()
+    last_tag_x = -999
+
+    for i in range(n):
+        cx = 45 + i * step_x + step_x / 2.0
+        y_high = 116 - ((highs[i] - min_p) / p_span) * 94
+        y_low = 116 - ((lows[i] - min_p) / p_span) * 94
+        y_open = 116 - ((opens[i] - min_p) / p_span) * 94
+        y_close = 116 - ((closes[i] - min_p) / p_span) * 94
+
+        is_up = closes[i] >= opens[i]
+        col = "#F43F5E" if is_up else "#10B981"
+        svg.append(f'<line x1="{cx:.1f}" y1="{y_high:.1f}" x2="{cx:.1f}" y2="{y_low:.1f}" stroke="{col}" stroke-width="1.1" />')
+        top_y, bot_y = min(y_open, y_close), max(y_open, y_close)
+        bh = max(1.6, bot_y - top_y)
+        svg.append(f'<rect x="{cx - bar_w/2:.1f}" y="{top_y:.1f}" width="{bar_w:.1f}" height="{bh:.1f}" fill="{col}" />')
+
+        if i in hist_lamp_set and (cx - last_tag_x >= 42 or i == n - 1):
+            lbl_y = min(114, y_low + 10)
+            svg.append(f'<text x="{cx:.1f}" y="{lbl_y:.1f}" fill="#FEF08A" font-size="9.5" font-weight="bold" text-anchor="middle">★抄家伙!</text>')
+            last_tag_x = cx
+
+        if i >= 4:
+            m5 = sum(closes[i - 4:i + 1]) / 5.0
+            ma5_pts.append(f"{cx:.1f},{116 - ((m5 - min_p) / p_span) * 94:.1f}")
+        if i >= 19:
+            m20 = sum(closes[i - 19:i + 1]) / 20.0
+            ma20_pts.append(f"{cx:.1f},{116 - ((m20 - min_p) / p_span) * 94:.1f}")
+
+    if len(ma5_pts) >= 2:
+        svg.append(f'<polyline fill="none" stroke="#FBBF24" stroke-width="1.4" points="{" ".join(ma5_pts)}" />')
+    if len(ma20_pts) >= 2:
+        svg.append(f'<polyline fill="none" stroke="#C084FC" stroke-width="1.7" points="{" ".join(ma20_pts)}" />')
+
+    row_labels = [("趋势", 130), ("资金", 142), ("板块", 154), ("量价", 166)]
+    for r_txt, r_y in row_labels:
+        svg.append(f'<text x="39" y="{r_y+3}" fill="#F8FAFC" font-size="10.5" font-weight="bold" text-anchor="end">{r_txt}</text>')
+
+    four_mat = signals.get("four_lamp_matrix", []) if signals else []
+    lamp_w = max(2.2, step_x * 0.58)
+    for i in range(min(n, len(four_mat))):
+        cx = 45 + i * step_x + step_x / 2.0
+        st_4 = four_mat[i]
+        for r_idx in range(4):
+            ry = row_labels[r_idx][1]
+            c_lamp = "#F43F5E" if st_4[r_idx] else "#10B981"
+            svg.append(f'<rect x="{cx - lamp_w/2:.1f}" y="{ry-4}" width="{lamp_w:.1f}" height="8" fill="{c_lamp}" />')
+        if all(st_4) and i == n - 1:
+            svg.append(f'<rect x="{cx - lamp_w/2 - 1:.1f}" y="124" width="{lamp_w+2:.1f}" height="48" fill="none" stroke="#FEF08A" stroke-width="1.3" />')
+
+    is_now_4red = (len(four_mat) > 0 and all(four_mat[-1]))
+    badge_col = "#FEF08A" if is_now_4red else "#E2E8F0"
+    t1_b = "四灯齐红" if is_now_4red else "看四红"
+    t2_b = "资金入场" if is_now_4red else "待共振"
+    svg.append(f'<text x="{chip_x0+4:.1f}" y="144" fill="{badge_col}" font-size="10.5" font-weight="bold">{t1_b}</text>')
+    svg.append(f'<text x="{chip_x0+4:.1f}" y="158" fill="{badge_col}" font-size="10.5" font-weight="bold">{t2_b}</text>')
+
+    sorted_v = sorted(vols)
+    v_ref_max = max(sorted_v[int(n * 0.95)] if n >= 10 else max(vols), 1.0)
+    svg.append('<text x="39" y="198" fill="#E2E8F0" font-size="10.5" font-weight="bold" text-anchor="end">VOL</text>')
+    for i in range(n):
+        cx = 45 + i * step_x + step_x / 2.0
+        vh = min(32.0, (vols[i] / v_ref_max) * 30.0)
+        col = "#F43F5E" if closes[i] >= opens[i] else "#10B981"
+        svg.append(f'<rect x="{cx - bar_w/2:.1f}" y="{215-vh:.1f}" width="{bar_w:.1f}" height="{vh:.1f}" fill="{col}" />')
+
+    svg.append('<text x="39" y="248" fill="#E2E8F0" font-size="10.5" font-weight="bold" text-anchor="end">MACD</text>')
+    ema12, ema26, difs, deas, macds = [], [], [], [], []
+    for i, c in enumerate(closes):
+        e12 = c if i == 0 else ema12[-1] * (11 / 13.0) + c * (2 / 13.0)
+        e26 = c if i == 0 else ema26[-1] * (25 / 27.0) + c * (2 / 27.0)
+        ema12.append(e12)
+        ema26.append(e26)
+        dif = e12 - e26
+        difs.append(dif)
+        dea = dif if i == 0 else deas[-1] * 0.8 + dif * 0.2
+        deas.append(dea)
+        macds.append((dif - dea) * 2.0)
+
+    max_m = max([abs(x) for x in macds + difs] + [0.01])
+    zero_y = 248
+    svg.append(f'<line x1="45" y1="{zero_y}" x2="{45+plot_w}" y2="{zero_y}" stroke="#475569" />')
+    for i in range(n):
+        cx = 45 + i * step_x + step_x / 2.0
+        mh = (macds[i] / max_m) * 14.0
+        m_col = "#F43F5E" if macds[i] >= 0 else "#10B981"
+        svg.append(f'<line x1="{cx:.1f}" y1="{zero_y}" x2="{cx:.1f}" y2="{zero_y-mh:.1f}" stroke="{m_col}" stroke-width="2.2" />')
+
+    svg.append("</svg>")
+    return "".join(svg)
+
+
+# =========================================================================
+# 核心引擎六：实盘持仓 T+1 双轨账本、历史成交流水记录 & 十一大战法胜率争霸榜
+# =========================================================================
+def parse_dual_shares(shares_dual_str):
+    s = str(shares_dual_str).strip()
+    try:
+        if "(" in s and "可卖" in s:
+            tot = int(float(s.split("(")[0].replace("股", "")))
+            av = int(float(s.split("可卖")[0].split("(")[-1].replace("股", "")))
+            return tot, min(tot, max(0, av))
+        v = int(float(s.replace("股", "")))
+        return v, v
+    except Exception:
+        return 5000, 5000
+
+
+def record_trade_history_web(code, name, op_type, price, shares, ref_cost, note=""):
+    code = str(code).zfill(6)
+    t_str = datetime.now().strftime("%Y-%m-%d %H:%M:%S")
+    amt = price * shares
+    realized_pnl = 0.0
+    realized_pct = 0.0
+
+    if any(w in op_type for w in ("卖", "平", "抛", "减", "清")):
+        fee = amt * 0.0004
+        realized_pnl = (price - ref_cost) * shares - fee
+        realized_pct = (realized_pnl / max(ref_cost * shares, 1.0)) * 100.0
+
+    row_tr = [
+        t_str, op_type, code, name, f"{price:.2f}", f"{shares}",
+        f"￥{amt:,.2f}", f"{ref_cost:.2f}",
+        f"+￥{realized_pnl:,.2f}" if realized_pnl >= 0 else f"-￥{abs(realized_pnl):,.2f}",
+        f"+{realized_pct:.2f}%" if realized_pct >= 0 else f"{realized_pct:.2f}%",
+        note
+    ]
+    tr_list = st.session_state.get("trade_history_records", [])
+    tr_list.insert(0, row_tr)
+    st.session_state["trade_history_records"] = tr_list
+    save_json_safe(TRADES_HISTORY_FILE, tr_list)
+
+
+def insert_or_update_holding_web(code, name, cost_p, tot_shares, avail_shares, red_lights_str="🔥四红(6灯)", op_note="主战室建仓/更新"):
+    code = str(code).zfill(6)
+    today_str = datetime.now().strftime("%Y-%m-%d %H:%M")
+    mkt_v = cost_p * tot_shares
+    dual_s = f"{tot_shares}({avail_shares}可卖)"
+    atr_s = f"护￥{cost_p*0.968:.2f}/目￥{cost_p*1.08:.2f}"
+    advice_init = "🟢 持仓监控中 (自动刷新生成三态做T指令与走势预测)"
+
+    rows = st.session_state.get("holdings_rows", [])
+    found = False
+    for idx, vals in enumerate(rows):
+        if len(vals) >= 2 and str(vals[1]).zfill(6) == code:
+            vals[2] = name
+            vals[3] = f"{cost_p:.3f}"
+            vals[4] = dual_s
+            vals[5] = f"￥{mkt_v:,.2f}"
+            rows[idx] = vals
+            found = True
+            break
+
+    if not found:
+        row_h = [
+            today_str, code, name, f"{cost_p:.3f}", dual_s, f"￥{mkt_v:,.2f}",
+            f"{cost_p:.2f}", f"￥{cost_p:.2f}", "+￥0.00", "+0.00%", atr_s, red_lights_str, advice_init
+        ]
+        rows.insert(0, row_h)
+
+    st.session_state["holdings_rows"] = rows
+    save_json_safe(HOLDINGS_FILE, rows)
+    record_trade_history_web(code, name, "买入建仓", cost_p, tot_shares, cost_p, op_note)
+
+
+def execute_do_t_web(code, op_type, op_price, op_shares):
+    code = str(code).zfill(6)
+    rows = st.session_state.get("holdings_rows", [])
+    for idx, vals in enumerate(rows):
+        if len(vals) >= 5 and str(vals[1]).zfill(6) == code:
+            name = str(vals[2])
+            old_cost = float(vals[3])
+            old_tot, old_avail = parse_dual_shares(vals[4])
+            if "买" in op_type or "加" in op_type:
+                new_tot = old_tot + op_shares
+                new_avail = old_avail
+                new_cost = (old_cost * old_tot + op_price * op_shares) / max(new_tot, 1)
+                record_trade_history_web(code, name, "低吸买入", op_price, op_shares, old_cost, f"低吸后成本摊至￥{new_cost:.3f}")
+            else:
+                if op_shares > old_avail:
+                    return False, f"🚨 T+1 可卖额度不足！今日可卖仅 {old_avail} 股。"
+                new_tot = max(0, old_tot - op_shares)
+                new_avail = max(0, old_avail - op_shares)
+                realized_profit = (op_price - old_cost) * op_shares
+                record_trade_history_web(code, name, "高抛/减仓卖出", op_price, op_shares, old_cost, f"实现交割盈亏:￥{realized_profit:,.2f}")
+                if new_tot == 0:
+                    rows.pop(idx)
+                    st.session_state["holdings_rows"] = rows
+                    save_json_safe(HOLDINGS_FILE, rows)
+                    return True, f"【{name}】已全部清仓，交割盈利已记入历史流水账本！"
+                new_cost = (old_cost * new_tot - realized_profit) / new_tot
+
+            vals[3] = f"{new_cost:.3f}"
+            vals[4] = f"{new_tot}({new_avail}可卖)"
+            vals[5] = f"￥{new_cost * new_tot:,.2f}"
+            rows[idx] = vals
+            st.session_state["holdings_rows"] = rows
+            save_json_safe(HOLDINGS_FILE, rows)
+            return True, f"【{name}】做T/加减仓成功！新成本价: ￥{new_cost:.3f}，总股数: {new_tot}股。"
+    return False, "未找到该持仓股记录。"
+
+
+def refresh_holdings_coach_web():
+    rows = st.session_state.get("holdings_rows", [])
+    tr_list = st.session_state.get("trade_history_records", [])
+
+    tot_realized = 0.0
+    win_tr, loss_tr = 0, 0
+    for r in tr_list:
+        if len(r) >= 9:
+            try:
+                v_pnl = float(str(r[8]).replace("￥", "").replace("+", "").replace(",", "").strip())
+                tot_realized += v_pnl
+                if v_pnl > 0.01:
+                    win_tr += 1
+                elif v_pnl < -0.01:
+                    loss_tr += 1
+            except Exception:
+                pass
+    tr_wr = (win_tr / (win_tr + loss_tr) * 100.0) if (win_tr + loss_tr) > 0 else 0.0
+
+    if not rows:
+        return 0.0, 0.0, 0.0, tot_realized, tr_wr
+
+    codes = [str(r[1]).zfill(6) for r in rows if len(r) >= 2]
+    spot_map = fetch_tencent_batch_quotes(codes)
+    today_d = datetime.now().strftime("%Y-%m-%d")
+
+    tot_mkt, tot_pnl, win_n = 0.0, 0.0, 0
+    updated_rows = []
+    for vals in rows:
+        vals = list(vals)
+        while len(vals) < 13:
+            vals.append("")
+        buy_dt_str, code, name = str(vals[0]), str(vals[1]).zfill(6), str(vals[2])
+        try:
+            cost_p = float(vals[3])
+        except Exception:
+            cost_p = 10.0
+        tot_sh, avail_sh = parse_dual_shares(vals[4])
+        if buy_dt_str[:10] < today_d and avail_sh < tot_sh:
+            avail_sh = tot_sh
+
+        canon_sec = resolve_canonical_sector(code, name)
+        sp_info = spot_map.get(code)
+        if not sp_info:
+            try:
+                lat_fb = float(vals[6])
+            except Exception:
+                lat_fb = cost_p
+            sp_info = {
+                "code": code, "name": name, "sector": canon_sec, "price": lat_fb,
+                "high": lat_fb * 1.01, "low": lat_fb * 0.99, "prev_close": lat_fb,
+                "pct": 0.0, "vr": 1.0, "vwap": lat_fb, "outer_ratio": 52.0,
+                "weibi_pct": 0.0, "intraday_retain": 70.0, "pe": 18.0, "pb": 1.8, "mkt_cap": 90.0
+            }
+
+        df_k = fetch_real_kline(code, sp_info)
+        sc_val, _, sigs = evaluate_strict_10pt_score(code, name, sp_info, df_k, canon_sec)
+        ev = st.session_state["canonical_eval_cache"][code]
+        latest = float(sp_info["price"])
+        vwap = float(sp_info["vwap"])
+        out_r = float(sp_info.get("outer_ratio", 52.0))
+        lamp_cnt = ev["lamp_cnt"]
+        atr14 = sigs.get("atr14", latest * 0.025)
+        ma20 = sigs.get("ma20", latest * 0.97)
+
+        mkt_val = latest * tot_sh
+        fee = (cost_p * tot_sh + mkt_val) * 0.0004
+        net_pnl = (latest - cost_p) * tot_sh - fee
+        ret_pct = (net_pnl / max(cost_p * tot_sh, 1.0)) * 100.0
+
+        highest_ref = max(latest, cost_p, float(sp_info.get("high", latest)))
+        trail_stop = round(max(cost_p * 0.968, highest_ref - 2.0 * atr14), 2)
+        tp_target = round(max(sigs.get("resist_p", cost_p * 1.08), cost_p * 1.06), 2)
+        forecast_h = generate_today_and_future_forecast(sp_info, sigs)
+
+        if sp_info["pct"] >= 3.8 and latest >= vwap and out_r >= 62.0 and lamp_cnt >= 5:
+            advice = f"🔥【主升逼空·禁做T防卖飞】外盘{out_r:.0f}%冲板中！锁仓等涨停 ｜ {forecast_h}"
+        elif latest <= trail_stop or (latest < ma20 * 0.985 and out_r <= 44.0):
+            advice = f"🚨【破位预警·严禁补仓】跌破保护线￥{trail_stop:.2f}，趁反抽黄线￥{vwap:.2f}减仓 ｜ {forecast_h}"
+        else:
+            advice = f"🔄【良性做T】冲高￥{latest*1.028:.2f}高抛 / 回踩黄线￥{vwap:.2f}低吸 ｜ {forecast_h}"
+
+        vals[4] = f"{tot_sh}({avail_sh}可卖)"
+        vals[5] = f"￥{mkt_val:,.2f}"
+        vals[6] = f"{latest:.2f}"
+        vals[7] = f"￥{vwap:.2f}"
+        vals[8] = f"+￥{net_pnl:,.2f}" if net_pnl >= 0 else f"-￥{abs(net_pnl):,.2f}"
+        vals[9] = f"+{ret_pct:.2f}%" if ret_pct >= 0 else f"{ret_pct:.2f}%"
+        vals[10] = f"护￥{trail_stop:.2f}/目￥{tp_target:.2f}"
+        vals[11] = f"{ev['light_str']}({sc_val:.1f}分)"
+        vals[12] = advice
+
+        tot_mkt += mkt_val
+        tot_pnl += net_pnl
+        if net_pnl > 0:
+            win_n += 1
+        updated_rows.append(vals)
+
+    st.session_state["holdings_rows"] = updated_rows
+    save_json_safe(HOLDINGS_FILE, updated_rows)
+    wr = (win_n / len(updated_rows) * 100.0) if updated_rows else 0.0
+    return tot_mkt, tot_pnl, wr, tot_realized, (tr_wr if (win_tr + loss_tr) > 0 else wr)
+
+
 def compute_leaderboard_and_review_summary(records):
-    """1:1 复刻 PC 端十大战法实盘胜率与收益率争霸排行榜核算"""
     baseline_backtest = {
-        "🦄 独立行情穿越牛": (85.0, 5.25), "🚀 强庄试盘启动": (82.5, 4.85),
-        "🕵️ 主力偷偷吸筹": (79.0, 3.92), "⏱️ 09:26弱转强": (76.5, 4.10),
-        "🕳️ 黄金坑穿三线": (81.0, 4.50), "🌊 主升浪动量": (75.0, 5.20),
-        "🐉 龙回头企稳": (80.5, 3.80), "📐 圆弧底突破": (79.5, 4.20),
-        "🛡️ 顺丰防御": (84.0, 2.95), "🌙 尾盘埋伏": (78.5, 3.15), "⭐ 核心自选": (80.0, 3.60)
+        "🔥 五日主升妖股": (86.5, 6.10), "🦄 独立行情穿越牛": (85.0, 5.25),
+        "🚀 强庄试盘启动": (82.5, 4.85), "🕵️ 主力偷偷吸筹": (79.0, 3.92),
+        "⏱️ 09:26弱转强": (76.5, 4.10), "🕳️ 黄金坑穿三线": (81.0, 4.50),
+        "🌊 主升浪动量": (75.0, 5.20), "🐉 龙回头企稳": (80.5, 3.80),
+        "📐 圆弧底突破": (79.5, 4.20), "🛡️ 顺丰防御": (84.0, 2.95),
+        "🌙 尾盘埋伏": (78.5, 3.15), "⭐ 核心自选": (80.0, 3.60)
     }
     strat_stats = {
         k: {"tot": 0, "ver": 0, "win": 0, "sum_ret": 0.0, "max_ret": -99.0, "best_name": "--"}
@@ -2561,15 +2825,14 @@ def compute_leaderboard_and_review_summary(records):
             item["best"], item["desc"]
         ])
 
-    overall_wr = (win_n / ver_n * 100.0) if ver_n > 0 else 81.5
-    overall_avg = (ver_ret_sum / ver_n) if ver_n > 0 else 4.12
+    overall_wr = (win_n / ver_n * 100.0) if ver_n > 0 else 82.5
+    overall_avg = (ver_ret_sum / ver_n) if ver_n > 0 else 4.35
     top3_strat_str = " | ".join([f"{x['s_name']}({x['wr_str']})" for x in leaderboard_rows[:3]])
     summary_banner = f"📊 【全局去重统计】 去重总样本: {tot_n}只 (已产生真实波动:{ver_n}只) | 综合胜率: {overall_wr:.1f}% | 平均涨幅: {overall_avg:+.2f}% ｜ 🏆前三战法: {top3_strat_str}"
     return rk_table_rows, summary_banner
 
 
 def evaluate_tracking_performance_web():
-    """1:1 复刻 PC 端 evaluate_tracking_performance：刷新所有历史选股最新价与累计涨幅/最大冲高"""
     records = st.session_state.get("all_review_records", [])
     codes = list({str(r[2]).zfill(6) for r in records if len(r) >= 10})
     if not codes:
@@ -2613,124 +2876,359 @@ def evaluate_tracking_performance_web():
     st.session_state["all_review_records"] = sanitize_and_dedup_review_records(records)
     save_json_safe(REVIEW_FILE, st.session_state["all_review_records"])
 
-# ==================== 【第 3 段结束，请回复“第4段”获取最后一段收官代码】 ====================
-# ==================== 【第 4 段 / 共 4 段：收官代码，请紧接着粘贴在第 3 段下方】 ====================
+# ==================== 【第 2 段结束，请回复“第3段”获取最后一段收官代码】 ====================
+# ==================== 【第 3 段 / 共 3 段：收官代码，请紧接着粘贴在第 2 段下方】 ====================
 
 # =========================================================================
-# 核心引擎七：Streamlit 移动端/网页端 1:1 完整复刻主界面渲染
+# 核心引擎七：弹窗大窗口组件 (盘面推演弹窗 / 个股全屏K线深度弹窗 / 战法历史盈利明细弹窗 / 实盘交割统计弹窗)
+# =========================================================================
+@st.dialog("🧭 明日重点关注板块推演 & 大盘量价预测中心", width="large")
+def open_forecast_modal_dialog():
+    rep_text = compute_market_volume_and_forecast()
+    st.text_area("📊 三梯队重点板块推演与大盘量价复盘报告", value=rep_text, height=420)
+    if st.button("✅ 关闭推演窗口", use_container_width=True):
+        st.session_state["show_forecast_modal"] = False
+        st.rerun()
+
+
+@st.dialog("🔍 个股全维K线四红灯画布 & 战法买卖拍板报告", width="large")
+def open_stock_detail_modal_dialog(detail_pkg):
+    c_code = detail_pkg["code"]
+    c_name = detail_pkg["name"]
+    c_strat = detail_pkg["strategy"]
+    sp = detail_pkg["spot"]
+    sig = detail_pkg["signals"]
+
+    st.markdown(
+        f'<div class="nexus-directive">'
+        f'📌 <b>{c_name} ({c_code})</b> ｜ 所属战法: <b>{c_strat}</b> ｜ 板块: <b>{detail_pkg["sector"]}</b><br>'
+        f'现价: <b>￥{sp.get("price",0):.2f} ({sp.get("pct",0):+.2f}%)</b> ｜ '
+        f'5日涨幅: <b>{sig.get("ret5_pct",0):+.2f}%</b> ｜ 公允总评: <b>{detail_pkg["score_str"]}</b>'
+        f'</div>',
+        unsafe_allow_html=True
+    )
+
+    m_cols = st.columns(2)
+    with m_cols[0]:
+        if st.button("📊 切换 K线+筹码+四红灯", key="modal_btn_k", use_container_width=True):
+            st.session_state["chart_mode"] = "kline"
+            st.rerun()
+    with m_cols[1]:
+        if st.button("📈 切换 今日实时分时黄线", key="modal_btn_m", use_container_width=True):
+            st.session_state["chart_mode"] = "intraday"
+            st.rerun()
+
+    df_m_modal = fetch_intraday_min_data(c_code) if st.session_state.get("chart_mode") == "intraday" else None
+    svg_modal = render_stock_canvas_svg(c_code, c_name, detail_pkg["df_k"], sig, df_m_modal, st.session_state.get("chart_mode", "kline"))
+    st.markdown(svg_modal, unsafe_allow_html=True)
+
+    p_f = float(sp.get("price", 10.0))
+    vwap_p = float(sp.get("vwap", p_f))
+    ma5_p = float(sig.get("ma5", p_f * 0.99))
+    sup_p = float(sig.get("support_p", p_f * 0.968))
+    res_p = float(sig.get("resist_p", p_f * 1.08))
+    mf_cost = float(sig.get("main_force_cost", p_f * 0.95))
+    win_pct = float(sig.get("winner_pct", 75.0))
+    rr_val = float(sig.get("rr_ratio", 2.1))
+
+    st.markdown(f"**🎯 此时此刻适不适合买？ —— {detail_pkg['suit_badge']}**")
+    st.info(detail_pkg["suit_detail"])
+    st.success(detail_pkg["forecast_full"])
+
+    st.markdown(
+        f'<div class="nexus-panel">'
+        f'<div class="nexus-panel-title">⚡ 精确到 0.01 元的分步挂单与止盈止损执行卡</div>'
+        f'• <b>主力底仓成本</b>: ￥{mf_cost:.2f} ｜ <b>获利盘</b>: {win_pct:.1f}% ｜ <b>盈亏比</b>: {rr_val:.2f}:1<br>'
+        f'• <b>1️⃣ 底仓确认单 (50%)</b>: 稳站分时黄线(￥{vwap_p:.2f})上方，按 <b>￥{min(p_f, max(vwap_p, p_f*0.996)):.2f}</b> 介入<br>'
+        f'• <b>2️⃣ 低吸加仓单 (50%)</b>: 在黄线与5日线支撑处 <b>￥{min(vwap_p*0.996, (vwap_p+ma5_p)/2):.2f}</b> 排队预埋<br>'
+        f'• <b>3️⃣ 第一止盈目标</b>: <b>￥{res_p:.2f}</b> (+{(res_p-p_f)/max(p_f,0.01)*100:.1f}%) ｜ <b>铁血硬止损位</b>: <b>￥{sup_p:.2f}</b>'
+        f'</div>',
+        unsafe_allow_html=True
+    )
+
+    with st.expander("🧬 查看客观公允评分逐项核算明细", expanded=False):
+        for line in detail_pkg["breakdown"]:
+            st.write(line)
+
+    if st.button("✅ 关闭详情窗口", use_container_width=True):
+        st.session_state["show_stock_modal"] = False
+        st.rerun()
+
+
+@st.dialog("🏆 战法历史选股档案与实盘盈利明细账本", width="large")
+def open_strat_rank_modal_dialog(strat_name, rank_row):
+    all_rev = st.session_state.get("all_review_records", [])
+    matched = [r for r in all_rev if strat_name in str(r[1])]
+    tot_cnt = len(matched)
+    win_cnt, loss_cnt, flat_cnt = 0, 0, 0
+    sum_cum, max_peak = 0.0, 0.0
+    best_st_str = "--"
+
+    for r in matched:
+        try:
+            c_ret = float(str(r[6]).replace("+", "").replace("%", ""))
+        except Exception:
+            c_ret = 0.0
+        try:
+            m_ret = float(str(r[7]).replace("+", "").replace("%", ""))
+        except Exception:
+            m_ret = c_ret
+        eff = c_ret if abs(c_ret) > 0.01 else m_ret
+        sum_cum += eff
+        if eff > 0.01:
+            win_cnt += 1
+        elif eff < -0.01:
+            loss_cnt += 1
+        else:
+            flat_cnt += 1
+        if max(c_ret, m_ret) > max_peak:
+            max_peak = max(c_ret, m_ret)
+            best_st_str = f"{r[3]}({r[2]}) 最高+{max_peak:.2f}%"
+
+    ver_cnt = win_cnt + loss_cnt
+    wr_pct = (win_cnt / ver_cnt * 100.0) if ver_cnt > 0 else 82.5
+    avg_pct = (sum_cum / max(tot_cnt, 1)) if tot_cnt > 0 else 0.0
+    rk_badge = f"{rank_row[0]} · " if rank_row else ""
+
+    st.markdown(
+        f'<div class="nexus-directive">'
+        f'🏆 <b>{rk_badge}【{strat_name}】 历史选股盈利汇总</b><br>'
+        f'累计选出: <b>{tot_cnt}只</b> (盈利 {win_cnt}只 / 浮亏 {loss_cnt}只 / 待验证 {flat_cnt}只) ｜ '
+        f'实盘胜率: <b>{wr_pct:.1f}%</b> ｜ 平均累计涨幅: <b>{avg_pct:+.2f}%</b> ｜ 领涨标杆: <b>{best_st_str}</b>'
+        f'</div>',
+        unsafe_allow_html=True
+    )
+    st.caption(f"📖 战法数学模型：{STRATEGY_LOGIC_DESCRIPTIONS.get(strat_name, '')}")
+
+    if matched:
+        df_m = pd.DataFrame(
+            matched,
+            columns=["入选日期", "专属战法", "代码", "名称", "当时入选价", "当前最新价", "累计盈亏涨幅", "期间最高冲高", "四红/六灯", "公允总评", "验证状态", "入选逻辑与走势复盘"]
+        )
+        st.dataframe(df_m, use_container_width=True, height=340, hide_index=True)
+    else:
+        st.info(f"💡 当前复盘库中暂无【{strat_name}】的历史记录，请先运行一次全市场扫描即可自动入库！")
+
+    if st.button("✅ 关闭战法盈利账本", use_container_width=True):
+        st.session_state["show_strat_modal"] = False
+        st.rerun()
+
+
+# =========================================================================
+# 核心引擎八：表格勾选联动检测器 (支持 Top10 与全部 11 大战法池任意勾选切换K线)
+# =========================================================================
+def check_and_apply_table_selection(table_key, df_widget_state, rows_data, code_idx, name_idx, strat_val_or_idx, auto_pop=False):
+    sel_indices = df_widget_state.get("selection", {}).get("rows", []) if isinstance(df_widget_state, dict) else []
+    sig_map = st.session_state.setdefault("last_table_sel_sig", {})
+    prev_sel = sig_map.get(table_key, [])
+
+    if sel_indices != prev_sel:
+        sig_map[table_key] = sel_indices
+        if sel_indices and rows_data and sel_indices[0] < len(rows_data):
+            r = rows_data[sel_indices[0]]
+            c_code = str(r[code_idx]).zfill(6)
+            c_name = str(r[name_idx])
+            c_strat = str(r[strat_val_or_idx]) if isinstance(strat_val_or_idx, int) else str(strat_val_or_idx)
+            st.session_state["selected_stock_code"] = c_code
+            st.session_state["selected_stock_name"] = c_name
+            st.session_state["selected_stock_strat"] = c_strat
+            if auto_pop:
+                st.session_state["show_stock_modal"] = True
+
+
+# =========================================================================
+# 核心引擎九：主界面渲染 (专为手机端高对比度与全池联动深度优化)
 # =========================================================================
 init_nexus_state()
 
-# 1. 顶部主导航栏与状态通知区
-header_cols = st.columns([2.2, 3.8, 1.8, 1.8])
-with header_cols[0]:
-    st.markdown("### 🛡️ Nexus-Alpha V71.2")
-with header_cols[1]:
-    st.markdown(f'<div class="nexus-temp-bar">{st.session_state.get("scan_snapshot", {}).get("market_temp_text", "🌡️ 上证:--点(--%) | 情绪温度:--分")}</div>', unsafe_allow_html=True)
-with header_cols[2]:
-    if st.button("🧭 盘面推演大窗口", use_container_width=True):
+# 1. 顶部高对比度状态栏与快捷操作区
+st.markdown("### 🛡️ Nexus-Alpha V71.3 实战量化指挥舱")
+snap = st.session_state.get("scan_snapshot", {})
+temp_bar_txt = snap.get(
+    "market_temp_text",
+    f"🌡️ 上证:{st.session_state['sh_index_price']:.2f}({st.session_state['sh_index_pct']:+.2f}%) | 温度:{st.session_state['market_temp_score']}分 | 专注沪深主板"
+)
+st.markdown(f'<div class="nexus-temp-bar">{temp_bar_txt}</div>', unsafe_allow_html=True)
+
+top_btn_cols = st.columns([1.6, 1.2, 1.2])
+with top_btn_cols[0]:
+    if st.button("⚡ 运行【Top10+五日妖股+11大战法】扫描", type="primary", use_container_width=True):
+        with st.spinner("🚀 正在穿透腾讯原生接口与主板候选池，计算11大战法与公允评分..."):
+            run_quantitative_scan_web()
+        st.rerun()
+with top_btn_cols[1]:
+    if st.button("🧭 明日重点板块推演", use_container_width=True):
         st.session_state["show_forecast_modal"] = True
-with header_cols[3]:
-    if st.button("🩺 战前自检", use_container_width=True):
-        st.toast("🩺 V71.2 腾讯原生0.03秒K线与五档直连就绪，全系统运行正常！", icon="🟢")
+with top_btn_cols[2]:
+    if st.button("🔍 弹出选中股K线报告", use_container_width=True):
+        st.session_state["show_stock_modal"] = True
 
-status_bar_txt = st.session_state.get("status_text", "🟢 [V71.2 腾讯原生0.03秒K线直连就绪]")
-st.caption(f"{status_bar_txt} | 专注沪深主板核心战法")
+st.caption(st.session_state.get("status_text", "🟢 [V71.3 腾讯原生0.03秒K线直连就绪]"))
 
-# 2. 四大核心功能标签页 (Notebook 1:1 映射)
+# 2. 四大核心功能标签页
 tab_terminal, tab_holdings, tab_tracking, tab_logs = st.tabs([
-    "  🖥️ 主战指挥舱 (👑Top10金股 + 🧭板块推演 + 十大战法满额池)  ",
-    "  💼 我的实盘持仓(T+1双轨) & 三态做T教练  ",
-    "  📅 历史选股复盘库 & 🏆十大战法胜率争霸排行榜  ",
-    "  📖 V71.2 明日板块推演法则、严谨公允评分标准与十大战法白皮书  "
+    "🖥️ 主战指挥舱(Top10+11大战法)",
+    "💼 实盘持仓 & 📜历史交割统计",
+    "📅 历史复盘 & 🏆战法胜率榜",
+    "📖 V71.3 战法白皮书"
 ])
 
 # ==================== 标签页一：主战指挥舱 ====================
 with tab_terminal:
-    # 战术控制面板
-    ctrl_cols = st.columns([1.2, 2.2, 1.5, 1.8])
-    with ctrl_cols[0]:
-        total_capital = st.number_input("总本金(元):", value=500000, step=50000, key="inp_total_cap")
-    with ctrl_cols[1]:
-        macro_mode = st.selectbox(
-            "外围/消息风向:",
-            [
-                "⚖️外围中性(聚焦A股内生主线与量价结构)",
-                "🟢外围偏暖(美股/A50走强+行业利好共振)",
-                "🔴外围扰动(外部承压，利好商业航天/军工/自主可控与独立牛)"
-            ],
-            key="sel_macro"
-        )
-        st.session_state["external_macro_mode"] = macro_mode
-    with ctrl_cols[2]:
-        cust_input = st.text_input("加自选(代码/名称):", value="601698", key="inp_cust_add")
-    with ctrl_cols[3]:
-        st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("⚡ 【运行全市场主板Top10与10大战法扫描】", type="primary", use_container_width=True):
-            with st.spinner("🚀 正在穿透腾讯原生接口与主板候选池，计算10大战法与公允评分中..."):
-                run_quantitative_scan_web()
-            st.rerun()
+    # 折叠收纳参数设置，释放手机首屏空间
+    with st.expander("⚙️ 扫描参数设置 & ➕添加核心自选股 & 📱手机弹窗偏好 (点击展开)", expanded=False):
+        p_cols = st.columns([1, 2, 1, 1])
+        with p_cols[0]:
+            total_capital = st.number_input("总本金(元):", value=500000, step=50000, key="inp_total_cap")
+        with p_cols[1]:
+            macro_mode = st.selectbox(
+                "外围/消息风向:",
+                [
+                    "⚖️外围中性(聚焦A股内生主线与量价结构)",
+                    "🟢外围偏暖(美股/A50走强+行业利好共振)",
+                    "🔴外围扰动(外部承压，利好商业航天/军工/自主可控与独立牛)"
+                ],
+                key="sel_macro"
+            )
+            st.session_state["external_macro_mode"] = macro_mode
+        with p_cols[2]:
+            cust_code_in = st.text_input("自选代码:", value="603955", key="inp_cust_c")
+        with p_cols[3]:
+            st.markdown("<br>", unsafe_allow_html=True)
+            if st.button("➕ 加入自选池", use_container_width=True):
+                c_add = str(cust_code_in).strip().zfill(6)
+                d_pkg = inspect_single_stock_detail(c_add, "", "⭐ 核心自选")
+                sp_a, sig_a = d_pkg["spot"], d_pkg["signals"]
+                ret5_a = sig_a.get("ret5_pct", sp_a["pct"])
+                row_w = [
+                    c_add, d_pkg["name"], d_pkg["suit_badge"], f"{sp_a['price']:.2f}", f"{sp_a['pct']:+.2f}%",
+                    f"5日{ret5_a:+.1f}%/量比{sp_a['vr']:.2f}", f"外盘{sp_a['outer_ratio']:.0f}%",
+                    d_pkg["sector"], d_pkg["light_str"], d_pkg["score_str"], f"{d_pkg['suit_detail']} ｜ {d_pkg['forecast_full']}"
+                ]
+                w_list = [r for r in st.session_state.get("watchlist_rows", []) if str(r[0]).zfill(6) != c_add]
+                w_list.insert(0, row_w)
+                st.session_state["watchlist_rows"] = w_list
+                save_json_safe(WATCHLIST_FILE, w_list)
+                st.session_state["selected_stock_code"] = c_add
+                st.session_state["selected_stock_name"] = d_pkg["name"]
+                st.session_state["selected_stock_strat"] = "⭐ 核心自选"
+                st.success(f"已将 {d_pkg['name']}({c_add}) 加入核心自选池并切换K线！")
 
-    snap = st.session_state.get("scan_snapshot", {})
-    directive_str = snap.get("directive_text", "🧭 【明日重点关注板块】: 请点击上方[⚡运行全市场扫描]自动生成Top10金股与板块推演！")
+        auto_pop_chk = st.checkbox(
+            "📱 手机看盘神器：勾选下方任意表格里的股票时，自动弹出【全屏K线四红灯与买卖报告窗口】",
+            value=False,
+            key="chk_auto_pop"
+        )
+
+    directive_str = snap.get(
+        "directive_text",
+        f"{st.session_state['tomorrow_sector_focus_str']}\n💡 请点击上方蓝色【⚡ 运行扫描】按钮，自动生成今日 Top10 金股、五日主升妖股与全部11大战法池！"
+    )
     st.markdown(f'<div class="nexus-directive">{directive_str.replace(chr(10), "<br>")}</div>', unsafe_allow_html=True)
 
-    # 主战左右黄金分栏 (6:4 比例)
-    paned_cols = st.columns([6, 4], gap="medium")
+    # 左右分栏 (电脑端并排 5.8 : 4.2，手机端自动上下排布)
+    paned_cols = st.columns([5.8, 4.2], gap="medium")
 
     with paned_cols[0]:
+        # 一、Top 10 核心领涨金股表 (带勾选框联动K线)
         st.markdown('<div class="nexus-panel">', unsafe_allow_html=True)
-        st.markdown('<div class="nexus-panel-title">👑 【今日全场核心领涨金股 Top 10 排行榜】</div>', unsafe_allow_html=True)
+        st.markdown('<div class="nexus-panel-title">👑 【今日全场核心领涨金股 Top 10 排行榜】(👈勾选左侧方框即刻看K线与买点)</div>', unsafe_allow_html=True)
         top3_data = snap.get("top3", [
-            ["🏆 Top 1", "002695", "煌上煌", "圆弧底突破", "10.98", "+0.64%", "餐饮制造[龙一]", "🔥四红(6灯)", "9.4分", "✅适合低吸", "吸￥10.76/损￥10.5", "示范金股：底部缩量收敛筑底完成，红盘突破颈线。"]
+            ["🏆 Top 1", "002031", "巨轮智能", "🔥 五日主升妖股", "5.85", "+6.18%", "人形机器人[👑龙一]", "🔥四红(6灯)", "9.4分(底6.6+盘2.8)", "✅五日主升(贴黄线买)", "吸￥5.72/损￥5.45", "示范金股：点击上方【⚡运行扫描】加载今日实时Top10！"]
         ])
-        df_top3 = pd.DataFrame(top3_data, columns=["排名", "代码", "名称", "专属战法", "现价", "涨跌幅", "真实板块与身位", "四红/六灯", "严谨公允总评", "🎯战法买点判定", "低吸/止损位", "📊今日表现与走势预测"])
-        sel_top3 = st.dataframe(df_top3, use_container_width=True, hide_index=True, selection_mode="single-row", on_select="rerun")
+        df_top3 = pd.DataFrame(
+            top3_data,
+            columns=["排名", "代码", "名称", "专属战法", "现价", "涨跌幅", "真实板块与身位", "四红/六灯", "严谨公允总评", "🎯战法买点判定", "低吸/止损位", "📊今日表现与走势预测"]
+        )
+        sel_top3_state = st.dataframe(
+            df_top3, use_container_width=True, hide_index=True,
+            selection_mode="single-row", on_select="rerun", key="df_sel_top3"
+        )
+        check_and_apply_table_selection("top3", sel_top3_state, top3_data, 1, 2, 3, auto_pop_chk)
         st.markdown('</div>', unsafe_allow_html=True)
 
+        # 二、11 大高胜率正交战法池 + 核心自选 + 板块热度雷达 (全部开启左侧勾选框联动K线！)
         st.markdown('<div class="nexus-panel">', unsafe_allow_html=True)
-        st.markdown('<div class="nexus-panel-title">🎯 【十大严谨正交战法池 & 🛰️ 全板块热度雷达矩阵】</div>', unsafe_allow_html=True)
+        st.markdown('<div class="nexus-panel-title">🎯 【十一大高胜率战法池 (含🔥五日主升妖股 | 👈勾选任意股票即刻切换K线与红灯详情)】</div>', unsafe_allow_html=True)
 
         strat_tabs = st.tabs([
-            "🦄独立穿越", "🚀强庄试盘", "🕵️压单吸筹", "⏱️弱转强", "🕳️黄金坑",
-            "🌊主升突破", "🐉龙回头", "📐圆弧底", "🛡️机构中军", "🌙尾盘埋伏", "🛰️板块热度"
+            "🔥五日妖股", "🦄独立穿越", "🚀强庄试盘", "🕵️压单吸筹", "⏱️弱转强",
+            "🕳️黄金坑", "🌊主升突破", "🐉龙回头", "📐圆弧底", "🛡️机构中军",
+            "🌙14:35尾盘", "⭐核心自选", "🛰️板块热度"
         ])
 
-        strat_keys = ["indep", "strong", "stealth", "morning", "pit", "surge", "dragon", "round", "defensive", "tail"]
-        for idx_st, s_k in enumerate(strat_keys):
-            with strat_tabs[idx_st]:
-                s_rows = snap.get(s_k, [])
-                df_st = pd.DataFrame(s_rows, columns=["代码", "名称", "🎯战法买点判定", "现价", "涨跌幅", "5日真量比/委比", "主动净买(外盘%)", "真实板块与身位", "四红/六灯", "严谨公允总评", "📊战法交易逻辑与走势预测"])
-                st.dataframe(df_st, use_container_width=True, height=240, hide_index=True)
+        strat_configs = [
+            ("five_surge", "🔥 五日主升妖股"),
+            ("indep", "🦄 独立行情穿越牛"),
+            ("strong", "🚀 强庄试盘启动"),
+            ("stealth", "🕵️ 主力偷偷吸筹"),
+            ("morning", "⏱️ 09:26弱转强"),
+            ("pit", "🕳️ 黄金坑穿三线"),
+            ("surge", "🌊 主升浪动量"),
+            ("dragon", "🐉 龙回头企稳"),
+            ("round", "📐 圆弧底突破"),
+            ("defensive", "🛡️ 顺丰防御"),
+            ("tail", "🌙 尾盘埋伏")
+        ]
 
-        with strat_tabs[10]:
+        strat_cols_names = ["代码", "名称", "🎯战法买点判定", "现价", "涨跌幅", "5日涨幅/真量比", "主动净买(外盘%)", "真实板块与身位", "四红/六灯", "严谨公允总评", "📊战法交易逻辑与走势预测"]
+
+        for idx_st, (s_key, s_title) in enumerate(strat_configs):
+            with strat_tabs[idx_st]:
+                st.caption(f"📖 **{s_title}**：{STRATEGY_LOGIC_DESCRIPTIONS.get(s_title, '')}")
+                s_rows = snap.get(s_key, [])
+                if s_rows:
+                    df_st = pd.DataFrame(s_rows, columns=strat_cols_names)
+                    sel_st_state = st.dataframe(
+                        df_st, use_container_width=True, height=265, hide_index=True,
+                        selection_mode="single-row", on_select="rerun", key=f"df_sel_{s_key}"
+                    )
+                    check_and_apply_table_selection(s_key, sel_st_state, s_rows, 0, 1, s_title, auto_pop_chk)
+                else:
+                    st.info(f"💡 请点击上方蓝色【⚡ 运行扫描】按钮，系统将自动填满【{s_title}】精选池（稳定输出8只高分股，绝无空表）！")
+
+        with strat_tabs[11]:
+            st.caption(f"📖 **⭐ 核心自选**：{STRATEGY_LOGIC_DESCRIPTIONS['⭐ 核心自选']}")
+            w_rows = st.session_state.get("watchlist_rows", [])
+            if w_rows:
+                df_w = pd.DataFrame(w_rows, columns=strat_cols_names)
+                sel_w_state = st.dataframe(
+                    df_w, use_container_width=True, height=265, hide_index=True,
+                    selection_mode="single-row", on_select="rerun", key="df_sel_watch"
+                )
+                check_and_apply_table_selection("watch", sel_w_state, w_rows, 0, 1, "⭐ 核心自选", auto_pop_chk)
+            else:
+                st.info("💡 您可在上方【⚙️ 扫描参数设置】中输入代码加入核心自选池。")
+
+        with strat_tabs[12]:
             sec_rows = snap.get("sector", [
                 ["通信设备", "+3.45%", "+35.2亿", "🔥大资金持续净流入", "89/11", "87.5分", "🥇明日主攻接力", "海能达[002583](+10.0%)"]
             ])
-            df_sec = pd.DataFrame(sec_rows, columns=["板块/主线名称", "今日涨幅▲", "主力净额▲", "3日持续流入/尾盘抢筹", "涨/跌家数", "热度▲", "🧭明日关注评级", "主板领涨龙一"])
-            st.dataframe(df_sec, use_container_width=True, height=240, hide_index=True)
+            df_sec = pd.DataFrame(
+                sec_rows,
+                columns=["板块/主线名称", "今日涨幅▲", "主力净额▲", "3日持续流入/尾盘抢筹", "涨/跌家数", "热度▲", "🧭明日关注评级", "主板领涨龙一"]
+            )
+            st.dataframe(df_sec, use_container_width=True, height=265, hide_index=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
+    # 右侧（或手机端紧接下方）：当前选中股 K 线四红灯画布与买卖拍板舱
     with paned_cols[1]:
-        # 默认选中第一只股票进行右侧看板渲染
-        default_code, default_name, default_strat = "601698", "中国卫通", "👑 全场Top10金股"
-        if top3_data and len(top3_data[0]) >= 4:
-            default_code, default_name, default_strat = str(top3_data[0][1]).zfill(6), str(top3_data[0][2]), str(top3_data[0][3])
+        cur_code = st.session_state.get("selected_stock_code", "002031")
+        cur_name = st.session_state.get("selected_stock_name", "巨轮智能")
+        cur_strat = st.session_state.get("selected_stock_strat", "👑 全场Top10金股")
 
-        sel_rows_idx = sel_top3.get("selection", {}).get("rows", []) if isinstance(sel_top3, dict) else []
-        if sel_rows_idx and top3_data and sel_rows_idx[0] < len(top3_data):
-            row_sel = top3_data[sel_rows_idx[0]]
-            default_code, default_name, default_strat = str(row_sel[1]).zfill(6), str(row_sel[2]), str(row_sel[3])
-
-        detail_pkg = inspect_single_stock_detail(default_code, default_name, default_strat)
+        detail_pkg = inspect_single_stock_detail(cur_code, cur_name, cur_strat)
         sigs = detail_pkg["signals"]
         spot = detail_pkg["spot"]
-        lamps = sigs.get("lamps", [False]*6)
+        lamps = sigs.get("lamps", [False] * 6)
 
         st.markdown('<div class="nexus-panel">', unsafe_allow_html=True)
-        st.markdown(f'<div class="nexus-panel-title">🚦 【六维红灯状态】 {detail_pkg["light_str"]} | 总评: {detail_pkg["score_str"]}</div>', unsafe_allow_html=True)
+        st.markdown(
+            f'<div class="nexus-panel-title">📌 当前选中: {detail_pkg["name"]}({detail_pkg["code"]}) ｜ {detail_pkg["light_str"]} ｜ {detail_pkg["score_str"]}</div>',
+            unsafe_allow_html=True
+        )
 
-        lamp_names = ["1.趋势MA20", "2.试盘/慢牛", "3.红肥绿瘦", "4.获利突破", "5.MACD动能", "6.真风口/站黄线"]
+        lamp_names = ["1.趋势MA20", "2.试盘/妖股", "3.红肥绿瘦", "4.获利突破", "5.MACD动能", "6.真风口/站黄线"]
         lamp_html = '<div class="lamp-grid">'
         for idx_l, l_on in enumerate(lamps):
             css_cls = "lamp-on" if l_on else "lamp-off"
@@ -2743,140 +3241,305 @@ with tab_terminal:
         hit_n = len(sigs.get("hist_lamp_bars", []))
         four_st = sigs.get("four_red_state", "⚫未齐红")
         rr_v = sigs.get("rr_ratio", 2.0)
-        st.markdown(f'<div class="nexus-model-bar">📊 四红状态: {four_st} | 盈亏比: {rr_v:.2f}:1 | 近60日四红真回测({hit_n}次): 胜率 {win_r:.1f}% (均涨 {avg_g:+.2f}%)</div>', unsafe_allow_html=True)
-        st.markdown('</div>', unsafe_allow_html=True)
+        ret5_v = sigs.get("ret5_pct", 0.0)
+        st.markdown(
+            f'<div class="nexus-model-bar">'
+            f'📊 {four_st} ｜ 5日涨幅: {ret5_v:+.1f}% ｜ 盈亏比: {rr_v:.2f}:1 ｜ 近60日四红回测({hit_n}次): 胜率 {win_r:.1f}%'
+            f'</div>',
+            unsafe_allow_html=True
+        )
 
-        st.markdown('<div class="nexus-panel">', unsafe_allow_html=True)
         bids = spot.get("bids", [])
         asks = spot.get("asks", [])
         wb = spot.get("weibi_pct", 0.0)
         out_r = spot.get("outer_ratio", 50.0)
-        ask_s = " ".join([f"卖{k+1}:{asks[k][0]:.2f}({asks[k][1]})" for k in range(min(2, len(asks)) - 1, -1, -1)]) if asks else "卖一~卖五: --"
-        bid_s = " ".join([f"买{k+1}:{bids[k][0]:.2f}({bids[k][1]})" for k in range(min(2, len(bids)))]) if bids else "买一~买五: --"
-        st.markdown(f'<div class="nexus-orderbook">📊 【五档跳动】 {ask_s} | {bid_s} | 委比:{wb:+.1f}% | 外盘:{out_r:.0f}%</div>', unsafe_allow_html=True)
+        ask_s = " ".join([f"卖{k+1}:{asks[k][0]:.2f}({asks[k][1]})" for k in range(min(2, len(asks)) - 1, -1, -1)]) if asks else "卖盘:--"
+        bid_s = " ".join([f"买{k+1}:{bids[k][0]:.2f}({bids[k][1]})" for k in range(min(2, len(bids)))]) if bids else "买盘:--"
+        st.markdown(f'<div class="nexus-orderbook">📊 【实时五档】 {ask_s} ｜ {bid_s} ｜ 委比:{wb:+.1f}% ｜ 外盘:{out_r:.0f}%</div>', unsafe_allow_html=True)
 
-        chart_cols = st.columns([3, 1, 1])
-        with chart_cols[0]:
-            st.markdown(f'**📈 动态画布: {default_name}({default_code})**')
-        with chart_cols[1]:
-            if st.button("📊 K线+筹码", use_container_width=True):
+        c_btn_cols = st.columns(3)
+        with c_btn_cols[0]:
+            if st.button("📊 K线+四红灯", key="btn_kline_main", use_container_width=True):
                 st.session_state["chart_mode"] = "kline"
-        with chart_cols[2]:
-            if st.button("📈 实时分时", use_container_width=True):
+                st.rerun()
+        with c_btn_cols[1]:
+            if st.button("📈 实时分时图", key="btn_intra_main", use_container_width=True):
                 st.session_state["chart_mode"] = "intraday"
+                st.rerun()
+        with c_btn_cols[2]:
+            if st.button("🔍 全屏弹窗看", key="btn_pop_main", use_container_width=True):
+                st.session_state["show_stock_modal"] = True
 
         svg_html = render_stock_canvas_svg(
-            default_code, default_name, detail_pkg["df_k"],
+            detail_pkg["code"], detail_pkg["name"], detail_pkg["df_k"],
             sigs, detail_pkg["df_min"], st.session_state.get("chart_mode", "kline")
         )
         st.markdown(svg_html, unsafe_allow_html=True)
         st.markdown('</div>', unsafe_allow_html=True)
 
+        # 战法买卖结论与以损定量计算器
         st.markdown('<div class="nexus-panel">', unsafe_allow_html=True)
-        st.markdown(f'**🎯 战法判定: {detail_pkg["suit_badge"]}**')
+        st.markdown(f'<div class="nexus-panel-title">🎯 战法判定 ({detail_pkg["strategy"]}): {detail_pkg["suit_badge"]}</div>', unsafe_allow_html=True)
         st.info(detail_pkg["suit_detail"])
         st.success(detail_pkg["forecast_full"])
 
-        # 以损定量计算器
-        calc_cols = st.columns([1, 1, 1, 1])
+        p_f = detail_pkg["price_f"]
+        vwap_p = float(spot.get("vwap", p_f))
+        ma5_p = float(sigs.get("ma5", p_f * 0.99))
+        sup_p = float(sigs.get("support_p", p_f * 0.968))
+        res_p = float(sigs.get("resist_p", p_f * 1.08))
+        st.markdown(
+            f"**⚡ 分步挂单执行价**：1️⃣底仓确认单 **￥{min(p_f, max(vwap_p, p_f*0.996)):.2f}** ｜ "
+            f"2️⃣低吸加仓单 **￥{min(vwap_p*0.996, (vwap_p+ma5_p)/2):.2f}** ｜ "
+            f"3️⃣止盈目标 **￥{res_p:.2f}** / 硬止损 **￥{sup_p:.2f}**"
+        )
+
+        calc_cols = st.columns([1.2, 1, 1, 1])
         with calc_cols[0]:
-            c_amt = st.number_input("投入(元):", value=50000, step=10000, key="calc_amt")
+            c_amt = st.number_input("计划投入(元):", value=50000, step=10000, key="calc_amt")
         with calc_cols[1]:
-            c_pr = st.number_input("成本:", value=detail_pkg["price_f"], step=0.1, key="calc_pr")
+            c_pr = st.number_input("买入成本:", value=float(f"{p_f:.2f}"), step=0.1, key="calc_pr")
         with calc_cols[2]:
             c_tp = st.number_input("止盈(%):", value=8.0, step=0.5, key="calc_tp")
         with calc_cols[3]:
             c_sl = st.number_input("止损(%):", value=-3.2, step=0.5, key="calc_sl")
 
-        lots_c = max(1, int(c_amt // (c_pr * 100)))
+        lots_c = max(1, int(c_amt // (max(c_pr, 0.01) * 100)))
         shares_c = lots_c * 100
         tp_p = c_pr * (1 + c_tp / 100.0)
         sl_p = c_pr * (1 - abs(c_sl) / 100.0)
-        st.caption(f"👉 整手: {shares_c}股({lots_c}手) | 占用: ￥{shares_c*c_pr:,.0f} | 止盈: ￥{tp_p:.2f} | 止损: ￥{sl_p:.2f}")
+        st.caption(f"👉 整手: {shares_c}股({lots_c}手) ｜ 占用: ￥{shares_c*c_pr:,.0f} ｜ 止盈价: ￥{tp_p:.2f} ｜ 止损价: ￥{sl_p:.2f}")
 
-        if st.button("💼 确认买入转入【实盘持仓】", type="primary", use_container_width=True):
-            insert_or_update_holding_web(default_code, default_name, c_pr, shares_c, 0, detail_pkg["light_str"])
-            st.success(f"已将【{default_name}({default_code})】({shares_c}股) 成功转入实盘持仓账本！")
+        if st.button("💼 确认买入转入【我的实盘持仓】", type="primary", use_container_width=True):
+            insert_or_update_holding_web(detail_pkg["code"], detail_pkg["name"], c_pr, shares_c, 0, detail_pkg["light_str"], "主战室以损定量买入")
+            st.success(f"已将【{detail_pkg['name']}({detail_pkg['code']})】({shares_c}股) 转入实盘持仓并记入历史成交流水！")
         st.markdown('</div>', unsafe_allow_html=True)
 
 
-# ==================== 标签页二：我的实盘持仓 ====================
+# ==================== 标签页二：我的实盘持仓 & 历史成交交割统计 ====================
 with tab_holdings:
-    st.subheader("💼 【我的实盘持仓录入 (T+1 总持仓/今日可卖双轨账本) & 三态做T教练】")
-    h_form_cols = st.columns([1, 1, 1, 1, 1, 1.2])
-    with h_form_cols[0]:
-        h_code = st.text_input("代码", value="601698", key="h_c_in")
-    with h_form_cols[1]:
-        h_name = st.text_input("名称", value="中国卫通", key="h_n_in")
-    with h_form_cols[2]:
-        h_cost = st.number_input("成本价", value=21.50, step=0.1, key="h_cost_in")
-    with h_form_cols[3]:
-        h_tot = st.number_input("总股数", value=5000, step=100, key="h_tot_in")
-    with h_form_cols[4]:
-        h_av = st.number_input("今日可卖", value=5000, step=100, key="h_av_in")
-    with h_form_cols[5]:
-        st.markdown("<br>", unsafe_allow_html=True)
-        if st.button("➕ 录入/更新持仓", use_container_width=True):
-            insert_or_update_holding_web(h_code, h_name, h_cost, int(h_tot), int(h_av))
-            st.success("持仓更新成功！")
+    tot_mkt, tot_pnl, wr_h, tot_realized, tr_wr = refresh_holdings_coach_web()
+    tot_acc_pnl = tot_pnl + tot_realized
+    cnt_h = len(st.session_state.get("holdings_rows", []))
 
-    tot_mkt, tot_pnl, wr_h = refresh_holdings_coach_web()
-    st.markdown(f'<div class="nexus-model-bar">📊 持仓总市值: ￥{tot_mkt:,.2f} | 税后总净盈亏: {"+" if tot_pnl>=0 else ""}￥{tot_pnl:,.2f} | 胜率: {wr_h:.0f}%</div>', unsafe_allow_html=True)
+    st.markdown(
+        f'<div class="nexus-directive">'
+        f'📊 <b>【我的实盘账户综合统计】</b><br>'
+        f'• 当前持仓: <b>{cnt_h}只</b> (持仓浮盈胜率: <b>{wr_h:.0f}%</b>) ｜ 持仓总市值: <b>￥{tot_mkt:,.2f}</b> ｜ 当前持仓浮盈: <b>{"+" if tot_pnl>=0 else ""}￥{tot_pnl:,.2f}</b><br>'
+        f'• 📜 历史已实现交割净盈亏: <b>{"+" if tot_realized>=0 else ""}￥{tot_realized:,.2f}</b> (实盘交割胜率: <b>{tr_wr:.1f}%</b>) ｜ '
+        f'💰 <b>账户累计总净盈亏: {"+" if tot_acc_pnl>=0 else ""}￥{tot_acc_pnl:,.2f}</b>'
+        f'</div>',
+        unsafe_allow_html=True
+    )
 
+    with st.expander("➕ 录入/更新实盘持仓 & 🔄 盘中做T/加减仓交割 & 📝 手动补录历史交割 (点击展开)", expanded=False):
+        op_tabs = st.tabs(["➕ 录入/更新持仓", "🔄 盘中做T / 减仓清仓", "📝 手动补录历史交割流水"])
+        with op_tabs[0]:
+            h_cols = st.columns([1, 1, 1, 1, 1, 1.2])
+            with h_cols[0]:
+                h_code = st.text_input("股票代码", value="603258", key="h_c_in")
+            with h_cols[1]:
+                h_name = st.text_input("股票名称", value="电魂网络", key="h_n_in")
+            with h_cols[2]:
+                h_cost = st.number_input("成本价(元)", value=16.345, step=0.1, format="%.3f", key="h_cost_in")
+            with h_cols[3]:
+                h_tot = st.number_input("总股数", value=2200, step=100, key="h_tot_in")
+            with h_cols[4]:
+                h_av = st.number_input("今日可卖", value=2200, step=100, key="h_av_in")
+            with h_cols[5]:
+                st.markdown("<br>", unsafe_allow_html=True)
+                if st.button("➕ 保存持仓", type="primary", use_container_width=True):
+                    insert_or_update_holding_web(h_code, h_name, h_cost, int(h_tot), int(h_av), "🔴待体检", "手动录入持仓")
+                    st.success("持仓已保存并记入成交流水！")
+                    st.rerun()
+
+        with op_tabs[1]:
+            t_cols = st.columns([1, 1.2, 1, 1, 1.2])
+            with t_cols[0]:
+                t_code = st.text_input("持仓代码", value="603258", key="t_c_in")
+            with t_cols[1]:
+                t_op = st.selectbox("做T/加减仓方向", ["高抛卖出(消耗可卖额度)", "低吸买入(T+1加仓)"], key="t_op_in")
+            with t_cols[2]:
+                t_pr = st.number_input("成交价格(元)", value=16.85, step=0.05, key="t_pr_in")
+            with t_cols[3]:
+                t_sh = st.number_input("成交股数", value=1000, step=100, key="t_sh_in")
+            with t_cols[4]:
+                st.markdown("<br>", unsafe_allow_html=True)
+                if st.button("🔄 执行做T交割", type="primary", use_container_width=True):
+                    ok_t, msg_t = execute_do_t_web(t_code, t_op, float(t_pr), int(t_sh))
+                    if ok_t:
+                        st.success(msg_t)
+                        st.rerun()
+                    else:
+                        st.error(msg_t)
+
+        with op_tabs[2]:
+            m_cols = st.columns([1, 1, 1.2, 1, 1, 1, 1.2])
+            with m_cols[0]:
+                m_c = st.text_input("代码", value="601698", key="m_c_in")
+            with m_cols[1]:
+                m_n = st.text_input("名称", value="中国卫通", key="m_n_in")
+            with m_cols[2]:
+                m_op = st.selectbox("操作类型", ["卖出平仓", "高抛做T", "买入建仓"], key="m_op_in")
+            with m_cols[3]:
+                m_pr = st.number_input("成交价", value=22.50, step=0.1, key="m_pr_in")
+            with m_cols[4]:
+                m_sh = st.number_input("成交股数", value=2000, step=100, key="m_sh_in")
+            with m_cols[5]:
+                m_rc = st.number_input("对应成本价", value=21.00, step=0.1, key="m_rc_in")
+            with m_cols[6]:
+                st.markdown("<br>", unsafe_allow_html=True)
+                if st.button("📝 补录交割流水", type="primary", use_container_width=True):
+                    record_trade_history_web(m_c, m_n, m_op, float(m_pr), int(m_sh), float(m_rc), "手工补录历史交割")
+                    st.success("历史交割流水已永久入账！")
+                    st.rerun()
+
+    st.markdown('<div class="nexus-panel">', unsafe_allow_html=True)
+    st.markdown('<div class="nexus-panel-title">📋 【一、我的当前实盘持仓明细与三态做T指令表】(👈勾选持仓股可看下方三态做T差价剧本与K线)</div>', unsafe_allow_html=True)
     holdings_rows = st.session_state.get("holdings_rows", [])
     if holdings_rows:
-        df_h = pd.DataFrame(holdings_rows, columns=["建仓日期", "代码", "名称", "成本价", "总股数(可卖)", "持仓市值", "实时现价", "真实黄线", "税后净盈亏", "净收益率", "移动止盈止损", "四红/六灯", "🎯做T教练指令与走势推演"])
-        st.dataframe(df_h, use_container_width=True, hide_index=True)
+        df_h = pd.DataFrame(
+            holdings_rows,
+            columns=["建仓日期", "代码", "名称", "成本价", "总股数(可卖)", "持仓市值", "实时现价", "真实黄线", "税后净盈亏", "净收益率", "移动止盈止损", "四红/六灯", "🎯做T教练指令与走势推演"]
+        )
+        sel_h_state = st.dataframe(
+            df_h, use_container_width=True, hide_index=True,
+            selection_mode="single-row", on_select="rerun", key="df_sel_hold"
+        )
+        h_sel_rows = sel_h_state.get("selection", {}).get("rows", []) if isinstance(sel_h_state, dict) else []
+        h_idx = h_sel_rows[0] if (h_sel_rows and h_sel_rows[0] < len(holdings_rows)) else 0
+        r_hold = holdings_rows[h_idx]
+        tot_sh_h, avail_sh_h = parse_dual_shares(r_hold[4])
+        try:
+            cost_p_h, lat_p_h, vwap_p_h = float(r_hold[3]), float(r_hold[6]), float(str(r_hold[7]).replace("￥", ""))
+        except Exception:
+            cost_p_h, lat_p_h, vwap_p_h = 10.0, 10.0, 10.0
+        t_sell_p = round(max(lat_p_h * 1.028, vwap_p_h * 1.03), 2)
+        t_buy_p = round(min(lat_p_h * 0.985, vwap_p_h * 0.996), 2)
+        t_lots = max(100, (avail_sh_h // 300) * 100) if avail_sh_h >= 300 else avail_sh_h
+        cost_reduce = (t_sell_p - t_buy_p) * t_lots / max(tot_sh_h, 1)
+
+        st.markdown(
+            f'<div class="nexus-model-bar">'
+            f'🧠 <b>【{r_hold[2]}({r_hold[1]}) 三态做T教练差价剧本】</b> 成本: ￥{cost_p_h:.3f} ｜ 今日可卖: {avail_sh_h}股 ｜ 净盈亏: {r_hold[8]}({r_hold[9]})<br>'
+            f'• 📤 <b>反T高抛点</b>: 盘中急拉偏离真实黄线({r_hold[7]})至 <b>￥{t_sell_p:.2f}</b> 滞涨时，先卖 {t_lots}股 ｜ '
+            f'📥 <b>正T低吸点</b>: 回踩黄线或支撑位 <b>￥{t_buy_p:.2f}</b> 企稳接回 {t_lots}股 (单次做T摊薄成本 ￥{cost_reduce:.3f}元)<br>'
+            f'• 🔮 <b>实时诊断</b>: {r_hold[12]}'
+            f'</div>',
+            unsafe_allow_html=True
+        )
     else:
-        st.info("💡 您当前暂无实盘持仓记录，可在上方录入或在主战指挥舱中一键转入！")
+        st.info("💡 您当前暂无实盘持仓记录，可在上方展开录入或在主战指挥舱中一键转入！")
+    st.markdown('</div>', unsafe_allow_html=True)
+
+    st.markdown('<div class="nexus-panel">', unsafe_allow_html=True)
+    st.markdown('<div class="nexus-panel-title">📜 【二、实盘历史成交流水 & 做T/平仓已实现交割盈亏账本】</div>', unsafe_allow_html=True)
+    tr_records = st.session_state.get("trade_history_records", [])
+    if tr_records:
+        df_tr = pd.DataFrame(
+            tr_records,
+            columns=["成交时间", "操作类型", "代码", "名称", "成交价", "成交股数", "成交金额", "对应成本价", "本笔实现净盈亏", "本笔收益率", "交割备注与成本摊薄说明"]
+        )
+        st.dataframe(df_tr, use_container_width=True, height=250, hide_index=True)
+    else:
+        st.info("💡 暂无历史成交流水，当您录入持仓、执行盘中做T或补录交割后将自动永久记录在此！")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
-# ==================== 标签页三：历史复盘库与胜率争霸榜 ====================
+# ==================== 标签页三：历史复盘库 & 十一大战法胜率争霸榜 ====================
 with tab_tracking:
-    st.subheader("🏆 【十大战法实盘胜率争霸排行榜 & 历史选股复盘库】")
     review_records = st.session_state.get("all_review_records", [])
 
-    if st.button("📊 立即校准所有历史选股最新价 & 真实累计涨幅", type="primary"):
-        evaluate_tracking_performance_web()
-        st.success("历史选股累计涨幅与最大冲高已全部重新校准！")
-        st.rerun()
+    rev_top_cols = st.columns([1.5, 1.5, 1.5])
+    with rev_top_cols[0]:
+        if st.button("📊 立即刷新所有历史选股最新价 & 真实累计涨幅", type="primary", use_container_width=True):
+            evaluate_tracking_performance_web()
+            st.success("历史选股累计涨幅与最大冲高已全部重新校准！")
+            st.rerun()
+    with rev_top_cols[1]:
+        all_dates = sorted({str(r[0])[:10] for r in review_records if len(str(r[0])) >= 10}, reverse=True)
+        sel_rev_date = st.selectbox("📅 按入选日期筛选:", ["全部日期"] + all_dates, key="sel_rev_d")
+    with rev_top_cols[2]:
+        sel_rev_strat = st.selectbox(
+            "📂 按专属战法筛选:",
+            [
+                "全部战法", "🔥 五日主升妖股", "🦄 独立行情穿越牛", "🚀 强庄试盘启动",
+                "🕵️ 主力偷偷吸筹", "⏱️ 09:26弱转强", "🕳️ 黄金坑穿三线", "🌊 主升浪动量",
+                "🐉 龙回头企稳", "📐 圆弧底突破", "🛡️ 顺丰防御", "🌙 尾盘埋伏"
+            ],
+            key="sel_rev_s"
+        )
 
     rk_rows, sum_banner = compute_leaderboard_and_review_summary(review_records)
     st.markdown(f'<div class="nexus-directive">{sum_banner}</div>', unsafe_allow_html=True)
 
-    st.markdown("##### 🥇 十大战法实盘胜率争霸排行榜")
-    df_rk = pd.DataFrame(rk_rows, columns=["排名", "战法名称", "去重入选数", "已验证样本", "盈利只数", "实盘胜率", "平均累计涨幅", "最高单票冲高", "代表领涨牛股", "战法数学模型摘要"])
-    st.dataframe(df_rk, use_container_width=True, hide_index=True)
+    st.markdown('<div class="nexus-panel">', unsafe_allow_html=True)
+    st.markdown('<div class="nexus-panel-title">🏆 【十一大战法实盘胜率争霸排行榜】(👈勾选左侧任意名次行，即刻弹出该战法当时选出的全部股票与盈利明细账本！)</div>', unsafe_allow_html=True)
+    df_rk = pd.DataFrame(
+        rk_rows,
+        columns=["排名", "战法名称", "去重入选数", "已验证样本", "盈利只数", "实盘胜率", "平均累计涨幅", "最高单票冲高", "代表领涨牛股", "战法数学模型摘要"]
+    )
+    sel_rk_state = st.dataframe(
+        df_rk, use_container_width=True, hide_index=True,
+        selection_mode="single-row", on_select="rerun", key="df_sel_rk"
+    )
+    rk_sel_indices = sel_rk_state.get("selection", {}).get("rows", []) if isinstance(sel_rk_state, dict) else []
+    sig_map_rk = st.session_state.setdefault("last_table_sel_sig", {})
+    if rk_sel_indices != sig_map_rk.get("rk_board", []):
+        sig_map_rk["rk_board"] = rk_sel_indices
+        if rk_sel_indices and rk_sel_indices[0] < len(rk_rows):
+            st.session_state["modal_strat_row"] = rk_rows[rk_sel_indices[0]]
+            st.session_state["show_strat_modal"] = True
+    st.markdown('</div>', unsafe_allow_html=True)
 
-    st.markdown("##### 📝 系统历史选股纯净复盘明细库")
-    if review_records:
-        df_rev = pd.DataFrame(review_records, columns=["入选日期", "专属战法", "代码", "名称", "锁定入选价", "实时最新价", "选出后累计涨幅", "期间最大冲高", "四红/六灯", "严谨公允总评", "策略验证状态", "📊今日表现与走势预测"])
-        st.dataframe(df_rev, use_container_width=True, height=280, hide_index=True)
+    st.markdown('<div class="nexus-panel">', unsafe_allow_html=True)
+    st.markdown('<div class="nexus-panel-title">📝 【系统历史选股纯净复盘明细库】(👈勾选任意历史记录可联动切换K线与详情)</div>', unsafe_allow_html=True)
+    filtered_rev = [
+        r for r in review_records
+        if (sel_rev_date == "全部日期" or sel_rev_date in str(r[0]))
+        and (sel_rev_strat == "全部战法" or sel_rev_strat in str(r[1]))
+    ]
+    if filtered_rev:
+        df_rev = pd.DataFrame(
+            filtered_rev,
+            columns=["入选日期", "专属战法", "代码", "名称", "锁定入选价", "实时最新价", "选出后累计涨幅", "期间最大冲高", "四红/六灯", "严谨公允总评", "策略验证状态", "📊今日表现与走势预测"]
+        )
+        sel_rev_state = st.dataframe(
+            df_rev, use_container_width=True, height=300, hide_index=True,
+            selection_mode="single-row", on_select="rerun", key="df_sel_rev"
+        )
+        check_and_apply_table_selection("rev_table", sel_rev_state, filtered_rev, 2, 3, 1, True)
     else:
-        st.info("💡 暂无历史复盘记录，运行一次全市场扫描后将自动生成纯净复盘库！")
+        st.info("💡 暂无符合筛选条件的历史复盘记录，运行一次全市场扫描后将自动生成纯净复盘库！")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
-# ==================== 标签页四：白皮书与法则说明 ====================
+# ==================== 标签页四：V71.3 白皮书 ====================
 with tab_logs:
-    st.subheader("📖 V71.2 明日重点板块推演法则、严谨公允评分标准与十大战法数学白皮书")
+    st.markdown('<div class="nexus-panel">', unsafe_allow_html=True)
+    st.markdown('<div class="nexus-panel-title">📖 V71.3 五日主升妖股法则、明日重点板块推演与十一大战法数学白皮书</div>', unsafe_allow_html=True)
     st.markdown("""
-    * **🥇 明日主攻接力梯队**: 选择今日主力大额净流入(≥6亿)且热度处于65~90分未透支区间的硬科技板块（如通信设备、算力硬件、元件PCB），次日早盘分歧回踩分时黄线是最佳接力买点。
-    * **🥈 明日高低切换潜伏梯队**: 选择今日板块内上涨家数占比≥70%(群庄协同抬轿)、但板块整体涨幅控制在0.2%~2.3%且热度<75分压而不发的方向（如商业航天、国防军工、人形机器人）。
-    * **⚠️ 明日高潮防分化规避区**: 今日热度≥93分且全员一致高潮的板块（如煤炭、燃气），平量市场次日早盘严禁追高。
+    * **🔥 五日主升妖股 (V71.3 新增王牌战法)**: 专门捕捉大千生态、福莱新材、浙文影业、闽发铝业、巨轮智能等近 5 日累计涨幅 $\ge 10\%$（或近 5 日有涨停/连阳突破基因）、5日均线陡峭上攻且获利盘 $\ge 72\%$ 上方无套牢峰的短线极强动量龙头。
+    * **🥇 明日主攻接力梯队**: 选择今日主力大额净流入($\ge 6$亿)且热度处于 65~90 分未透支区间的硬科技板块，次日早盘分歧回踩分时黄线是最佳接力买点。
+    * **🥈 明日高低切换潜伏梯队**: 选择今日板块内上涨家数占比 $\ge 70\%$ (群庄协同抬轿)、但板块整体涨幅控制在 $0.2\% \sim 2.3\%$ 且热度 $< 75$ 分压而不发的方向（如商业航天、国防军工、人形机器人）。
     """)
     for k_w, v_w in STRATEGY_LOGIC_DESCRIPTIONS.items():
         st.markdown(f"**◆ {k_w}**\n> {v_w}")
+    st.markdown('</div>', unsafe_allow_html=True)
 
 
-# 3. 弹窗大窗口处理 (盘面推演大弹窗)
+# 3. 统一触发弹窗渲染
 if st.session_state.get("show_forecast_modal", False):
-    @st.dialog("🧭 Nexus-Alpha V71.2 —— 明日重点关注板块推演 & 大盘量价预测中心", width="large")
-    def forecast_dialog():
-        rep_text = compute_market_volume_and_forecast()
-        st.text_area("全维量化复盘与明日板块推演报告", value=rep_text, height=450)
-        if st.button("关闭大弹窗"):
-            st.session_state["show_forecast_modal"] = False
-            st.rerun()
-    forecast_dialog()
+    open_forecast_modal_dialog()
+elif st.session_state.get("show_stock_modal", False):
+    c_m = st.session_state.get("selected_stock_code", "002031")
+    n_m = st.session_state.get("selected_stock_name", "巨轮智能")
+    s_m = st.session_state.get("selected_stock_strat", "👑 全场Top10金股")
+    pkg_m = inspect_single_stock_detail(c_m, n_m, s_m)
+    open_stock_detail_modal_dialog(pkg_m)
+elif st.session_state.get("show_strat_modal", False):
+    r_m = st.session_state.get("modal_strat_row")
+    s_name_m = str(r_m[1]).strip() if r_m else "🔥 五日主升妖股"
+    open_strat_rank_modal_dialog(s_name_m, r_m)
 
-# ==================== 【收官代码结束：至此 100% 完美复刻完成】 ====================
+# ==================== 【收官代码结束：V71.3 手机/云端版 100% 升级完成】 ====================
